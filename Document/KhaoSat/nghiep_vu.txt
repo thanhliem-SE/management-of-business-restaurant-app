@@ -1,0 +1,25 @@
+quy trình phục vụ
+
+- nhân viên phục vụ tiếp nhận yêu cầu
+- chọn món ăn trên màn hình
+- tiến hành đặt món
+- nhân viên thu ngân tiến hành xác nhận đơn hàng
+- hiển thị lượt chờ món ăn trên màn hình nhà hàng
+- hiển thị đơn hàng trên màn hình ở bếp
+- món ăn hoàn thành thông báo đến nhân viên phục vụ
+- nhân viên phục vụ kiêm thanh toán
+- hệ thống cung cấp thống kê doanh thu
+- hệ thống quản lý xuất nhập kho
+- quản lý sổ quỷ và công nợ của khách hàng và nhà cung cấpquy trình phục vụ
+
+- nhân viên phục vụ tiếp nhận yêu cầu
+- chọn món ăn trên màn hình
+- tiến hành đặt món
+- nhân viên thu ngân tiến hành xác nhận đơn hàng
+- hiển thị lượt chờ món ăn trên màn hình nhà hàng
+- hiển thị đơn hàng trên màn hình ở bếp
+- món ăn hoàn thành thông báo đến nhân viên phục vụ
+- nhân viên phục vụ kiêm thanh toán
+- hệ thống cung cấp thống kê doanh thu
+- hệ thống quản lý xuất nhập kho
+- quản lý sổ quỷ và công nợ của khách hàng và nhà cung cấp

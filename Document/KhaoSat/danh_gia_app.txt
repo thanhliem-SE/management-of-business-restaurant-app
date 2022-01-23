@@ -1,0 +1,19 @@
+PopsApp:
+- Ưu điểm: 
++ Đầy đủ tính năng quản lý cho các bộ phận (phục vụ, thu ngân, quản lý)
++ Hệ thống có tính mở rộng có thể sử dụng cho nhiều mô hình nhà bán hàng
++ Có hệ thống đặt hàng và theo dõi đơn hàng được vận chuyển online
++ Có kết nối với các thiết bị ngoại vi(máy in hóa đơn, ngăn kéo tiền)
++ Chủ cửa hàng dễ quản lý, giám sát cửa hàng với luồng dữ liệu được đồng bộ trực tiếp
+- Khuyết điểm
++ Thống kê dữ liệu doanh thu còn chưa trực quan (không có biểu đồ)
++ Giao diện còn gò bó, đơn giản
+
+KiotViet
+- Ưu điểm:
++ tương tự như PopsApp
++ trực quan dữ liệu thống kê ở dưới dạng các biểu đồ
+- Khuyết điểm
++ Tốc độ phản hồi dữ liệu chưa tối ưu
++ Ứng dụng mở lên bị delay 5-10s
++ Xử lý đăng ký tài khoản dễ gặp lỗi
