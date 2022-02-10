@@ -1,4 +1,4 @@
-PopsApp:
+PosApp:
 - Ưu điểm: 
 + Đầy đủ tính năng quản lý cho các bộ phận (phục vụ, thu ngân, quản lý)
 + Hệ thống có tính mở rộng có thể sử dụng cho nhiều mô hình nhà bán hàng
