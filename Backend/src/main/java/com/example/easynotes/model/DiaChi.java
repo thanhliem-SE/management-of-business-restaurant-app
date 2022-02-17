@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 @Embeddable
 @Data
@@ -13,8 +14,12 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DiaChi {
-    private String msoNha;
+    @NotBlank
+    private String soNha;
+    @NotBlank
     private String phuong;
+    @NotBlank
     private String quan;
+    @NotBlank
     private String tinh;
 }

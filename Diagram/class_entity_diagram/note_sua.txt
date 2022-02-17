@@ -1,0 +1,12 @@
+Table NguyenLieu: ten --> tenNguyenLieu 
+	        : soLuong: String --> int
+		: + lieuLuong: LieuLuong
+
+Table NhanVien  : ten --> tenNhanVien
+		  maNguoiDung --> maNhanVien	
+
+Table NhaCungCap: xuatXu: XuatXu --> String
+
+Table LieuLuong : + maLieuLuong: String
+                  luongDung: int --> double
+
