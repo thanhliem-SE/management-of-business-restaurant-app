@@ -29,7 +29,7 @@ import java.util.List;
 public class NguyenLieu {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String maNguyenLieu;
+    private Long maNguyenLieu;
 
     @Nationalized
     @NotBlank

@@ -27,7 +27,7 @@ import java.util.List;
 public class NhaCungCap {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String maNhaCungCap;
+    private Long maNhaCungCap;
 
     @Nationalized
     @NotBlank

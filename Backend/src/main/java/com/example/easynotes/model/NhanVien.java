@@ -28,7 +28,7 @@ import java.util.List;
 public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String maNhanVien;
+    private Long maNhanVien;
 
     @Nationalized
     @NotBlank

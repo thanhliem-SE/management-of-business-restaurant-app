@@ -27,7 +27,7 @@ import java.util.Date;
 public class LieuLuong {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String maLieuLuong;
+    private Long maLieuLuong;
 
     @Range(min = 0)
     private double giaTien;
