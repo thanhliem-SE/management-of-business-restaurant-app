@@ -1,5 +1,6 @@
 package com.example.easynotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
-public class NhanVien {
+public class NhanVien implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long maNhanVien;
@@ -48,10 +50,11 @@ public class NhanVien {
     private Date updatedAt;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tenTaiKhoan", referencedColumnName = "tenTaiKhoan")
+    @JoinColumn(name = "tenTaiKhoan", nullable = false)
     private TaiKhoan taiKhoan;
 
 //    @OneToMany(mappedBy = "nhanVien")
+//    @JsonIgnore
 //    private List<HoaDon> hoaDon;
 
 }

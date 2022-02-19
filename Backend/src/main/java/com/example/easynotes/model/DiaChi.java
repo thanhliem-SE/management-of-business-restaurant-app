@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 
 @Embeddable
@@ -14,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class DiaChi {
+public class DiaChi implements Serializable {
     @NotBlank
     private String soNha;
     @NotBlank

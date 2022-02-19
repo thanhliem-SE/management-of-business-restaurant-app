@@ -10,4 +10,4 @@ Table NhaCungCap: xuatXu: XuatXu --> String
 Table LieuLuong : + maLieuLuong: String
                   luongDung: int --> double
 
-all Table       : id: String --> long
+all Table       : id: String --> Long

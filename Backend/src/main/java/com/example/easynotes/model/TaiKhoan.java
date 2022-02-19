@@ -1,19 +1,19 @@
 package com.example.easynotes.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -21,7 +21,7 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
-public class TaiKhoan {
+public class TaiKhoan implements Serializable {
     @Id
     private String tenTaiKhoan;
 
@@ -42,8 +42,10 @@ public class TaiKhoan {
     private Date updatedAt;
 
     @OneToOne(mappedBy = "taiKhoan")
+    @JsonIgnore
     private NhanVien nhanVien;
 
 //    @OneToOne(mappedBy = "taiKhoan")
+//    @JsonIgnore
 //    private KhachHang khachHang;
 }

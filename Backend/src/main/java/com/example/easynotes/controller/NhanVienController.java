@@ -15,7 +15,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api")
-public class NhanVienController {
+public class NhanVienController  {
 
     @Autowired
     NhanVienService service;
