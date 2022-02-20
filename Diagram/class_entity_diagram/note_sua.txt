@@ -11,3 +11,7 @@ Table LieuLuong : + maLieuLuong: String
                   luongDung: int --> double
 
 all Table       : id: String --> Long
+
+Ban : cần thảo luận lại về danh sách bàn trong hóa đơn hay chỉ 1 bàn 1 hóa đơn
+ChiTietHoaDon: update thêm phương thức thành tiền
+HoaDon: Thảo luận về tổng thành tiền trong HoaDon
