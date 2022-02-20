@@ -17,7 +17,7 @@ public class TaiKhoanService {
     }
 
     public TaiKhoan getById(String tenTaiKhoan){
-        return  repository.getById(tenTaiKhoan);
+        return  repository.findById(tenTaiKhoan).get();
     }
 
     public TaiKhoan add(TaiKhoan taiKhoan){

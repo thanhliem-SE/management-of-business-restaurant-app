@@ -20,17 +20,17 @@ public class NhanVienController  {
     @Autowired
     NhanVienService service;
 
-    @GetMapping("/nhanVien")
+    @GetMapping("/nhanvien")
     public List<NhanVien> getAll() {
         return service.getList();
     }
 
-    @PostMapping("/nhanVien")
+    @PostMapping("/nhanvien")
     public NhanVien addItem(@Valid @RequestBody NhanVien nhanVien) {
         return service.add(nhanVien);
     }
 
-    @GetMapping("/nhanVien/{id}")
+    @GetMapping("/nhanvien/{id}")
     public NhanVien getById(@PathVariable(value = "id") Long id) {
         try {
             return service.getById(id);
@@ -39,7 +39,7 @@ public class NhanVienController  {
         }
     }
 
-    @PutMapping("/nhanVien/{id}")
+    @PutMapping("/nhanvien/{id}")
     public NhanVien update(@PathVariable(value = "id") Long id,
                                      @Valid @RequestBody NhanVien nhanVien) {
         NhanVien rs = service.update(nhanVien, id);
@@ -50,7 +50,7 @@ public class NhanVienController  {
         }
     }
 
-    @DeleteMapping("/nhanVien/{id}")
+    @DeleteMapping("/nhanvien/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         try{
             service.deleteById(id);

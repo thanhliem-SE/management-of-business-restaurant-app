@@ -17,7 +17,7 @@ public class LieuLuongService {
     }
 
     public LieuLuong getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public LieuLuong add(LieuLuong lieuLuong){
