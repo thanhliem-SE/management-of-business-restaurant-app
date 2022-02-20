@@ -17,7 +17,7 @@ public class NhanVienService {
     }
 
     public NhanVien getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public NhanVien add(NhanVien nhanVien){

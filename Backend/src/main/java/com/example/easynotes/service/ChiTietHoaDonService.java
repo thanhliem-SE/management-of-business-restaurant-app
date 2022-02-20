@@ -18,7 +18,7 @@ public class ChiTietHoaDonService {
     }
 
     public ChiTietHoaDon getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public ChiTietHoaDon add(ChiTietHoaDon chiTietHoaDon){

@@ -19,7 +19,7 @@ public class NguyenLieuService {
     }
 
     public NguyenLieu getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public NguyenLieu add(NguyenLieu nguyenLieu){

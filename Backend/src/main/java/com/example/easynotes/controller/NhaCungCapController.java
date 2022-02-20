@@ -21,17 +21,17 @@ public class NhaCungCapController  {
     @Autowired
     NhaCungCapService service;
 
-    @GetMapping("/nhaCungCap")
+    @GetMapping("/nhacungcap")
     public List<NhaCungCap> getAll() {
         return service.getList();
     }
 
-    @PostMapping("/nhaCungCap")
+    @PostMapping("/nhacungcap")
     public NhaCungCap addItem(@Valid @RequestBody NhaCungCap nhaCungCap) {
         return service.add(nhaCungCap);
     }
 
-    @GetMapping("/nhaCungCap/{id}")
+    @GetMapping("/nhacungcap/{id}")
     public NhaCungCap getById(@PathVariable(value = "id") Long id) {
         try {
             return service.getById(id);
@@ -40,7 +40,7 @@ public class NhaCungCapController  {
         }
     }
 
-    @PutMapping("/nhaCungCap/{id}")
+    @PutMapping("/nhacungcap/{id}")
     public NhaCungCap update(@PathVariable(value = "id") Long id,
                                      @Valid @RequestBody NhaCungCap nhaCungCap) {
         NhaCungCap rs = service.update(nhaCungCap, id);
@@ -51,7 +51,7 @@ public class NhaCungCapController  {
         }
     }
 
-    @DeleteMapping("/nhaCungCap/{id}")
+    @DeleteMapping("/nhacungcap/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         try{
             service.deleteById(id);

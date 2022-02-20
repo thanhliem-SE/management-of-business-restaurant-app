@@ -17,7 +17,7 @@ public class ThanhToanService {
     }
 
     public ThanhToan getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public ThanhToan add(ThanhToan thanhToan){

@@ -17,7 +17,7 @@ public class HoaDonService {
     }
 
     public HoaDon getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public HoaDon add(HoaDon hoaDon){

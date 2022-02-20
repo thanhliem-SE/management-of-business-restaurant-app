@@ -20,17 +20,17 @@ public class TaiKhoanController {
     @Autowired
     TaiKhoanService service;
 
-    @GetMapping("/taiKhoan")
+    @GetMapping("/taikhoan")
     public List<TaiKhoan> getAll() {
         return service.getList();
     }
 
-    @PostMapping("/taiKhoan")
+    @PostMapping("/taikhoan")
     public TaiKhoan addItem(@Valid @RequestBody TaiKhoan taiKhoan) {
         return service.add(taiKhoan);
     }
 
-    @GetMapping("/taiKhoan/{id}")
+    @GetMapping("/taikhoan/{id}")
     public TaiKhoan getById(@PathVariable(value = "id") String id) {
         try {
             return service.getById(id);
@@ -39,7 +39,7 @@ public class TaiKhoanController {
         }
     }
 
-    @PutMapping("/taiKhoan/{id}")
+    @PutMapping("/taikhoan/{id}")
     public TaiKhoan update(@PathVariable(value = "id") String id,
                                      @Valid @RequestBody TaiKhoan taiKhoan) {
         TaiKhoan rs = service.update(taiKhoan, id);
@@ -50,7 +50,7 @@ public class TaiKhoanController {
         }
     }
 
-    @DeleteMapping("/taiKhoan/{id}")
+    @DeleteMapping("/taikhoan/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
         try{
             service.deleteById(id);

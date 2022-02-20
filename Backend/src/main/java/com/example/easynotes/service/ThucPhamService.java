@@ -17,7 +17,7 @@ public class ThucPhamService {
     }
 
     public ThucPham getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public ThucPham add(ThucPham thucPham){

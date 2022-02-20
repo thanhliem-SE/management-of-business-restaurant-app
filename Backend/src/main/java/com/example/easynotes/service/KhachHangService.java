@@ -17,7 +17,7 @@ public class KhachHangService {
     }
 
     public KhachHang getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public KhachHang add(KhachHang khachHang){

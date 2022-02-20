@@ -17,7 +17,7 @@ public class NhaCungCapService {
     }
 
     public NhaCungCap getById(Long id){
-        return  repository.getById(id);
+        return  repository.findById(id).get();
     }
 
     public NhaCungCap add(NhaCungCap nhaCungCap){
