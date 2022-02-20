@@ -47,8 +47,8 @@ public class LieuLuong implements Serializable {
     @JoinColumn(name = "maNguyenLieu")
     private NguyenLieu nguyenLieu;
 
-//    @ManyToOne
-//    @JoinColumn(name = "maThucPham")
-//    private ThucPham thucPham;
+    @ManyToOne
+    @JoinColumn(name = "maThucPham")
+    private ThucPham thucPham;
 
 }
