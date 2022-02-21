@@ -39,7 +39,6 @@ public class ThucPham implements Serializable {
     @NotBlank
     private String moTa;
 
-    @NotBlank
     @Min(value = 0)
     private double giaTien;
 

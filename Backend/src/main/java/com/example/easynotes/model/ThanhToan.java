@@ -33,11 +33,9 @@ public class ThanhToan implements Serializable {
     @Nationalized
     private String hinhThucThanhToan;
 
-    @NotBlank
     @Min(value = 0)
     private double tienKhachTra;
 
-    @NotBlank
     @Min(value = 0)
     private double tienThua;
 

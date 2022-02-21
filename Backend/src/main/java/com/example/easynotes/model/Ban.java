@@ -25,16 +25,15 @@ public class Ban implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long maSoBan;
 
-    @NotBlank
     @Min(value = 1)
     private int soGhe;
 
-    @NotBlank
-    private boolean tinhTrang;
+    @Enumerated(EnumType.STRING)
+    private TinhTrang tinhTrang;
 
     @OneToOne
-    @JoinColumn(name = "id")
-    private Note note;
+    @JoinColumn(name = "maGhiChu")
+    private GhiChu ghiChu;
 
 
 

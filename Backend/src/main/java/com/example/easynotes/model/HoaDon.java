@@ -38,7 +38,6 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maKhachHang")
     private KhachHang khachHang;
 
-    @NotBlank
     @Min(value = 0)
     private double tongThanhTien;
 
@@ -55,7 +54,7 @@ public class HoaDon implements Serializable {
     private List<ChiTietHoaDon> lieuLuongs;
 
     @NotBlank
-    private boolean tinhTrang;
+    private String tinhTrang;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

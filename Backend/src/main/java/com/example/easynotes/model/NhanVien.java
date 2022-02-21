@@ -53,8 +53,8 @@ public class NhanVien implements Serializable {
     @JoinColumn(name = "tenTaiKhoan", nullable = false)
     private TaiKhoan taiKhoan;
 
-//    @OneToMany(mappedBy = "nhanVien")
-//    @JsonIgnore
-//    private List<HoaDon> hoaDon;
+    @OneToMany(mappedBy = "nguoiLapHoaDon")
+    @JsonIgnore
+    private List<HoaDon> hoaDon;
 
 }

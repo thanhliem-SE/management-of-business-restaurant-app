@@ -45,7 +45,7 @@ public class TaiKhoan implements Serializable {
     @JsonIgnore
     private NhanVien nhanVien;
 
-//    @OneToOne(mappedBy = "taiKhoan")
-//    @JsonIgnore
-//    private KhachHang khachHang;
+    @OneToOne(mappedBy = "taiKhoan")
+    @JsonIgnore
+    private KhachHang khachHang;
 }

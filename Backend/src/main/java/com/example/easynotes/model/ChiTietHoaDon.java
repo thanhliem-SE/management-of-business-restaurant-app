@@ -29,17 +29,14 @@ public class ChiTietHoaDon implements Serializable {
     @JoinColumn(name = "maThucPham")
     private ThucPham thucPham;
 
-    @NotBlank
     @Min(value = 1)
     private int soLuong;
 
-    @NotBlank
     @Min(value = 0)
     private double thanhTien;
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")
-    @NotBlank
     private HoaDon hoaDon;
 
     @Column(nullable = false, updatable = false)
