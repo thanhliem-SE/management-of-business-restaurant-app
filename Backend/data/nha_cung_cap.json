@@ -1,0 +1,15 @@
+[
+  {
+    "maNhaCungCap": 1,
+    "tenNhaCungCap": "tenNhaCungCap 1",
+    "moTa": "moTa 1",
+    "diaChi": {
+      "soNha": "soNha 1",
+      "phuong": "phuong 1",
+      "quan": "quan 1",
+      "tinh": "tinh 1"
+    },
+    "createdAt": "2022-02-22T14:27:41.292+00:00",
+    "updatedAt": "2022-02-22T14:27:41.292+00:00"
+  }
+]
