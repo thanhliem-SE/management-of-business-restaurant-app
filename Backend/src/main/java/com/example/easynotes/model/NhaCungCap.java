@@ -52,10 +52,9 @@ public class NhaCungCap implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
-
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "nhaCungCap", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<NguyenLieu> dsNguyenLieu;
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "nhaCungCap", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<NguyenLieu> dsNguyenLieu;
 
 }
