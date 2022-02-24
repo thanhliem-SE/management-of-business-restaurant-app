@@ -20,17 +20,17 @@ public class LieuLuongController {
     @Autowired
     LieuLuongService service;
 
-    @GetMapping("/lieuLuong")
+    @GetMapping("/lieuluong")
     public List<LieuLuong> getAll() {
         return service.getList();
     }
 
-    @PostMapping("/lieuLuong")
+    @PostMapping("/lieuluong")
     public LieuLuong addItem(@Valid @RequestBody LieuLuong lieuLuong) {
         return service.add(lieuLuong);
     }
 
-    @GetMapping("/lieuLuong/{id}")
+    @GetMapping("/lieuluong/{id}")
     public LieuLuong getById(@PathVariable(value = "id") Long id) {
         try {
             return service.getById(id);
@@ -39,7 +39,7 @@ public class LieuLuongController {
         }
     }
 
-    @PutMapping("/lieuLuong/{id}")
+    @PutMapping("/lieuluong/{id}")
     public LieuLuong update(@PathVariable(value = "id") Long id,
                                      @Valid @RequestBody LieuLuong lieuLuong) {
         LieuLuong rs = service.update(lieuLuong, id);
@@ -50,7 +50,7 @@ public class LieuLuongController {
         }
     }
 
-    @DeleteMapping("/lieuLuong/{id}")
+    @DeleteMapping("/lieuluong/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
         try{
             service.deleteById(id);
