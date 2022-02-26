@@ -1,0 +1,11 @@
+[
+  {
+    "tenNguyenLieu": "tenNguyenLieu 1",
+    "soLuong": 1,
+    "donViTinh": "donViTinh 1",
+    "giaTien": 1.0,
+    "nhaCungCap": {
+      "maNhaCungCap": 1
+      }
+  }
+]
