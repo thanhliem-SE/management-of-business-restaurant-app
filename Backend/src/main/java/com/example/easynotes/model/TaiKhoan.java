@@ -28,8 +28,8 @@ public class TaiKhoan implements Serializable {
     @NotBlank
     private String matKhau;
 
-    @NotBlank
-    private String quyen;
+    @Enumerated(EnumType.STRING)
+    private Quyen quyen;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -41,11 +41,4 @@ public class TaiKhoan implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    @OneToOne(mappedBy = "taiKhoan")
-    @JsonIgnore
-    private NhanVien nhanVien;
-
-    @OneToOne(mappedBy = "taiKhoan")
-    @JsonIgnore
-    private KhachHang khachHang;
 }

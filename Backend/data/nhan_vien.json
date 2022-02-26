@@ -1,0 +1,9 @@
+[
+  {
+    "tenNhanVien": "tenNhanVien",
+    "soDienThoai": "0123456789",
+    "taiKhoan": {
+      "tenTaiKhoan": "tenTaiKhoan1"
+    }
+  }
+]

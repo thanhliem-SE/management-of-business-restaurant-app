@@ -33,7 +33,7 @@ public class TaiKhoanController {
     @GetMapping("/taikhoan/{id}")
     public TaiKhoan getById(@PathVariable(value = "id") String id) {
         try {
-            return service.getById(id);
+            return service.getByTenTaiKhoan(id);
         } catch (Exception e) {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
@@ -53,7 +53,7 @@ public class TaiKhoanController {
     @DeleteMapping("/taikhoan/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
         try{
-            service.deleteById(id);
+            service.deleteByTenTaiKhoan(id);
             return  ResponseEntity.ok().build();
         }catch (Exception e) {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
