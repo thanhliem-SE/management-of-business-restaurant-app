@@ -45,7 +45,7 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "maSoBan")
     private Ban bans;
 

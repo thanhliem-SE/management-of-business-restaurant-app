@@ -36,6 +36,10 @@ public class GhiChu implements Serializable {
     @NotBlank
     private String noiDung;
 
+    @OneToOne
+    @JoinColumn(name = "maSoBan")
+    private Ban ban;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
