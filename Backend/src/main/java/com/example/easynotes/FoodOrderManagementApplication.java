@@ -14,7 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 public class FoodOrderManagementApplication {
     @Autowired
     Helpers helpers;
-
     public static void main(String[] args) {
         SpringApplication.run(FoodOrderManagementApplication.class, args);
     }

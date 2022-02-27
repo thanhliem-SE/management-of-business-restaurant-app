@@ -11,6 +11,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -31,10 +33,10 @@ public class Ban implements Serializable {
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;
 
-    @OneToOne
-    @JoinColumn(name = "maGhiChu")
-    private GhiChu ghiChu;
 
+    private String ghiChu;
 
+    @ManyToMany(mappedBy = "bans")
+    private Set<HoaDon> hoaDons;
 
 }
