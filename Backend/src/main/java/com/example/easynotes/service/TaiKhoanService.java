@@ -16,7 +16,7 @@ public class TaiKhoanService {
         return repository.findAll();
     }
 
-    public TaiKhoan getById(String tenTaiKhoan){
+    public TaiKhoan getByTenTaiKhoan(String tenTaiKhoan){
         return  repository.findById(tenTaiKhoan).get();
     }
 
@@ -24,12 +24,12 @@ public class TaiKhoanService {
         return repository.save(taiKhoan);
     }
 
-    public void deleteById(String tenTaiKhoan){
+    public void deleteByTenTaiKhoan(String tenTaiKhoan){
         repository.deleteById(tenTaiKhoan);
     }
 
     public TaiKhoan update(TaiKhoan taiKhoan, String tenTaiKhoan){
-        if(getById(tenTaiKhoan) != null){
+        if(getByTenTaiKhoan(tenTaiKhoan) != null){
             taiKhoan.setTenTaiKhoan(tenTaiKhoan);
             return  repository.save(taiKhoan);
         }

@@ -31,7 +31,7 @@ public class LieuLuong implements Serializable {
     private Long maLieuLuong;
 
     @Range(min = 0)
-    private double giaTien;
+    private int luongDung;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

@@ -49,8 +49,8 @@ public class NhanVien implements Serializable {
     @LastModifiedDate
     private Date updatedAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "tenTaiKhoan", nullable = false)
+    @OneToOne()
+    @JoinColumn(name = "tenTaiKhoan")
     private TaiKhoan taiKhoan;
 
     @OneToMany(mappedBy = "nguoiLapHoaDon")
