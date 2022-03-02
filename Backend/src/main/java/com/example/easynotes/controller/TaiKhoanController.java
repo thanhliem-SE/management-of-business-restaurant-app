@@ -1,10 +1,17 @@
 package com.example.easynotes.controller;
 
 import com.example.easynotes.exception.ResourceNotFoundException;
+import com.example.easynotes.jwt.JwtTokenProvider;
+import com.example.easynotes.model.CustomUserDetails;
 import com.example.easynotes.model.TaiKhoan;
+import com.example.easynotes.dto.LoginRequest;
 import com.example.easynotes.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,6 +26,12 @@ public class TaiKhoanController {
 
     @Autowired
     TaiKhoanService service;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
+    private JwtTokenProvider tokenProvider;
 
     @GetMapping("/taikhoan")
     public List<TaiKhoan> getAll() {
@@ -41,7 +54,7 @@ public class TaiKhoanController {
 
     @PutMapping("/taikhoan/{id}")
     public TaiKhoan update(@PathVariable(value = "id") String id,
-                                     @Valid @RequestBody TaiKhoan taiKhoan) {
+                           @Valid @RequestBody TaiKhoan taiKhoan) {
         TaiKhoan rs = service.update(taiKhoan, id);
         if (rs != null) {
             return rs;
@@ -52,11 +65,13 @@ public class TaiKhoanController {
 
     @DeleteMapping("/taikhoan/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") String id) {
-        try{
+        try {
             service.deleteByTenTaiKhoan(id);
-            return  ResponseEntity.ok().build();
-        }catch (Exception e) {
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
     }
+
+
 }
