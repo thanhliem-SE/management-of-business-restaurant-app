@@ -46,15 +46,9 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;
 
-//    @ManyToOne
-//    @JoinColumn(name = "maSoBan")
-//        name = "hoadon_ban",
-//    private Ban bans;
-    @ManyToMany
-    @JoinTable(
-        joinColumns = @JoinColumn(name = "maSoBan"),
-        inverseJoinColumns = @JoinColumn(name = "maHoaDon"))
-    private Set<Ban> bans;
+    @ManyToOne
+    @JoinColumn(name = "maSoBan")
+    private Ban bans;
 
     @JsonIgnore
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
