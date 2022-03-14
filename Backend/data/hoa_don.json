@@ -1,0 +1,18 @@
+[
+  {
+    "nguoiLapHoaDon": {
+      "maNhanVien": 1
+    },
+    "khachHang": {
+      "maKhachHang": 1
+    },
+    "tongThanhTien": 100000.0,
+    "bans": {
+      "maSoBan":  1
+    },
+    "tinhTrang": "wait",
+    "thanhToan": {
+      "maThanhToan": 1
+    }
+  }
+]

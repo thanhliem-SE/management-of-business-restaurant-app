@@ -3,5 +3,10 @@
     "tenTaiKhoan": "tenTaiKhoan1",
     "matKhau": "matKhau1",
     "quyen": "ADMIN"
+  },
+  {
+    "tenTaiKhoan": "khachang1",
+    "matKhau": "matKhau1",
+    "quyen": "KHACHHANG"
   }
 ]
