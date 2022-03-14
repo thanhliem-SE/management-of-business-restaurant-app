@@ -1,0 +1,11 @@
+[
+  {
+    "luongDung": 200,
+    "nguyenLieu": {
+      "maNguyenLieu": 1
+    },
+    "thucPham": {
+      "maThucPham": 1
+    }
+  }
+]

@@ -1,0 +1,11 @@
+[
+  {
+    "thucPham": {
+      "maThucPham": 1
+    },
+    "soLuong": 100000.0,
+    "hoaDon": {
+      "maHoaDon": 1
+    }
+  }
+]

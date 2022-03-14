@@ -1,0 +1,15 @@
+[
+  {
+    "tenKhachHang": "Doan Van Vinh",
+    "diaChiNhanHang": {
+      "soNha": "12 duong Nguyen Van Bao",
+      "phuong": "4",
+      "quan": "Go Vap",
+      "tinh": "Thanh pho Ho Chi Minh"
+    },
+    "taiKhoan": {
+      "tenTaiKhoan": "khachang1"
+    },
+    "soDienThoai": "0834696983"
+  }
+]
