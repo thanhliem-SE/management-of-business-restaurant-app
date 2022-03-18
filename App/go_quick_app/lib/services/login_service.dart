@@ -1,21 +1,34 @@
 import 'dart:convert';
 import 'dart:ffi';
+import 'dart:io';
 
+import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService {
-  Future<String> login(String username, String password) async {
-    final response = await http.post(Uri.parse(api + 'login'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({'username': username, 'password': password}));
+  Future<Object> login(String username, String password) async {
+    try {
+      final response = await http.post(Uri.parse(api + 'login'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode({'username': username, 'password': password}));
 
-    if (response.statusCode == 200) {
-      return response.body;
-    } else {
-      throw Exception("Failed to login");
+      if (response.statusCode == 200) {
+        return Success(response: response.body);
+      }
+      return Failure(
+          code: USER_INVALID_RESPONSE,
+          errrorResponse: 'Thông tin đăng nhập không chính xác!');
+    } on HttpException {
+      return Failure(
+          code: NO_INTERNET, errrorResponse: 'Không có kết nối internet!');
+    } on FormatException {
+      return Failure(
+          code: INVALID_FORMAT, errrorResponse: 'Định dạng không hợp lệ!');
+    } catch (e) {
+      return Failure(code: UNKNOW_ERROR, errrorResponse: 'Lỗi không xác định!');
     }
   }
 }
