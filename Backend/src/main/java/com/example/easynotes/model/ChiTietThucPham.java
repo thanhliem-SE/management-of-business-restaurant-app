@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Nationalized;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,21 +21,17 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
-public class Ban implements Serializable {
-
+public class ChiTietThucPham implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long maSoBan;
+    private Long maChiTietThucPham;
 
-    @Min(value = 1)
-    private int soGhe;
+    @ManyToOne
+    @JoinColumn(name = "maThucPham")
+    private ThucPham thucPham;
 
-    @Enumerated(EnumType.STRING)
-    private TinhTrang tinhTrang;
-
-
-    @Nationalized
-    private String ghiChu;
+    @Min(value = 0)
+    private int soLuong;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
