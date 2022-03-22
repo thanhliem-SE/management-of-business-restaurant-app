@@ -1,0 +1,22 @@
+Vĩnh:
+- Đăng ký
+- Lấy danh sách món ăn
+- Quản lý kho nguyên liệu
+- Cấp tài khoản
+- Quản lý món ăn
+- Đặt tiệc
+- Đặt món từ xa
+- Thống kê (maybe)
+- Tìm kiếm
+
+
+Liêm:
+- Đăng nhập
+- Nhận yêu cầu đặt món
+- Tiếp nhận đặt món
+- Phản hồi trạng thái đặt món
+- Xuất hóa đơn
+- Tài liệu
+- Quản lý khách hàng
+- Thống kê (maybe)
+
