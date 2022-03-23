@@ -39,9 +39,6 @@ public class Helpers {
     ThanhToanService thanhToanService;
 
     @Autowired
-    BanService banService;
-
-    @Autowired
     HoaDonService hoaDonService;
 
     @Autowired
@@ -58,7 +55,6 @@ public class Helpers {
         // must put after thucpham and nguyen lieu
         initLieuLuong();
         initThanhToan();
-        initBan();
         initKhachHang();
         initHoaDon();
         initChiTietHoaDon();
@@ -201,25 +197,6 @@ public class Helpers {
             jsonArray.forEach(jsonObject -> {
                 ThanhToan thanhToan = new Gson().fromJson(jsonObject.toString(), ThanhToan.class);
                 thanhToanService.add(thanhToan);
-            });
-
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void initBan() {
-        JSONParser jsonParser = new JSONParser();
-
-        try (FileReader reader = new FileReader("data/ban.json")) {
-            //Read JSON file
-            Object obj = jsonParser.parse(reader);
-
-            JSONArray jsonArray = (JSONArray) obj;
-
-            jsonArray.forEach(jsonObject -> {
-                Ban ban = new Gson().fromJson(jsonObject.toString(), Ban.class);
-                banService.add(ban);
             });
 
         } catch (IOException | ParseException e) {

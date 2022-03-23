@@ -2,4 +2,10 @@ import 'package:flutter/material.dart';
 
 const appTitle = 'GoQuick';
 const welcomeTitle = 'WELCOME TO GOQUICK';
-const api = 'http://192.168.1.8:8080/api/';
+
+// api
+const api = 'http://192.168.1.7:8080/api/';
+const USER_INVALID_RESPONSE = 100;
+const NO_INTERNET = 101;
+const INVALID_FORMAT = 102;
+const UNKNOW_ERROR = 103;

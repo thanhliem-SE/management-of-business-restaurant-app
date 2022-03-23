@@ -10,6 +10,7 @@ import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/sign_up/sign_up_view.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -19,11 +20,11 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final _viewModel = LoginViewModel();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final _viewModel = Provider.of<LoginViewModel>(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -97,7 +98,7 @@ class _LoginViewState extends State<LoginView> {
                   text: "LOGIN",
                   press: () {
                     if (_formKey.currentState!.validate()) {
-                       _viewModel.login(context);
+                      _viewModel.login(context);
                     }
                   },
                 ),

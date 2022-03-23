@@ -1,7 +1,6 @@
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\NguyenLieuController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\config\WebSecurityConfig.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\TaiKhoan.java
-C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\BanRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\TaiKhoanRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\KhachHangRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\TaiKhoanController.java
@@ -9,15 +8,14 @@ C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\NguyenLieuS
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\ThanhToanController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\LieuLuongService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\ChiTietHoaDonService.java
-C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\BanController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ChiTietHoaDonRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\ChiTietHoaDon.java
+C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\ChiTietThucPham.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\ThucPham.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\ChiTietHoaDonController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\exception\ResourceNotFoundException.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\NhaCungCapController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\FoodOrderManagementApplication.java
-C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\BanService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\NhanVienRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\NhanVienController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\jwt\JwtAuthenticationFilter.java
@@ -40,7 +38,6 @@ C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\LieuLuong.jav
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\DiaChi.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ThucPhamRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\NhanVien.java
-C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\Ban.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\NhanVienService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\IndexController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\jwt\JwtTokenProvider.java

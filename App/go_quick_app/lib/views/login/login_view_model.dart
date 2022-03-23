@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/login_service.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class LoginViewModel {
-  late String _username;
-  late String _password;
+class LoginViewModel extends ChangeNotifier {
+  String _username = '';
+  String _password = '';
+  bool _loading = false;
+  String _token = '';
+
+  String get username => this._username;
+
+  get password => this._password;
+
+  get loading => this._loading;
+
+  get token => this._token;
 
   setUsername(String username) {
     _username = username;
@@ -15,22 +28,27 @@ class LoginViewModel {
     _password = password;
   }
 
-  getUsername() {
-    return _username;
+  setLoading(bool loading) async {
+    _loading = loading;
+    notifyListeners();
   }
 
-  getPassword() {
-    return _password;
+  setToken(String token) {
+    _token = token;
+    Helper.setToken(token);
   }
 
   login(context) async {
-    final future = LoginService().login(_username, _password);
-    future.then((value) {
-      String token = value;
+    setLoading(true);
+    var response = await LoginService().login(_username, _password);
+    if (response is Success) {
+      setToken(response.response as String);
       NavigationHelper.push(context: context, page: HomeView());
-    }).catchError((error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Tên tài khoản/mật khẩu không đúng')));
-    });
+    }
+    if (response is Failure) {
+      String errorResponse = (response as Failure).errrorResponse as String;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(errorResponse)));
+    }
   }
 }
