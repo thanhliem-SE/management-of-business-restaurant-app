@@ -19,8 +19,9 @@ class _GoQuickAppState extends State<GoQuickApp> {
   Widget build(BuildContext context) {
     // return checkLogin() ? HomeView() : WelcomeView();
     return FutureBuilder<bool>(
-      future: checkLogin(),
+      future: Helper.checkLogin(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        // Kiểm tra xem có dữ liệu token lưu trong bộ nhớ ko
         if (snapshot.data == true) {
           return HomeView();
         } else {
