@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/login_service.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,7 +35,7 @@ class LoginViewModel extends ChangeNotifier {
 
   setToken(String token) {
     _token = token;
-    setToken(token);
+    Helper.setToken(token);
   }
 
   login(context) async {
