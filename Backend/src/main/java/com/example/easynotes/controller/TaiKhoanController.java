@@ -2,16 +2,11 @@ package com.example.easynotes.controller;
 
 import com.example.easynotes.exception.ResourceNotFoundException;
 import com.example.easynotes.jwt.JwtTokenProvider;
-import com.example.easynotes.model.CustomUserDetails;
 import com.example.easynotes.model.TaiKhoan;
-import com.example.easynotes.dto.LoginRequest;
 import com.example.easynotes.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -72,6 +67,4 @@ public class TaiKhoanController {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
     }
-
-
 }
