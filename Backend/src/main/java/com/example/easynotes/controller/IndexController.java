@@ -2,8 +2,10 @@ package com.example.easynotes.controller;
 
 
 import com.example.easynotes.dto.LoginRequest;
+import com.example.easynotes.exception.ResourceNotFoundException;
 import com.example.easynotes.jwt.JwtTokenProvider;
 import com.example.easynotes.model.CustomUserDetails;
+import com.example.easynotes.model.TaiKhoan;
 import com.example.easynotes.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -51,5 +53,14 @@ public class IndexController {
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
         return jwt;
+    }
+
+    @GetMapping("/api/token/{token}")
+    public TaiKhoan getByToken(@PathVariable(value = "token") String token) {
+        try {
+            return service.getTaiKhoanFromToken(token);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("TaiKhoan", "token", token);
+        }
     }
 }

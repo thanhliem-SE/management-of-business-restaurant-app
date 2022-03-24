@@ -78,7 +78,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // Our public endpoints
         http.authorizeRequests().antMatchers("/api/login**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/token/**").permitAll()
+                //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
                 // Out private endpoint
                 .anyRequest().authenticated();
 

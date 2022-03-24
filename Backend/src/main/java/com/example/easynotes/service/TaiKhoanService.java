@@ -1,11 +1,11 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.JwtBody;
 import com.example.easynotes.model.TaiKhoan;
 import com.example.easynotes.repository.TaiKhoanRepository;
+import com.google.gson.Gson;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +43,31 @@ public class TaiKhoanService {
             return  repository.save(taiKhoan);
         }
         return null;
+    }
+
+    public TaiKhoan getTaiKhoanFromToken(String token){
+        String tenTaiKhoan = getTenTaiKhoanFromToken(token);
+        return getByTenTaiKhoan(tenTaiKhoan);
+    }
+
+
+    private String getTenTaiKhoanFromToken(String jwtToken){
+        System.out.println("------------ Decode JWT ------------");
+        String[] split_string = jwtToken.split("\\.");
+        String base64EncodedHeader = split_string[0];
+        String base64EncodedBody = split_string[1];
+        String base64EncodedSignature = split_string[2];
+        Base64 base64Url = new Base64(true);
+
+//        System.out.println("~~~~~~~~~ JWT Header ~~~~~~~");
+//        String header = new String(base64Url.decode(base64EncodedHeader));
+//        System.out.println("JWT Header : " + header);
+
+        System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
+        String body = new String(base64Url.decode(base64EncodedBody));
+        JwtBody jwtBody = new Gson().fromJson(body, JwtBody.class);
+//        System.out.println(jwtBody.getSub());
+        return jwtBody.getSub();
     }
 
 }
