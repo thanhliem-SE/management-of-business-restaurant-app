@@ -1,7 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Helper {
-  static Future<bool> checkLogin() async {
+  static Future<bool> isHasToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (prefs.getString('token') != '') {
@@ -13,16 +13,16 @@ class Helper {
     }
   }
 
-  static getToken() async {
+  static Future<String> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       String token = prefs.getString('token')!;
       if (token != '') {
         return token;
       }
-      return null;
+      return '';
     } catch (e) {
-      return null;
+      return '';
     }
   }
 

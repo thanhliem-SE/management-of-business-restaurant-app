@@ -52,7 +52,6 @@ public class TaiKhoanService {
 
 
     private String getTenTaiKhoanFromToken(String jwtToken){
-        System.out.println("------------ Decode JWT ------------");
         String[] split_string = jwtToken.split("\\.");
         String base64EncodedHeader = split_string[0];
         String base64EncodedBody = split_string[1];
@@ -63,10 +62,8 @@ public class TaiKhoanService {
 //        String header = new String(base64Url.decode(base64EncodedHeader));
 //        System.out.println("JWT Header : " + header);
 
-        System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
         String body = new String(base64Url.decode(base64EncodedBody));
         JwtBody jwtBody = new Gson().fromJson(body, JwtBody.class);
-//        System.out.println(jwtBody.getSub());
         return jwtBody.getSub();
     }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/app.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/utils/constants.dart';
+import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => LoginViewModel())],
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => LoginViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeViewModel(),
+        )
+      ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,
           title: appTitle,

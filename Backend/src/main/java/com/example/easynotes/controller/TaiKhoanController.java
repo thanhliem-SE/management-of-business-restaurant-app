@@ -67,12 +67,4 @@ public class TaiKhoanController {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
     }
-    @GetMapping("/taikhoan/getByToken/{token}")
-    public TaiKhoan getByToken(@PathVariable(value = "token") String token) {
-        try {
-            return service.getTaiKhoanFromToken(token);
-        } catch (Exception e) {
-            throw new ResourceNotFoundException("TaiKhoan", "token", token);
-        }
-    }
 }

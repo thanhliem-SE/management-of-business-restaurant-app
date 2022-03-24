@@ -36,7 +36,7 @@ public class IndexController {
     @PostMapping("/api/login")
     public String authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-        System.out.println("==> loginRequest: " + loginRequest.toString());
+//        System.out.println("==> loginRequest: " + loginRequest.toString());
 
         // Xác thực thông tin người dùng Request lên
         Authentication authentication = authenticationManager.authenticate(
@@ -55,8 +55,8 @@ public class IndexController {
         return jwt;
     }
 
-    @GetMapping("/api/token/{token}")
-    public TaiKhoan getByToken(@PathVariable(value = "token") String token) {
+    @PostMapping("/api/getbytoken")
+    public TaiKhoan getByToken(@RequestBody String token) {
         try {
             return service.getTaiKhoanFromToken(token);
         } catch (Exception e) {
