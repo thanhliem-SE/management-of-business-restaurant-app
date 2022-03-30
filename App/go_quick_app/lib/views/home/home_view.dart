@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
+import 'package:go_quick_app/views/request_order/request_order.dart';
 import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
@@ -29,6 +31,7 @@ class _HomeViewState extends State<HomeView> {
           title: Text(
             'GoQuick',
           ),
+          centerTitle: true,
           actions: [
             IconButton(onPressed: () {}, icon: Icon(Icons.search)),
           ]),
@@ -67,49 +70,55 @@ class WidgetForAdmin extends StatelessWidget {
       crossAxisCount: 2,
       children: <Widget>[
         cardItemMenu(size, Icons.app_registration_outlined, 'Yêu cầu đặt món',
-            Colors.lightGreen),
-        cardItemMenu(
-            size, Icons.library_books, 'Tiếp nhận đặt món', Colors.pinkAccent),
+            Colors.lightGreen, () {
+          NavigationHelper.push(context: context, page: const RequestOrder());
+        }),
+        cardItemMenu(size, Icons.library_books, 'Tiếp nhận đặt món',
+            Colors.pinkAccent, () {}),
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
-            Colors.lightBlueAccent),
+            Colors.lightBlueAccent, () {}),
         cardItemMenu(
-            size, Icons.person, 'Quản lý khách hàng', Colors.limeAccent),
-        cardItemMenu(
-            size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent),
+            size, Icons.person, 'Quản lý khách hàng', Colors.limeAccent, () {}),
+        cardItemMenu(size, Icons.restaurant, 'Quản lý món ăn',
+            Colors.orangeAccent, () {}),
         cardItemMenu(size, Icons.home_repair_service_outlined,
-            'Quản lý nguyên liệu', Colors.purpleAccent),
+            'Quản lý nguyên liệu', Colors.purpleAccent, () {}),
+        cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
+            Colors.indigoAccent, () {}),
         cardItemMenu(
-            size, Icons.bar_chart_outlined, 'Thống kê', Colors.indigoAccent),
-        cardItemMenu(
-            size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent),
+            size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent, () {}),
       ],
     );
   }
 
-  Container cardItemMenu(Size size, IconData icon, String title, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            icon,
-            size: size.height * 0.08,
-          ),
-          SizedBox(
-            height: size.height * 0.01,
-          ),
-          Text(
-            title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
+  InkWell cardItemMenu(
+      Size size, IconData icon, String title, Color color, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: size.height * 0.08,
             ),
-          )
-        ],
+            SizedBox(
+              height: size.height * 0.01,
+            ),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            )
+          ],
+        ),
+        color: color,
       ),
-      color: color,
     );
   }
 }
