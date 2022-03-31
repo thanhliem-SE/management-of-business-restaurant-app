@@ -79,7 +79,45 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/login**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/getbytoken**").permitAll()
-                //.antMatchers(HttpMethod.GET,"/api/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                // permission for thuc pham api
+                .antMatchers(HttpMethod.GET, "/api/thucpham/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/thucpham/").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/thucpham/**").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/thucpham/**").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                // permission for chi tiet thuc pham
+                .antMatchers(HttpMethod.GET, "/api/chitietthucpham/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/chitietthucpham/").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/chitietthucpham/**").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/chitietthucpham/**").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")
+                // permission for hoa don
+                .antMatchers(HttpMethod.DELETE, "/api/hoadon/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/hoadon/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                // permission for chi tiet hoa don
+                .antMatchers(HttpMethod.DELETE, "/api/chitiethoadon/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/chitiethoadon/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                // permission for thanh toan
+                .antMatchers(HttpMethod.DELETE, "/api/thanhtoan/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/thanhtoan/**").hasAnyRole( "ROLE_NHANVIEN","QUANLY", "ROLE_ADMIN")
+                // permission for nhan vien
+                .antMatchers(HttpMethod.DELETE, "/api/nhanvien/**").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/nhanvien/**").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/nhanvien/").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
+                // permission for khach hang
+                .antMatchers(HttpMethod.POST, "/api/khachhang/").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/khachhang/").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/khachhang/**").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/khachhang/**").hasAnyRole( "ROLE_KHACHHANG","ROLE_QUANLY", "ROLE_ADMIN")
+                // permission tai khoan
+                .antMatchers(HttpMethod.POST, "/api/taikhoan/").permitAll()
+                .antMatchers(HttpMethod.GET, "api/taikhoan/").hasAnyRole("ROLE_ADMIN")
+                .antMatchers(HttpMethod.DELETE, "api/taikhoan/**").hasAnyRole( "ROLE_ADMIN")
+                // permission nha cung cap
+                .antMatchers("/api/nhacungcap/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                //permission nguyen lieu
+                .antMatchers("/api/nguyenlieu/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
+                // permission lieu luong
+                .antMatchers("/api/lieuluong/**").hasAnyRole( "ROLE_NHANVIEN","ROLE_QUANLY", "ROLE_ADMIN")
                 // Out private endpoint
                 .anyRequest().authenticated();
 
@@ -87,6 +125,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         // Thêm một lớp Filter kiểm tra jwt
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
-
-
 }
