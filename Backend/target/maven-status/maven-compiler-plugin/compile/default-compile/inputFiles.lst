@@ -39,6 +39,7 @@ C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\DiaChi.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ThucPhamRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\NhanVien.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\NhanVienService.java
+C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\JwtBody.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\IndexController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\jwt\JwtTokenProvider.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\NhaCungCapRepository.java

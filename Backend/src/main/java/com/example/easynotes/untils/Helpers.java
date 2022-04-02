@@ -45,6 +45,9 @@ public class Helpers {
     KhachHangService khachHangService;
 
     @Autowired
+    ChiTietThucPhamService chiTietThucPhamService;
+
+    @Autowired
     ChiTietHoaDonService chiTietHoaDonService;
     public void initData() {
         initNhaCungCap();
@@ -58,6 +61,7 @@ public class Helpers {
         initKhachHang();
         initHoaDon();
         initChiTietHoaDon();
+        initChiTietThucPham();
     }
 
     private void initNhaCungCap() {
@@ -253,6 +257,25 @@ public class Helpers {
             jsonArray.forEach(jsonObject -> {
                 ChiTietHoaDon chiTietHoaDon = new Gson().fromJson(jsonObject.toString(), ChiTietHoaDon.class);
                 chiTietHoaDonService.add(chiTietHoaDon);
+            });
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void initChiTietThucPham() {
+        JSONParser jsonParser = new JSONParser();
+
+        try (FileReader reader = new FileReader("data/chi_tiet_thuc_pham.json")) {
+            //Read JSON file
+            Object obj = jsonParser.parse(reader);
+
+            JSONArray jsonArray = (JSONArray) obj;
+
+            jsonArray.forEach(jsonObject -> {
+                ChiTietThucPham chiTietThucPham = new Gson().fromJson(jsonObject.toString(), ChiTietThucPham.class);
+                chiTietThucPhamService.add(chiTietThucPham);
             });
 
         } catch (IOException | ParseException e) {
