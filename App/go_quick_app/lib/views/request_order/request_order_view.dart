@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 
-class RequestOrder extends StatefulWidget {
-  const RequestOrder({Key? key}) : super(key: key);
+class RequestOrderView extends StatefulWidget {
+  const RequestOrderView({Key? key}) : super(key: key);
 
   @override
-  State<RequestOrder> createState() => _RequestOrderState();
+  State<RequestOrderView> createState() => _RequestOrderViewState();
 }
 
-class _RequestOrderState extends State<RequestOrder> {
+class _RequestOrderViewState extends State<RequestOrderView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

@@ -6,7 +6,7 @@ import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
-import 'package:go_quick_app/views/request_order/request_order.dart';
+import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +71,8 @@ class WidgetForAdmin extends StatelessWidget {
       children: <Widget>[
         cardItemMenu(size, Icons.app_registration_outlined, 'Yêu cầu đặt món',
             Colors.lightGreen, () {
-          NavigationHelper.push(context: context, page: const RequestOrder());
+          NavigationHelper.push(
+              context: context, page: const RequestOrderView());
         }),
         cardItemMenu(size, Icons.library_books, 'Tiếp nhận đặt món',
             Colors.pinkAccent, () {}),
