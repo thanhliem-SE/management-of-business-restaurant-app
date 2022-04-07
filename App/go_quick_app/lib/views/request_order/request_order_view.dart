@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 
-class RequestOrder extends StatefulWidget {
-  const RequestOrder({Key? key}) : super(key: key);
+class RequestOrderView extends StatefulWidget {
+  const RequestOrderView({Key? key}) : super(key: key);
 
   @override
-  State<RequestOrder> createState() => _RequestOrderState();
+  State<RequestOrderView> createState() => _RequestOrderViewState();
 }
 
-class _RequestOrderState extends State<RequestOrder> {
+class _RequestOrderViewState extends State<RequestOrderView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -83,6 +83,7 @@ class _RequestOrderState extends State<RequestOrder> {
                   cardTableOrder(size, 4, '07', 'null'),
                   cardTableOrder(size, 4, '08', 'null'),
                   cardTableOrder(size, 6, '09', 'full'),
+                  cardTableOrder(size, 4, '10', 'null'),
                 ],
               ),
             )
@@ -103,7 +104,16 @@ class _RequestOrderState extends State<RequestOrder> {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          if (status != 'full') {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return SelectCustomerCount();
+              },
+            );
+          }
+        },
         child: status == 'full'
             ? Column(
                 children: [
@@ -158,6 +168,77 @@ class _RequestOrderState extends State<RequestOrder> {
                   )
                 ],
               ),
+      ),
+    );
+  }
+}
+
+class SelectCustomerCount extends StatefulWidget {
+  const SelectCustomerCount({Key? key}) : super(key: key);
+
+  @override
+  State<SelectCustomerCount> createState() => _SelectCustomerCountState();
+}
+
+class _SelectCustomerCountState extends State<SelectCustomerCount> {
+  int _selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      title: Text(
+        'Chọn số lượng khách hàng',
+        textAlign: TextAlign.center,
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/icons/icon_table.png',
+            ),
+            SizedBox(
+              height: size.height * 0.05,
+            ),
+            Container(
+              width: size.width,
+              height: size.height * 0.38,
+              child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                ),
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  var color = _selectedIndex == index
+                      ? kPrimaryColor
+                      : kPrimaryLightColor;
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = index;
+                      });
+                    },
+                    child: Card(
+                      color: color,
+                      child: Center(
+                          child: Text(
+                        (index + 1).toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(size.height * 0.01),
+              decoration: BoxDecoration(color: kPrimaryColor),
+              child: Center(
+                child: Text("Tiếp theo"),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
