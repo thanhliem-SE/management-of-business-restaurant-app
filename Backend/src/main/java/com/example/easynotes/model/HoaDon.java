@@ -46,7 +46,6 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;
 
-    @Min(value = 0)
     private int ban;
 
     @JsonIgnore
