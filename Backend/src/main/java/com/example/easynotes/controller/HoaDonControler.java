@@ -60,8 +60,8 @@ public class HoaDonControler  {
             throw new ResourceNotFoundException("HoaDon", "maHoaDon", id);
         }
     }
-    @GetMapping("/danhsachban")
-    public List<Integer> getAllTable(){
-        return service.getAllTableNumber();
+    @GetMapping("/chuathanhtoan")
+    public List<HoaDon> getHoaDonBeforPaymented(){
+        return service.getHoaDonBeforePaymented();
     }
 }

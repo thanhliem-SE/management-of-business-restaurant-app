@@ -8,7 +8,8 @@
     },
     "tongThanhTien": 100000.0,
     "ban": 1,
-    "tinhTrang": "wait",
+    "soNguoi": 5,
+    "tinhTrang": "WAIT",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -22,7 +23,8 @@
     },
     "tongThanhTien": 100000.0,
     "ban": 2,
-    "tinhTrang": "wait",
+    "soNguoi": 2,
+    "tinhTrang": "WAIT",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -36,7 +38,8 @@
     },
     "tongThanhTien": 100000.0,
     "ban": 3,
-    "tinhTrang": "wait",
+    "soNguoi": 4,
+    "tinhTrang": "WAIT",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -50,7 +53,8 @@
     },
     "tongThanhTien": 100000.0,
     "ban": 4,
-    "tinhTrang": "wait",
+    "soNguoi": 2,
+    "tinhTrang": "WAIT",
     "thanhToan": {
       "maThanhToan": 1
     }

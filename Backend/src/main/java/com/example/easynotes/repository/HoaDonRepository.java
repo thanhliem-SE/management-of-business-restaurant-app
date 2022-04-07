@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
-    @Query(value = "select ban from hoa_don", nativeQuery = true)
-    public List<Integer> getAllTableNumbers();
+    @Query(value = "select * from hoa_don where tinh_trang != 'PAYMENTED'", nativeQuery = true)
+    public List<HoaDon> getHoaDonBeforePaymented();
 }
