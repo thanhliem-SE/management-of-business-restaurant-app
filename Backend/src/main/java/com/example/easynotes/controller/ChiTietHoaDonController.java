@@ -60,4 +60,8 @@ public class ChiTietHoaDonController  {
             throw new ResourceNotFoundException("ChiTietHoaDon", "maChiTietHoaDon", id);
         }
     }
+    @GetMapping("/danhsachtheohoadon/{id}")
+    public List<ChiTietHoaDon> getAllBymaHoaDon(@PathVariable(value = "id") Long id){
+        return service.getAllByIdHoaDon(id);
+    }
 }

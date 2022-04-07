@@ -36,4 +36,8 @@ public class ChiTietHoaDonService {
         }
         return null;
     }
+
+    public List<ChiTietHoaDon> getAllByIdHoaDon(Long maHoaDon){
+        return repository.getChiTietHoaDonByMaHoaDon(maHoaDon);
+    }
 }
