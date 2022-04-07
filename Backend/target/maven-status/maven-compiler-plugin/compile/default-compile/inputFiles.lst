@@ -2,11 +2,13 @@ C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\NguyenLi
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\config\WebSecurityConfig.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\TaiKhoan.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\TaiKhoanRepository.java
+C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\ChiTietThucPhamService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\KhachHangRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\TaiKhoanController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\NguyenLieuService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\ThanhToanController.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\LieuLuongService.java
+C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ChiTietThucPhamRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\ChiTietHoaDonService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ChiTietHoaDonRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\model\ChiTietHoaDon.java
@@ -53,3 +55,4 @@ C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\ThanhToa
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\repository\HoaDonRepository.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\HoaDonService.java
 C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\service\NhaCungCapService.java
+C:\Work\KhoaLuan\Backend\src\main\java\com\example\easynotes\controller\ChiTietThucPhamController.java

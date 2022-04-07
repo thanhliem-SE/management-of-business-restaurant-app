@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
+import 'package:go_quick_app/views/select_category/select_category_view.dart';
+import 'package:provider/provider.dart';
 
-class RequestOrderView extends StatefulWidget {
+class RequestOrderView extends StatelessWidget {
   const RequestOrderView({Key? key}) : super(key: key);
 
-  @override
-  State<RequestOrderView> createState() => _RequestOrderViewState();
-}
-
-class _RequestOrderViewState extends State<RequestOrderView> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -19,14 +18,24 @@ class _RequestOrderViewState extends State<RequestOrderView> {
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            size: size.height * 0.05,
+          ),
         ),
         title: Text('Yêu cầu đặt món'),
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.refresh),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (context) => const SelectTableCount());
+            },
+            icon: Icon(
+              Icons.add,
+              size: size.height * 0.05,
+            ),
           ),
         ],
       ),
@@ -74,16 +83,14 @@ class _RequestOrderViewState extends State<RequestOrderView> {
                 mainAxisSpacing: 10,
                 crossAxisCount: 3,
                 children: <Widget>[
-                  cardTableOrder(size, 2, '01', 'full'),
-                  cardTableOrder(size, 2, '02', 'null'),
-                  cardTableOrder(size, 3, '03', 'full'),
-                  cardTableOrder(size, 1, '04', 'null'),
-                  cardTableOrder(size, 1, '05', 'full'),
-                  cardTableOrder(size, 2, '06', 'null'),
-                  cardTableOrder(size, 4, '07', 'null'),
-                  cardTableOrder(size, 4, '08', 'null'),
-                  cardTableOrder(size, 6, '09', 'full'),
-                  cardTableOrder(size, 4, '10', 'null'),
+                  cardTableOrder(
+                      size: size, people: 2, numTable: '01', context: context),
+                  cardTableOrder(
+                      size: size, people: 2, numTable: '02', context: context),
+                  cardTableOrder(
+                      size: size, people: 2, numTable: '06', context: context),
+                  cardTableOrder(
+                      size: size, people: 2, numTable: '07', context: context),
                 ],
               ),
             )
@@ -94,7 +101,10 @@ class _RequestOrderViewState extends State<RequestOrderView> {
   }
 
   Container cardTableOrder(
-      Size size, int people, String numTable, String status) {
+      {required Size size,
+      required int people,
+      required String numTable,
+      required BuildContext context}) {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
@@ -104,90 +114,55 @@ class _RequestOrderViewState extends State<RequestOrderView> {
         ),
       ),
       child: InkWell(
-        onTap: () {
-          if (status != 'full') {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return SelectCustomerCount();
-              },
-            );
-          }
-        },
-        child: status == 'full'
-            ? Column(
+          onTap: () {
+            // NavigationHelper.push(
+            //     context: context,
+            //     page: SelectCategoryView(
+            //       numTable: numTable,
+            //       numCustomer: people,
+            //     ));
+          },
+          child: Column(
+            children: [
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.people,
-                        size: size.width * 0.1,
-                      ),
-                      SizedBox(
-                        width: size.width * 0.08,
-                      ),
-                      Text(
-                        numTable,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
+                  Icon(
+                    Icons.people,
+                    size: size.width * 0.1,
                   ),
                   SizedBox(
-                    height: size.height * 0.02,
+                    width: size.width * 0.08,
                   ),
                   Text(
-                    '$people People',
+                    numTable,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                    textAlign: TextAlign.right,
                   ),
-                ],
-              )
-            : Column(
-                children: [
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.15,
-                      ),
-                      Text(
-                        numTable,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
-                        textAlign: TextAlign.right,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: size.height * 0.01,
-                  ),
-                  Icon(
-                    Icons.local_restaurant_sharp,
-                    size: size.width * 0.15,
-                    color: Colors.black,
-                  )
                 ],
               ),
-      ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              Text(
+                '$people People',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+            ],
+          )),
     );
   }
 }
 
-class SelectCustomerCount extends StatefulWidget {
-  const SelectCustomerCount({Key? key}) : super(key: key);
+class SelectTableCount extends StatelessWidget {
+  const SelectTableCount({Key? key}) : super(key: key);
 
-  @override
-  State<SelectCustomerCount> createState() => _SelectCustomerCountState();
-}
-
-class _SelectCustomerCountState extends State<SelectCustomerCount> {
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<RequestOrderViewModel>(context);
     Size size = MediaQuery.of(context).size;
     return AlertDialog(
-      title: Text(
-        'Chọn số lượng khách hàng',
+      title: const Text(
+        'CHỌN BÀN',
         textAlign: TextAlign.center,
       ),
       content: SingleChildScrollView(
@@ -197,7 +172,7 @@ class _SelectCustomerCountState extends State<SelectCustomerCount> {
               'assets/icons/icon_table.png',
             ),
             SizedBox(
-              height: size.height * 0.05,
+              height: size.height * 0.03,
             ),
             Container(
               width: size.width,
@@ -209,34 +184,121 @@ class _SelectCustomerCountState extends State<SelectCustomerCount> {
                 ),
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
-                  var color = _selectedIndex == index
+                  var color = viewModel.getNumTable() == index
                       ? kPrimaryColor
                       : kPrimaryLightColor;
                   return InkWell(
                     onTap: () {
-                      setState(() {
-                        _selectedIndex = index;
-                      });
+                      viewModel.setNumTable(index);
                     },
                     child: Card(
                       color: color,
                       child: Center(
                           child: Text(
                         (index + 1).toString(),
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: viewModel.getNumTable() == index
+                                ? Colors.white
+                                : Colors.black),
                       )),
                     ),
                   );
                 },
               ),
             ),
+            RoundedButton(
+              text: 'TIẾP THEO',
+              press: () {
+                showDialog(
+                    context: context,
+                    builder: (context) => SelectCustomerCount());
+              },
+              color: kPrimaryColor,
+              textColor: Colors.white,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class SelectCustomerCount extends StatelessWidget {
+  const SelectCustomerCount({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final viewModel = Provider.of<RequestOrderViewModel>(context);
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
+      title: const Text(
+        'CHỌN SỐ KHÁCH',
+        textAlign: TextAlign.center,
+      ),
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            Icon(
+              Icons.people,
+              size: size.height * 0.08,
+            ),
+            SizedBox(
+              height: size.height * 0.01,
+            ),
             Container(
-              padding: EdgeInsets.all(size.height * 0.01),
-              decoration: BoxDecoration(color: kPrimaryColor),
-              child: Center(
-                child: Text("Tiếp theo"),
+              width: size.width,
+              height: size.height * 0.38,
+              child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 5,
+                ),
+                itemCount: 20,
+                itemBuilder: (BuildContext context, int index) {
+                  var color = viewModel.getNumCustomer() == index
+                      ? kPrimaryColor
+                      : kPrimaryLightColor;
+                  return InkWell(
+                    onTap: () {
+                      viewModel.setNumCustomer(index);
+                    },
+                    child: Card(
+                      color: color,
+                      child: Center(
+                          child: Text(
+                        (index + 1).toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: viewModel.getNumCustomer() == index
+                                ? Colors.white
+                                : Colors.black),
+                      )),
+                    ),
+                  );
+                },
               ),
-            )
+            ),
+            RoundedButton(
+              text: 'TIẾP THEO',
+              press: () {
+                NavigationHelper.push(
+                    context: context,
+                    page: SelectCategoryView(
+                        numTable: viewModel.getNumTable() + 1,
+                        numCustomer: viewModel.getNumCustomer() + 1));
+              },
+              color: kPrimaryColor,
+              textColor: Colors.white,
+            ),
+            RoundedButton(
+              text: 'QUAY LẠI',
+              press: () {
+                Navigator.pop(context);
+              },
+              color: Colors.red,
+              textColor: Colors.white,
+            ),
           ],
         ),
       ),
