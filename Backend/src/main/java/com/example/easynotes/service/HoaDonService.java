@@ -35,7 +35,7 @@ public class HoaDonService {
         }
         return null;
     }
-    public List<Integer> getAllTableNumber(){
-        return repository.getAllTableNumbers();
+    public List<HoaDon> getHoaDonBeforePaymented(){
+        return repository.getHoaDonBeforePaymented();
     }
 }

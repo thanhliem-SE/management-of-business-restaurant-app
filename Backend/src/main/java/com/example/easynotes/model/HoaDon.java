@@ -46,10 +46,14 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;
 
+    @Min(value = 0)
     private int ban;
 
+    @Min(value = 0)
+    private int soNguoi;
+
     @JsonIgnore
-    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ChiTietHoaDon> chiTietHoaDons;
 
     @Enumerated(EnumType.STRING)
