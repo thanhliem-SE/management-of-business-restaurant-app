@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 
 class SelectCategoryView extends StatelessWidget {
-  final int numTable, numCustomer;
+  final int numCustomer;
+  final String numTable;
   const SelectCategoryView(
       {Key? key, required this.numTable, required this.numCustomer})
       : super(key: key);
