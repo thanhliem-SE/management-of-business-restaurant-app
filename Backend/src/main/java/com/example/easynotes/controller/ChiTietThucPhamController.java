@@ -55,4 +55,9 @@ public class ChiTietThucPhamController {
             throw new ResourceNotFoundException("ChiTietThucPham", "maChiTietThucPham", id);
         }
     }
+
+    @GetMapping("/getbytoday")
+    public List<ChiTietThucPham> getByToday() {
+        return service.getChiTietThucPhamToday();
+    }
 }
