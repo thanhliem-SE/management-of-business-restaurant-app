@@ -5,6 +5,7 @@ import 'package:go_quick_app/utils/constants.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
+import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => RequestOrderViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SelectCategoryViewModel(),
         ),
       ],
       child: MaterialApp(
