@@ -43,8 +43,7 @@ class RequestOrderView extends StatelessWidget {
           IconButton(
             onPressed: () {
               showDialog(
-                  context: context,
-                  builder: (context) => const SelectTableCount());
+                  context: context, builder: (context) => SelectTableCount());
             },
             icon: Icon(
               Icons.add,
@@ -97,6 +96,11 @@ class RequestOrderView extends StatelessWidget {
               ),
             ),
             SizedBox(height: size.height * 0.04),
+            Text('Danh Sách Bàn Ăn Đang Phục Vụ',
+                style: TextStyle(
+                    fontSize: size.height * 0.03,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black)),
             Expanded(
               child: listHoaDonChuaThanhToan.length > 0
                   ? GridView.builder(
@@ -114,7 +118,7 @@ class RequestOrderView extends StatelessWidget {
                         return cardTableOrder(
                             size: size,
                             people: item.soNguoi,
-                            numTable: item.ban.toString(),
+                            numTable: item.ban,
                             context: context);
                       },
                     )
@@ -132,7 +136,7 @@ class RequestOrderView extends StatelessWidget {
   Container cardTableOrder(
       {required Size size,
       required int people,
-      required String numTable,
+      required int numTable,
       required BuildContext context}) {
     return Container(
       padding: const EdgeInsets.all(8),
@@ -189,7 +193,7 @@ class RequestOrderView extends StatelessWidget {
 }
 
 class SelectTableCount extends StatelessWidget {
-  const SelectTableCount({Key? key}) : super(key: key);
+  SelectTableCount({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -203,8 +207,39 @@ class SelectTableCount extends StatelessWidget {
       content: SingleChildScrollView(
         child: Column(
           children: [
-            Image.asset(
-              'assets/icons/icon_table.png',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      color: Colors.red,
+                      width: 14,
+                      height: 14,
+                    ),
+                    const Text(
+                      ' : Full chỗ',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+                Image.asset(
+                  'assets/icons/icon_table.png',
+                ),
+                Row(
+                  children: [
+                    Container(
+                      color: kPrimaryLightColor,
+                      width: 14,
+                      height: 14,
+                    ),
+                    const Text(
+                      ' : Bàn Rỗng',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ],
+                ),
+              ],
             ),
             SizedBox(
               height: size.height * 0.03,
@@ -224,16 +259,23 @@ class SelectTableCount extends StatelessWidget {
                       : kPrimaryLightColor;
                   return InkWell(
                     onTap: () {
-                      viewModel.setNumTable(index);
+                      if (!viewModel.getListTableDangPhucVu().contains(index)) {
+                        viewModel.setNumTable(index);
+                      }
                     },
                     child: Card(
-                      color: color,
+                      color: viewModel.getListTableDangPhucVu().contains(index)
+                          ? Colors.red
+                          : color,
                       child: Center(
                           child: Text(
                         (index + 1).toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: viewModel.getNumTable() == index
+                            color: viewModel.getNumTable() == index ||
+                                    viewModel
+                                        .getListTableDangPhucVu()
+                                        .contains(index)
                                 ? Colors.white
                                 : Colors.black),
                       )),

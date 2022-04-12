@@ -8,14 +8,20 @@ class RequestOrderViewModel extends ChangeNotifier {
   int? _numCustomer;
   int? _numTable;
   List<HoaDon> _listHoaDon = [];
+  List<int> _listTableDangPhucVu = [];
   bool _isInit = false;
 
   get isInit => _isInit;
 
   setListHoaDon(List<HoaDon> listHoaDon) {
     _listHoaDon = listHoaDon;
+    listHoaDon.forEach((element) {
+      _listTableDangPhucVu.add(element.ban);
+    });
     notifyListeners();
   }
+
+  getListTableDangPhucVu() => _listTableDangPhucVu;
 
   getListHoaDon() => _listHoaDon;
 
@@ -39,8 +45,7 @@ class RequestOrderViewModel extends ChangeNotifier {
     if (response is Success) {
       _isInit = true;
       setListHoaDon(response.response as List<HoaDon>);
-    }
-    if (response is Failure) {
+    } else {
       return null;
     }
   }
