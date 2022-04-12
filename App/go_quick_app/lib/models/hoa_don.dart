@@ -3,7 +3,7 @@
 //     final hoaDon = hoaDonFromJson(jsonString);
 
 import 'package:go_quick_app/models/khach_hang.dart';
-import 'package:go_quick_app/models/nguoi_lap_hoa_don.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
@@ -29,7 +29,7 @@ class HoaDon {
   });
 
   int maHoaDon;
-  NguoiLapHoaDon nguoiLapHoaDon;
+  NhanVien nguoiLapHoaDon;
   KhachHang khachHang;
   double tongThanhTien;
   ThanhToan thanhToan;
@@ -41,7 +41,7 @@ class HoaDon {
 
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
-        nguoiLapHoaDon: NguoiLapHoaDon.fromJson(json["nguoiLapHoaDon"]),
+        nguoiLapHoaDon: NhanVien.fromJson(json["nguoiLapHoaDon"]),
         khachHang: KhachHang.fromJson(json["khachHang"]),
         tongThanhTien: json["tongThanhTien"],
         thanhToan: ThanhToan.fromJson(json["thanhToan"]),

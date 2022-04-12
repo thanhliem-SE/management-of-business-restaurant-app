@@ -1,7 +1,7 @@
 import 'package:go_quick_app/models/tai_khoan.dart';
 
-class NguoiLapHoaDon {
-  NguoiLapHoaDon({
+class NhanVien {
+  NhanVien({
     required this.maNhanVien,
     required this.tenNhanVien,
     required this.soDienThoai,
@@ -17,7 +17,7 @@ class NguoiLapHoaDon {
   DateTime updatedAt;
   TaiKhoan taiKhoan;
 
-  factory NguoiLapHoaDon.fromJson(Map<String, dynamic> json) => NguoiLapHoaDon(
+  factory NhanVien.fromJson(Map<String, dynamic> json) => NhanVien(
         maNhanVien: json["maNhanVien"],
         tenNhanVien: json["tenNhanVien"],
         soDienThoai: json["soDienThoai"],

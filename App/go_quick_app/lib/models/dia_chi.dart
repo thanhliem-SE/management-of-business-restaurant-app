@@ -1,5 +1,5 @@
-class DiaChiNhanHang {
-  DiaChiNhanHang({
+class DiaChi {
+  DiaChi({
     required this.soNha,
     required this.phuong,
     required this.quan,
@@ -11,7 +11,7 @@ class DiaChiNhanHang {
   String quan;
   String tinh;
 
-  factory DiaChiNhanHang.fromJson(Map<String, dynamic> json) => DiaChiNhanHang(
+  factory DiaChi.fromJson(Map<String, dynamic> json) => DiaChi(
         soNha: json["soNha"],
         phuong: json["phuong"],
         quan: json["quan"],

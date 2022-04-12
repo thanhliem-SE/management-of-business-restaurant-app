@@ -1,4 +1,4 @@
-import 'package:go_quick_app/models/dia_chi_nhan_hang.dart';
+import 'package:go_quick_app/models/dia_chi.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 
 class KhachHang {
@@ -14,7 +14,7 @@ class KhachHang {
 
   int maKhachHang;
   String tenKhachHang;
-  DiaChiNhanHang diaChiNhanHang;
+  DiaChi diaChiNhanHang;
   TaiKhoan taiKhoan;
   String soDienThoai;
   DateTime createdAt;
@@ -23,7 +23,7 @@ class KhachHang {
   factory KhachHang.fromJson(Map<String, dynamic> json) => KhachHang(
         maKhachHang: json["maKhachHang"],
         tenKhachHang: json["tenKhachHang"],
-        diaChiNhanHang: DiaChiNhanHang.fromJson(json["diaChiNhanHang"]),
+        diaChiNhanHang: DiaChi.fromJson(json["diaChiNhanHang"]),
         taiKhoan: TaiKhoan.fromJson(json["taiKhoan"]),
         soDienThoai: json["soDienThoai"],
         createdAt: DateTime.parse(json["createdAt"]),
