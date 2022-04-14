@@ -59,4 +59,13 @@ public class NhanVienController  {
             throw new ResourceNotFoundException("NhanVien", "maNhanVien", id);
         }
     }
+
+    @GetMapping("/nhanvien/getbytentaikhoan/{tenTaiKhoan}")
+    public NhanVien getByTenTaiKhoan(@PathVariable(value = "tenTaiKhoan") String tenTaiKhoan) {
+        try {
+            return service.getByTenTaiKhoan(tenTaiKhoan);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("NhanVien", "taiKhoan", tenTaiKhoan);
+        }
+    }
 }
