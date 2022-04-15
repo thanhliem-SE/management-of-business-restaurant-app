@@ -4,6 +4,11 @@
     "matKhau": "matKhau1",
     "quyen": "ADMIN"
   },
+   {
+    "tenTaiKhoan": "khach_hang",
+    "matKhau": "matKhau1",
+    "quyen": "KHACHHANG"
+  },
   {
     "tenTaiKhoan": "khachang1",
     "matKhau": "matKhau1",

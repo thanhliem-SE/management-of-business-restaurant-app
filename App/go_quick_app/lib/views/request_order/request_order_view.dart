@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
@@ -119,7 +121,8 @@ class RequestOrderView extends StatelessWidget {
                             size: size,
                             people: item.soNguoi,
                             numTable: item.ban,
-                            context: context);
+                            context: context,
+                            maHoaDon: item.maHoaDon);
                       },
                     )
                   : const Text(
@@ -137,10 +140,14 @@ class RequestOrderView extends StatelessWidget {
       {required Size size,
       required int people,
       required int numTable,
-      required BuildContext context}) {
+      required BuildContext context,
+      required int maHoaDon}) {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
+        boxShadow: [
+          customBoxShadow(color: Colors.blueGrey),
+        ],
         color: kPrimaryLightColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
@@ -152,8 +159,8 @@ class RequestOrderView extends StatelessWidget {
         onTap: () {
           NavigationHelper.push(
               context: context,
-              page:
-                  SelectCategoryView(numTable: numTable, numCustomer: people));
+              page: SelectCategoryView(
+                  numTable: numTable, numCustomer: people, maHoaDon: maHoaDon));
         },
         child: Column(
           children: [

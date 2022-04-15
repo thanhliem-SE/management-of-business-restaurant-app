@@ -1,6 +1,6 @@
 [
   {
-    "tenKhachHang": "Doan Van Vinh",
+    "tenKhachHang": "Khách Hàng",
     "diaChiNhanHang": {
       "soNha": "12 duong Nguyen Van Bao",
       "phuong": "4",
@@ -11,5 +11,18 @@
       "tenTaiKhoan": "khachang1"
     },
     "soDienThoai": "0834696983"
+  },
+  {
+    "tenKhachHang": "Khách Hàng",
+    "diaChiNhanHang": {
+      "soNha": "12 duong Nguyen Van Bao",
+      "phuong": "4",
+      "quan": "Go Vap",
+      "tinh": "Thanh pho Ho Chi Minh"
+    },
+    "taiKhoan": {
+      "tenTaiKhoan": "khach_hang"
+    },
+    "soDienThoai": "0123456789"
   }
 ]
