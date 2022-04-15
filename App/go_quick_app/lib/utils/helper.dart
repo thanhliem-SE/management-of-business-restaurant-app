@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Helper {
@@ -30,5 +33,27 @@ class Helper {
   static setToken(String token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
+  }
+
+  static setNhanVienSigned(NhanVien nhanVien) async {
+    var box = Hive.box('signed');
+    box.put('nhanVien', nhanVien);
+  }
+
+  static Future<NhanVien> getNhanVienSigned() async {
+    var box = Hive.box('signed');
+    NhanVien nhanVien = box.get('nhanVien');
+    return nhanVien;
+  }
+
+  static setTaiKhoanSigned(TaiKhoan taiKhoan) async {
+    var box = Hive.box('signed');
+    box.put('taiKhoan', taiKhoan);
+  }
+
+  static Future<TaiKhoan> getTaiKhoanSigned() async {
+    var box = Hive.box('signed');
+    TaiKhoan taiKhoan = box.get('taiKhoan');
+    return taiKhoan;
   }
 }

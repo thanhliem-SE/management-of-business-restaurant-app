@@ -3,7 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/services/api_status.dart';
+import 'package:go_quick_app/services/nhan_vien_service.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
@@ -40,6 +44,7 @@ class _HomeViewState extends State<HomeView> {
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             taiKhoan = snapshot.data as TaiKhoan;
+            storedSignedData(taiKhoan);
             if (taiKhoan.quyen == 'ADMIN') {
               return WidgetForAdmin();
             }
@@ -51,6 +56,18 @@ class _HomeViewState extends State<HomeView> {
       ),
       drawer: NavBar(),
     );
+  }
+
+  void storedSignedData(TaiKhoan taiKhoan) async {
+    Helper.setTaiKhoanSigned(taiKhoan);
+    String token = await Helper.getToken();
+
+    var response = await NhanVienService()
+        .getNhanVienByTenTaiKhoan(token, taiKhoan.tenTaiKhoan);
+    if (response is Success) {
+      NhanVien nhanVien = response.response as NhanVien;
+      Helper.setNhanVienSigned(nhanVien);
+    }
   }
 }
 
