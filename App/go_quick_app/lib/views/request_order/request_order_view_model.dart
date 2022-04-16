@@ -49,4 +49,10 @@ class RequestOrderViewModel extends ChangeNotifier {
       return null;
     }
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

@@ -51,4 +51,10 @@ class LoginViewModel extends ChangeNotifier {
           .showSnackBar(SnackBar(content: Text(errorResponse)));
     }
   }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 }

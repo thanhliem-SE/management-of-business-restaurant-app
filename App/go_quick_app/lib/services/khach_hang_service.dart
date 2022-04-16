@@ -1,25 +1,25 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:go_quick_app/models/khach_hang.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-class NhanVienService {
-  Future<Object> getNhanVienByTenTaiKhoan(
-      String token, String tenTaiKhoan) async {
+class KhachHangService {
+  Future<Object> getKhachHangByMaKhachHang(
+      String token, int maKhachHang) async {
     try {
-      final response = await http.get(
-          Uri.parse(api + 'nhanvien/getbytentaikhoan/$tenTaiKhoan'),
+      final response = await http.get(Uri.parse(api + 'khachhang/$maKhachHang'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             HttpHeaders.authorizationHeader: '$token'
           });
 
       if (response.statusCode == 200) {
-        return Success(response: NhanVien.fromJson(jsonDecode(response.body)));
+        return Success(response: KhachHang.fromJson(jsonDecode(response.body)));
       }
       return Failure(
           code: USER_INVALID_RESPONSE,

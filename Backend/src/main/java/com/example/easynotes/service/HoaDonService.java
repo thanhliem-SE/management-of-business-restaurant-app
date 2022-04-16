@@ -4,6 +4,7 @@ import com.example.easynotes.model.HoaDon;
 import com.example.easynotes.repository.HoaDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class HoaDonService {
     }
 
     public HoaDon add(HoaDon hoaDon){
-        return repository.save(hoaDon);
+     return repository.save(hoaDon);
     }
 
     public void deleteById(Long id){

@@ -4,24 +4,28 @@ class ThanhToan {
     required this.hinhThucThanhToan,
     required this.tienKhachTra,
     required this.tienThua,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   int maThanhToan;
   String hinhThucThanhToan;
   double tienKhachTra;
   double tienThua;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory ThanhToan.fromJson(Map<String, dynamic> json) => ThanhToan(
         maThanhToan: json["maThanhToan"],
         hinhThucThanhToan: json["hinhThucThanhToan"],
         tienKhachTra: json["tienKhachTra"],
         tienThua: json["tienThua"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +33,5 @@ class ThanhToan {
         "hinhThucThanhToan": hinhThucThanhToan,
         "tienKhachTra": tienKhachTra,
         "tienThua": tienThua,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }

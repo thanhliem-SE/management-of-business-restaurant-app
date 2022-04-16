@@ -8,8 +8,8 @@ class KhachHang {
     required this.diaChiNhanHang,
     required this.taiKhoan,
     required this.soDienThoai,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   int maKhachHang;
@@ -17,8 +17,8 @@ class KhachHang {
   DiaChi diaChiNhanHang;
   TaiKhoan taiKhoan;
   String soDienThoai;
-  DateTime createdAt;
-  DateTime updatedAt;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory KhachHang.fromJson(Map<String, dynamic> json) => KhachHang(
         maKhachHang: json["maKhachHang"],
@@ -26,8 +26,12 @@ class KhachHang {
         diaChiNhanHang: DiaChi.fromJson(json["diaChiNhanHang"]),
         taiKhoan: TaiKhoan.fromJson(json["taiKhoan"]),
         soDienThoai: json["soDienThoai"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,7 +40,5 @@ class KhachHang {
         "diaChiNhanHang": diaChiNhanHang.toJson(),
         "taiKhoan": taiKhoan.toJson(),
         "soDienThoai": soDienThoai,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }

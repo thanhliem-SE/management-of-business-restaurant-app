@@ -16,7 +16,6 @@ String listHoaDonToJson(List<HoaDon> data) =>
 
 class HoaDon {
   HoaDon({
-    required this.maHoaDon,
     required this.nguoiLapHoaDon,
     required this.khachHang,
     required this.tongThanhTien,
@@ -24,11 +23,11 @@ class HoaDon {
     required this.ban,
     required this.soNguoi,
     required this.tinhTrang,
-    required this.createdAt,
-    required this.updatedAt,
+    this.maHoaDon,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  int maHoaDon;
   NhanVien nguoiLapHoaDon;
   KhachHang khachHang;
   double tongThanhTien;
@@ -36,8 +35,10 @@ class HoaDon {
   int ban;
   int soNguoi;
   String tinhTrang;
-  DateTime createdAt;
-  DateTime updatedAt;
+
+  int? maHoaDon;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
@@ -48,12 +49,15 @@ class HoaDon {
         ban: json["ban"],
         soNguoi: json["soNguoi"],
         tinhTrang: json["tinhTrang"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
-        "maHoaDon": maHoaDon,
         "nguoiLapHoaDon": nguoiLapHoaDon.toJson(),
         "khachHang": khachHang.toJson(),
         "tongThanhTien": tongThanhTien,
@@ -61,7 +65,5 @@ class HoaDon {
         "ban": ban,
         "soNguoi": soNguoi,
         "tinhTrang": tinhTrang,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }

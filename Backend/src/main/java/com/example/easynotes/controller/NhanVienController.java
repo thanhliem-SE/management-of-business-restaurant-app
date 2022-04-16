@@ -60,7 +60,7 @@ public class NhanVienController  {
         }
     }
 
-    @PostMapping("/nhanvien/getbytentaikhoan/{tenTaiKhoan}")
+    @GetMapping("/nhanvien/getbytentaikhoan/{tenTaiKhoan}")
     public NhanVien getByTenTaiKhoan(@PathVariable(value = "tenTaiKhoan") String tenTaiKhoan) {
         try {
             return service.getByTenTaiKhoan(tenTaiKhoan);

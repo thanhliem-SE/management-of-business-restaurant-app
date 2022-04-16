@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:go_quick_app/models/dto/hoa_don_dto.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/utils/constants.dart';
@@ -32,15 +31,15 @@ class HoaDonService {
     }
   }
 
-  Future<Object> createHoaDon(String token, HoaDonDTO hoaDonDTO) async {
+  Future<Object> createHoaDon(String token, HoaDon hoaDon) async {
     try {
       final response = await http.post(
-        Uri.parse(api + 'hoadon/chuathanhtoan'),
+        Uri.parse(api + 'hoadon/'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           HttpHeaders.authorizationHeader: '$token'
         },
-        body: hoaDonDTOToJson(hoaDonDTO),
+        body: json.encode(hoaDon.toJson()),
       );
 
       if (response.statusCode == 200) {
