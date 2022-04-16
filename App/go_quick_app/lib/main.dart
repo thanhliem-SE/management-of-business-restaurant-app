@@ -17,9 +17,10 @@ Future<void> main() async {
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
-  Hive.openBox('signed');
   Hive.registerAdapter(TaiKhoanAdapter());
   Hive.registerAdapter(NhanVienAdapter());
+
+  await Hive.openBox('signed');
 
   runApp(const MyApp());
 }

@@ -1,11 +1,17 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
-import 'package:go_quick_app/models/dto/hoa_don_dto.dart';
+import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/models/khach_hang.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
-import 'package:go_quick_app/services/nhan_vien_service.dart';
+import 'package:go_quick_app/services/hoa_don_service.dart';
+import 'package:go_quick_app/services/khach_hang_service.dart';
+import 'package:go_quick_app/services/thanh_toan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/bill/bill_view.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
   bool _isInit = false;
@@ -56,5 +62,51 @@ class SelectCategoryViewModel extends ChangeNotifier {
     } else {
       return null;
     }
+  }
+
+  navigateToHoaDon(
+      {required int soNguoi,
+      required int ban,
+      required BuildContext context}) async {
+    var response;
+
+    String token = await Helper.getToken();
+    NhanVien nguoiLapHoaDon = await Helper.getNhanVienSigned();
+    KhachHang? khachHang = null;
+    ThanhToan? thanhToan = null;
+
+    response = await KhachHangService().getKhachHangByMaKhachHang(token, 1);
+    if (response is Success) {
+      khachHang = response.response as KhachHang;
+    }
+
+    response = await ThanhToanService().getThanhToanByMaThanhToan(token, 1);
+    if (response is Success) {
+      thanhToan = response.response as ThanhToan;
+    }
+
+    HoaDon hoaDon = HoaDon(
+        nguoiLapHoaDon: nguoiLapHoaDon,
+        khachHang: khachHang!,
+        tongThanhTien: _totalPrice,
+        thanhToan: thanhToan!,
+        ban: ban,
+        soNguoi: soNguoi,
+        tinhTrang: 'WAIT');
+
+    response = await HoaDonService().createHoaDon(token, hoaDon);
+    if (response is Success) {
+      NavigationHelper.pushReplacement(
+          context: context,
+          page: BillView(
+            hoaDon: response.response as HoaDon,
+          ));
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 }

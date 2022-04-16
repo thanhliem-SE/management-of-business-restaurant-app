@@ -16,8 +16,8 @@ class TaiKhoan {
     required this.tenTaiKhoan,
     required this.matKhau,
     required this.quyen,
-    required this.createdAt,
-    required this.updatedAt,
+    this.createdAt,
+    this.updatedAt,
   });
 
   @HiveField(0)
@@ -30,24 +30,26 @@ class TaiKhoan {
   String quyen;
 
   @HiveField(3)
-  DateTime createdAt;
+  DateTime? createdAt;
 
   @HiveField(4)
-  DateTime updatedAt;
+  DateTime? updatedAt;
 
   factory TaiKhoan.fromJson(Map<String, dynamic> json) => TaiKhoan(
         tenTaiKhoan: json["tenTaiKhoan"],
         matKhau: json["matKhau"],
         quyen: json["quyen"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "tenTaiKhoan": tenTaiKhoan,
         "matKhau": matKhau,
         "quyen": quyen,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }

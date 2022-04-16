@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_diablog.dart';
 import 'package:go_quick_app/config/palette.dart';
@@ -31,22 +32,7 @@ class SelectCategoryView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kPrimaryLightColor,
-        title: const Text(
-          'YÊU CẦU ĐẶT MÓN',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: size.height * 0.05,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-      ),
+      appBar: buildAppBar(context: context, title: 'YÊU CẦU ĐẶT MÓN'),
       backgroundColor: kPrimaryLightColor,
       body: Column(
         children: [
@@ -196,8 +182,12 @@ class SelectCategoryView extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () {
-                      showConfirmDialog(
-                          context, () {}, 'Bạn có xác nhận đặt món');
+                      showConfirmDialog(context, () {
+                        _viewModel.navigateToHoaDon(
+                            soNguoi: numCustomer,
+                            ban: numTable,
+                            context: context);
+                      }, 'Bạn có xác nhận đặt món');
                     },
                     child: Container(
                       color: Colors.black,
