@@ -40,3 +40,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+
+fonts:
+  - family: Pacificos
+    fonts:
+    - asset: assets/fonts/Pacifico-Regular.ttf

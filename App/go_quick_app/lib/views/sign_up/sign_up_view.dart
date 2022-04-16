@@ -1,193 +1,107 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_quick_app/components/already_have_an_account_acheck.dart';
-import 'package:go_quick_app/components/rounded_button.dart';
-import 'package:go_quick_app/components/rounded_input_field.dart';
-import 'package:go_quick_app/components/rounded_password_field.dart';
-import 'package:go_quick_app/config/palette.dart';
-import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/sign_up/components/elevated_button_rounded.dart';
+
+import 'package:go_quick_app/views/sign_up/components/text_field_signup_component.dart';
+import 'package:go_quick_app/views/sign_up/components/text_password_component.dart';
 
 class SignUpView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Body(),
-    );
-  }
-}
-
-class Background extends StatelessWidget {
-  final Widget child;
-  const Background({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const SignUpView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height,
-      width: double.infinity,
-      // Here i can use size.width but use double.infinity because both work as a same
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            top: 0,
-            left: 0,
-            child: Image.asset(
-              "assets/images/signup_top.png",
-              width: size.width * 0.35,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            child: Image.asset(
-              "assets/images/main_bottom.png",
-              width: size.width * 0.25,
-            ),
-          ),
-          child,
-        ],
-      ),
-    );
-  }
-}
-
-class Body extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Background(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "SIGNUP",
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: size.height * 0.03),
-            SvgPicture.asset(
-              "assets/icons/signup.svg",
-              height: size.height * 0.35,
-            ),
-            RoundedInputField(
-              hintText: "Your Email",
-              onChanged: (value) {},
-            ),
-            RoundedPasswordField(
-              onChanged: (value) {},
-            ),
-            RoundedButton(
-              text: "SIGNUP",
-              press: () {},
-            ),
-            SizedBox(height: size.height * 0.03),
-            AlreadyHaveAnAccountCheck(
-              login: false,
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return LoginView();
-                    },
-                  ),
-                );
-              },
-            ),
-            OrDivider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SocalIcon(
-                  iconSrc: "assets/icons/facebook.svg",
-                  press: () {},
+    return SafeArea(
+      child: Scaffold(
+        body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+          return Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              Container(
+                height: constraints.maxHeight,
+                width: constraints.maxWidth,
+                decoration: const BoxDecoration(color: Colors.deepOrange),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      height: constraints.maxHeight * 0.7,
+                      width: constraints.maxWidth,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.elliptical(200, 100),
+                          topRight: Radius.elliptical(200, 100),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SocalIcon(
-                  iconSrc: "assets/icons/twitter.svg",
-                  press: () {},
-                ),
-                SocalIcon(
-                  iconSrc: "assets/icons/google-plus.svg",
-                  press: () {},
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class OrDivider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: size.height * 0.02),
-      width: size.width * 0.8,
-      child: Row(
-        children: <Widget>[
-          buildDivider(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(
-              "OR",
-              style: TextStyle(
-                color: kPrimaryColor,
-                fontWeight: FontWeight.w600,
               ),
-            ),
-          ),
-          buildDivider(),
-        ],
-      ),
-    );
-  }
-
-  Expanded buildDivider() {
-    return Expanded(
-      child: Divider(
-        color: Color(0xFFD9D9D9),
-        height: 1.5,
-      ),
-    );
-  }
-}
-
-class SocalIcon extends StatelessWidget {
-  final String iconSrc;
-  final VoidCallback press;
-  const SocalIcon({
-    Key? key,
-    required this.iconSrc,
-    required this.press,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: press,
-      child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 10),
-        padding: EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: kPrimaryLightColor,
-          ),
-          shape: BoxShape.circle,
-        ),
-        child: SvgPicture.asset(
-          iconSrc,
-          height: 20,
-          width: 20,
-        ),
+              Center(
+                child: Container(
+                  width: constraints.maxWidth * 0.8,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: [
+                          const Text(
+                            'Sign Up',
+                            style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Pacificos'),
+                          ),
+                          const TextFieldSignUp(
+                            hintText: "Họ và Tên",
+                          ),
+                          const TextFieldSignUp(
+                            hintText: "Số điện thoại",
+                          ),
+                          const TextFieldSignUp(
+                            hintText: "Tên tài khoản",
+                          ),
+                          const TextInputPassword(
+                            hintPass: "Mật khẩu",
+                          ),
+                          const TextInputPassword(
+                            hintPass: "Nhập lại Mật khẩu",
+                          ),
+                          ElevatedButtonRouded(
+                            text: "Sign Up",
+                            constraints: constraints,
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: const Text(
+                              "Bạn đã có tài khoản? Hãy đăng nhập",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }
