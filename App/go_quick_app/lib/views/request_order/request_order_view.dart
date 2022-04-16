@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
@@ -24,23 +25,9 @@ class RequestOrderView extends StatelessWidget {
     List<HoaDon> listHoaDonChuaThanhToan = viewModel.getListHoaDon();
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.black,
-            size: size.height * 0.05,
-          ),
-        ),
-        title: const Text(
-          'Yêu cầu đặt món',
-          style: TextStyle(color: Colors.black),
-        ),
-        centerTitle: true,
+      appBar: buildAppBar(
+        context: context,
+        title: 'Yêu cầu đặt món',
         actions: [
           IconButton(
             onPressed: () {
@@ -122,7 +109,7 @@ class RequestOrderView extends StatelessWidget {
                             people: item.soNguoi,
                             numTable: item.ban,
                             context: context,
-                            maHoaDon: item.maHoaDon);
+                            maHoaDon: item.maHoaDon!);
                       },
                     )
                   : const Text(

@@ -8,9 +8,9 @@ class NhanVien {
     required this.maNhanVien,
     required this.tenNhanVien,
     required this.soDienThoai,
-    required this.createdAt,
-    required this.updatedAt,
     required this.taiKhoan,
+    this.createdAt,
+    this.updatedAt,
   });
 
   @HiveField(0)
@@ -23,10 +23,10 @@ class NhanVien {
   String soDienThoai;
 
   @HiveField(3)
-  DateTime createdAt;
+  DateTime? createdAt;
 
   @HiveField(4)
-  DateTime updatedAt;
+  DateTime? updatedAt;
 
   @HiveField(5)
   TaiKhoan taiKhoan;
@@ -35,17 +35,19 @@ class NhanVien {
         maNhanVien: json["maNhanVien"],
         tenNhanVien: json["tenNhanVien"],
         soDienThoai: json["soDienThoai"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
         taiKhoan: TaiKhoan.fromJson(json["taiKhoan"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "maNhanVien": maNhanVien,
         "tenNhanVien": tenNhanVien,
         "soDienThoai": soDienThoai,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
         "taiKhoan": taiKhoan.toJson(),
       };
 }
