@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 class ElevatedButtonRouded extends StatelessWidget {
   final BoxConstraints constraints;
   final String text;
+  final VoidCallback? onPressed;
   const ElevatedButtonRouded({
     Key? key,
     required this.constraints,
     required this.text,
+    required this.onPressed,
   }) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class ElevatedButtonRouded extends StatelessWidget {
             Radius.circular(30),
           ),
           child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
