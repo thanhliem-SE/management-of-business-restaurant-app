@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_quick_app/views/sign_up/components/elevated_button_rounded.dart';
 
 import 'package:go_quick_app/views/sign_up/components/text_field_signup_component.dart';
 import 'package:go_quick_app/views/sign_up/components/text_password_component.dart';
+import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<SignUpViewModel>(context);
     return SafeArea(
       child: Scaffold(
         body: LayoutBuilder(
@@ -21,8 +25,31 @@ class SignUpView extends StatelessWidget {
                 width: constraints.maxWidth,
                 decoration: const BoxDecoration(color: Colors.deepOrange),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/images/logo.png",
+                            width: constraints.maxWidth * 0.4,
+                          ),
+                          Column(
+                            children: const [
+                              Text(
+                                "Go Quick",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 40,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text("Ẩm thực là tinh hoa cuộc sống")
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                     Container(
                       height: constraints.maxHeight * 0.7,
                       width: constraints.maxWidth,
@@ -39,7 +66,7 @@ class SignUpView extends StatelessWidget {
               ),
               Center(
                 child: Container(
-                  width: constraints.maxWidth * 0.8,
+                  width: constraints.maxWidth * 0.9,
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(
@@ -65,24 +92,36 @@ class SignUpView extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                                 fontFamily: 'Pacificos'),
                           ),
-                          const TextFieldSignUp(
+                          TextFieldSignUp(
                             hintText: "Họ và Tên",
+                            onChanged: (String value) {
+                              provider.setTenKhachHang = value;
+                            },
                           ),
-                          const TextFieldSignUp(
+                          TextFieldSignUp(
                             hintText: "Số điện thoại",
+                            onChanged: (String value) {
+                              provider.setSoDienthoai = value;
+                            },
                           ),
-                          const TextFieldSignUp(
+                          TextFieldSignUp(
                             hintText: "Tên tài khoản",
+                            onChanged: (value) {
+                              provider.setTenTaikhoan = value;
+                            },
                           ),
-                          const TextInputPassword(
+                          TextInputPassword(
                             hintPass: "Mật khẩu",
                           ),
-                          const TextInputPassword(
+                          TextInputPassword(
                             hintPass: "Nhập lại Mật khẩu",
                           ),
                           ElevatedButtonRouded(
                             text: "Sign Up",
                             constraints: constraints,
+                            onPressed: () {
+                              provider.SignUp(context);
+                            },
                           ),
                           TextButton(
                             onPressed: () {},

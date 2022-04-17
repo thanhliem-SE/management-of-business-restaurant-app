@@ -3,9 +3,11 @@ import 'package:go_quick_app/config/palette.dart';
 
 class TextFieldSignUp extends StatelessWidget {
   final String hintText;
+  final ValueChanged<String> onChanged;
   const TextFieldSignUp({
     Key? key,
     required this.hintText,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -13,6 +15,7 @@ class TextFieldSignUp extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        onChanged: onChanged,
         cursorColor: kPrimaryColor,
         decoration: InputDecoration(
             label: Text(
