@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/khach_hang.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:go_quick_app/services/api_status.dart';
+import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
 import 'package:go_quick_app/services/khach_hang_service.dart';
@@ -22,7 +24,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
   getToTalPrice() {
     double sum = 0;
     for (int i = 0; i < listAmoutFoodOrder.length; i++) {
-      sum += listChiTietThucPham[i].thucPham.giaTien * listAmoutFoodOrder[i];
+      sum += listChiTietThucPham[i].thucPham.giaTien! * listAmoutFoodOrder[i];
     }
     return sum;
   }
@@ -72,35 +74,30 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
     String token = await Helper.getToken();
     NhanVien nguoiLapHoaDon = await Helper.getNhanVienSigned();
-    KhachHang? khachHang = null;
-    ThanhToan? thanhToan = null;
-
-    response = await KhachHangService().getKhachHangByMaKhachHang(token, 1);
-    if (response is Success) {
-      khachHang = response.response as KhachHang;
-    }
-
-    response = await ThanhToanService().getThanhToanByMaThanhToan(token, 1);
-    if (response is Success) {
-      thanhToan = response.response as ThanhToan;
-    }
 
     HoaDon hoaDon = HoaDon(
         nguoiLapHoaDon: nguoiLapHoaDon,
-        khachHang: khachHang!,
         tongThanhTien: _totalPrice,
-        thanhToan: thanhToan!,
         ban: ban,
         soNguoi: soNguoi,
         tinhTrang: 'WAIT');
 
     response = await HoaDonService().createHoaDon(token, hoaDon);
+    HoaDon hoaDonCreated = response.response as HoaDon;
+
+    for (int i = 0; i < listChiTietThucPham.length; i++) {
+      if (listAmoutFoodOrder[i] > 0) {
+        ChiTietHoaDon chiTietHoaDon = ChiTietHoaDon(
+            thucPham: listChiTietThucPham[i].thucPham,
+            soLuong: listAmoutFoodOrder[i],
+            hoaDon: hoaDonCreated);
+        ChiTietHoaDonService().addChiTietHoaDon(token, chiTietHoaDon);
+      }
+    }
+
     if (response is Success) {
       NavigationHelper.pushReplacement(
-          context: context,
-          page: BillView(
-            hoaDon: response.response as HoaDon,
-          ));
+          context: context, page: BillView(maHoaDon: hoaDonCreated.maHoaDon!));
     }
   }
 

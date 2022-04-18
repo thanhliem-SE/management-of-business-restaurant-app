@@ -106,8 +106,8 @@ class RequestOrderView extends StatelessWidget {
                         HoaDon item = listHoaDonChuaThanhToan[index];
                         return cardTableOrder(
                             size: size,
-                            people: item.soNguoi,
-                            numTable: item.ban,
+                            people: item.soNguoi!,
+                            numTable: item.ban!,
                             context: context,
                             maHoaDon: item.maHoaDon!);
                       },

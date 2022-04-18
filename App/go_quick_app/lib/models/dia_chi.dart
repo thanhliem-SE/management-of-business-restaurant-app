@@ -1,15 +1,15 @@
 class DiaChi {
   DiaChi({
-    required this.soNha,
-    required this.phuong,
-    required this.quan,
-    required this.tinh,
+    this.soNha,
+    this.phuong,
+    this.quan,
+    this.tinh,
   });
 
-  String soNha;
-  String phuong;
-  String quan;
-  String tinh;
+  String? soNha;
+  String? phuong;
+  String? quan;
+  String? tinh;
 
   factory DiaChi.fromJson(Map<String, dynamic> json) => DiaChi(
         soNha: json["soNha"],

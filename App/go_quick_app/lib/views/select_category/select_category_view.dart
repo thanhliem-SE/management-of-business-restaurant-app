@@ -95,7 +95,7 @@ class SelectCategoryView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.network(
-                            item.thucPham.urlHinhAnh[0],
+                            item.thucPham.urlHinhAnh![0],
                             fit: BoxFit.cover,
                             height: size.height * 0.1,
                             width: size.width * 0.2,
@@ -105,7 +105,7 @@ class SelectCategoryView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.thucPham.ten,
+                                item.thucPham.ten!,
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
