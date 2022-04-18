@@ -30,10 +30,11 @@ class SignUpView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Image.asset(
                             "assets/images/logo.png",
-                            width: constraints.maxWidth * 0.4,
+                            width: constraints.maxWidth * 0.3,
                           ),
                           Column(
                             children: const [
