@@ -16,7 +16,7 @@ class RequestOrderViewModel extends ChangeNotifier {
   setListHoaDon(List<HoaDon> listHoaDon) {
     _listHoaDon = listHoaDon;
     listHoaDon.forEach((element) {
-      _listTableDangPhucVu.add(element.ban);
+      _listTableDangPhucVu.add(element.ban!);
     });
     notifyListeners();
   }

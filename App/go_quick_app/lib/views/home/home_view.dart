@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
     String token = await Helper.getToken();
 
     var response = await NhanVienService()
-        .getNhanVienByTenTaiKhoan(token, taiKhoan.tenTaiKhoan);
+        .getNhanVienByTenTaiKhoan(token, taiKhoan.tenTaiKhoan!);
     if (response is Success) {
       NhanVien nhanVien = response.response as NhanVien;
       Helper.setNhanVienSigned(nhanVien);

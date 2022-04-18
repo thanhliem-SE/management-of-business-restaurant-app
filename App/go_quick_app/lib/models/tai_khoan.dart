@@ -13,21 +13,21 @@ String taiKhoanToJson(List<TaiKhoan> data) =>
 @HiveType(typeId: 0)
 class TaiKhoan {
   TaiKhoan({
-    required this.tenTaiKhoan,
-    required this.matKhau,
-    required this.quyen,
+    this.tenTaiKhoan,
+    this.matKhau,
+    this.quyen,
     this.createdAt,
     this.updatedAt,
   });
 
   @HiveField(0)
-  String tenTaiKhoan;
+  String? tenTaiKhoan;
 
   @HiveField(1)
-  String matKhau;
+  String? matKhau;
 
   @HiveField(2)
-  String quyen;
+  String? quyen;
 
   @HiveField(3)
   DateTime? createdAt;

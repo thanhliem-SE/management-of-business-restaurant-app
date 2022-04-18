@@ -3,20 +3,20 @@ import 'package:go_quick_app/models/tai_khoan.dart';
 
 class KhachHang {
   KhachHang({
-    required this.maKhachHang,
-    required this.tenKhachHang,
-    required this.diaChiNhanHang,
-    required this.taiKhoan,
-    required this.soDienThoai,
+    this.maKhachHang,
+    this.tenKhachHang,
+    this.diaChiNhanHang,
+    this.taiKhoan,
+    this.soDienThoai,
     this.createdAt,
     this.updatedAt,
   });
 
-  int maKhachHang;
-  String tenKhachHang;
-  DiaChi diaChiNhanHang;
-  TaiKhoan taiKhoan;
-  String soDienThoai;
+  int? maKhachHang;
+  String? tenKhachHang;
+  DiaChi? diaChiNhanHang;
+  TaiKhoan? taiKhoan;
+  String? soDienThoai;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -37,8 +37,8 @@ class KhachHang {
   Map<String, dynamic> toJson() => {
         "maKhachHang": maKhachHang,
         "tenKhachHang": tenKhachHang,
-        "diaChiNhanHang": diaChiNhanHang.toJson(),
-        "taiKhoan": taiKhoan.toJson(),
+        "diaChiNhanHang": diaChiNhanHang?.toJson(),
+        "taiKhoan": taiKhoan?.toJson(),
         "soDienThoai": soDienThoai,
       };
 }
