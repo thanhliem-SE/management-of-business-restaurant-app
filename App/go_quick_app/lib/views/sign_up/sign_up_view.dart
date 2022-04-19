@@ -113,9 +113,15 @@ class SignUpView extends StatelessWidget {
                           ),
                           TextInputPassword(
                             hintPass: "Mật khẩu",
+                            onChanged: (value) {
+                              provider.setMatKhau = value;
+                            },
                           ),
                           TextInputPassword(
                             hintPass: "Nhập lại Mật khẩu",
+                            onChanged: (value) {
+                              provider.setNhapLaiMatKhau = value;
+                            },
                           ),
                           ElevatedButtonRouded(
                             text: "Sign Up",

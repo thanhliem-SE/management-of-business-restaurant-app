@@ -105,6 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/api/nhanvien/").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
 //                // permission for khach hang
                 .antMatchers(HttpMethod.POST, "/api/khachhang/").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/khachhang/dangkytaikhoan/").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/khachhang/").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
 //                .antMatchers(HttpMethod.DELETE, "/api/khachhang/**").hasAnyRole( "ROLE_QUANLY", "ROLE_ADMIN")
 //                .antMatchers(HttpMethod.PUT, "/api/khachhang/**").hasAnyRole( "ROLE_KHACHHANG","ROLE_QUANLY", "ROLE_ADMIN")

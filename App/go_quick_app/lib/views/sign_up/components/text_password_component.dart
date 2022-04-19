@@ -3,9 +3,11 @@ import 'package:go_quick_app/config/palette.dart';
 
 class TextInputPassword extends StatefulWidget {
   final String hintPass;
+  final ValueChanged<String> onChanged;
   const TextInputPassword({
     Key? key,
     required this.hintPass,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -19,6 +21,7 @@ class _TextInputPasswordState extends State<TextInputPassword> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextField(
+        onChanged: widget.onChanged,
         obscureText: _passwordVisible,
         enableSuggestions: false,
         autocorrect: false,
