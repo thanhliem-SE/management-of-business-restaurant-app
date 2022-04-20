@@ -10,5 +10,41 @@
     "trangThai": "enough",
     "createdAt": "2019-08-20T03:22:34.000+00:00",
     "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Mắm trưng ",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 60000.0,
+    "urlHinhAnh": [
+      "https://i.pinimg.com/736x/74/f8/f4/74f8f4b0b50d02edb77f84b300c459ad.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Canh chua cá lóc",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 60000.0,
+    "urlHinhAnh": [
+      "https://nghethuat365.com/wp-content/uploads/2021/08/Cach-Nau-Canh-Chua-Ca-Loc-Don-Gian-Ma-Ngon.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Cá linh kho tiêu",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 60000.0,
+    "urlHinhAnh": [
+      "https://cdn.tgdd.vn/2020/10/CookRecipe/Avatar/ca-linh-kho-tieu-thumbnail-1.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
   }
 ]
