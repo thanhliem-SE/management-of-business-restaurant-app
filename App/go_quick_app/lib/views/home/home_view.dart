@@ -89,7 +89,9 @@ class WidgetForAdmin extends StatelessWidget {
         cardItemMenu(size, Icons.app_registration_outlined, 'Yêu cầu đặt món',
             Colors.lightGreen, () {
           NavigationHelper.push(
-              context: context, page: const RequestOrderView());
+              context: context,
+              page: const RequestOrderView(),
+              routeName: 'RequestOrderView');
         }),
         cardItemMenu(size, Icons.library_books, 'Tiếp nhận đặt món',
             Colors.pinkAccent, () {}),
