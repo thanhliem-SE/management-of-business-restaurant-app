@@ -14,6 +14,7 @@ import 'package:go_quick_app/services/thanh_toan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
+import 'package:go_quick_app/views/request_order/request_order_view.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
   bool _isInit = false;
@@ -96,6 +97,12 @@ class SelectCategoryViewModel extends ChangeNotifier {
     }
 
     if (response is Success) {
+      SelectCategoryViewModel().init();
+
+      Navigator.popUntil(context, (route) {
+        return route.settings.name == 'RequestOrderView';
+      });
+
       NavigationHelper.pushReplacement(
           context: context, page: BillView(maHoaDon: hoaDonCreated.maHoaDon!));
     }

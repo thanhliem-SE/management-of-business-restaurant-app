@@ -6,13 +6,19 @@ import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:provider/provider.dart';
 
-class RequestOrderView extends StatelessWidget {
+class RequestOrderView extends StatefulWidget {
   const RequestOrderView({Key? key}) : super(key: key);
 
+  @override
+  State<RequestOrderView> createState() => _RequestOrderViewState();
+}
+
+class _RequestOrderViewState extends State<RequestOrderView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<RequestOrderViewModel>(context);
@@ -51,10 +57,13 @@ class RequestOrderView extends StatelessWidget {
         ],
       ),
       body: Container(
+        color: kPrimaryLightColor,
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+              color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -68,7 +77,7 @@ class RequestOrderView extends StatelessWidget {
                   ),
                   Image.asset(
                     'assets/icons/icon_table.png',
-                    color: Colors.deepPurpleAccent,
+                    color: kPrimaryColor,
                     width: size.width * 0.2,
                     height: size.height * 0.12,
                     fit: BoxFit.fill,
@@ -84,8 +93,8 @@ class RequestOrderView extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: size.height * 0.04),
-            Text('Danh Sách Bàn Ăn Đang Phục Vụ',
+            SizedBox(height: size.height * 0.01),
+            Text('DANH SÁCH BÀN ĂN',
                 style: TextStyle(
                     fontSize: size.height * 0.03,
                     fontWeight: FontWeight.bold,
@@ -101,15 +110,27 @@ class RequestOrderView extends StatelessWidget {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                       ),
-                      itemCount: listHoaDonChuaThanhToan.length,
+                      itemCount: 20,
                       itemBuilder: (BuildContext context, int index) {
-                        HoaDon item = listHoaDonChuaThanhToan[index];
-                        return cardTableOrder(
-                            size: size,
-                            people: item.soNguoi!,
-                            numTable: item.ban!,
-                            context: context,
-                            maHoaDon: item.maHoaDon!);
+                        HoaDon? hoaDon;
+                        listHoaDonChuaThanhToan.forEach((element) {
+                          if (element.ban == index + 1) {
+                            hoaDon = listHoaDonChuaThanhToan[index];
+                          }
+                        });
+                        return hoaDon != null
+                            ? cardTableOrder(
+                                size: size,
+                                people: hoaDon!.soNguoi!,
+                                numTable: hoaDon!.ban!,
+                                context: context,
+                                hoaDon: hoaDon)
+                            : cardTableOrder(
+                                size: size,
+                                people: 0,
+                                numTable: index + 1,
+                                context: context,
+                                hoaDon: hoaDon);
                       },
                     )
                   : const Text(
@@ -128,60 +149,111 @@ class RequestOrderView extends StatelessWidget {
       required int people,
       required int numTable,
       required BuildContext context,
-      required int maHoaDon}) {
+      HoaDon? hoaDon}) {
+    final viewModel = Provider.of<RequestOrderViewModel>(context);
     return Container(
       padding: const EdgeInsets.all(8),
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       decoration: BoxDecoration(
         boxShadow: [
-          customBoxShadow(color: Colors.blueGrey),
+          customBoxShadow(color: Colors.grey),
         ],
-        color: kPrimaryLightColor,
-        borderRadius: BorderRadius.circular(20),
+        color: hoaDon != null ? Colors.white70 : Colors.white,
         border: Border.all(
           color: Colors.blueGrey,
           width: 2,
         ),
       ),
-      child: InkWell(
-        onTap: () {
-          NavigationHelper.push(
-              context: context,
-              page: SelectCategoryView(
-                  numTable: numTable, numCustomer: people, maHoaDon: maHoaDon));
-        },
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(
-                  Icons.people_alt_outlined,
-                  color: Colors.deepPurpleAccent,
-                  size: size.width * 0.12,
-                ),
-                Text(
-                  numTable.toString(),
-                  style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-              ],
+      child: hoaDon != null
+          ? InkWell(
+              onTap: () {
+                NavigationHelper.push(
+                    context: context,
+                    page: BillView(maHoaDon: hoaDon.maHoaDon!));
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Icon(
+                        Icons.people_alt_outlined,
+                        color: kPrimaryColor,
+                        size: size.width * 0.08,
+                      ),
+                      Text(
+                        numTable.toString(),
+                        style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '$people Người',
+                    style: const TextStyle(fontSize: 15, color: kPrimaryColor),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(
+                    height: size.height * 0.05,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          hoaDon.createdAt!.hour.toString() +
+                              ':' +
+                              hoaDon.createdAt!.minute.toString(),
+                        ),
+                        Text(
+                          DateTime.now().hour.toString() +
+                              ':' +
+                              DateTime.now().minute.toString(),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          : InkWell(
+              onTap: () {
+                viewModel.setNumTable(numTable - 1);
+                showDialog(
+                  context: context,
+                  builder: (context) => SelectCustomerCount(),
+                );
+              },
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        numTable.toString(),
+                        style: const TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'Trống',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: kPrimaryColor),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-            SizedBox(height: size.height * 0.005),
-            Row(
-              children: [
-                Text(
-                  '$people Người',
-                  style: const TextStyle(
-                      fontSize: 15, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.left,
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -249,7 +321,7 @@ class SelectTableCount extends StatelessWidget {
                 itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
                   var color = viewModel.getNumTable() == index
-                      ? kPrimaryColor
+                      ? Colors.deepPurple
                       : kPrimaryLightColor;
                   return InkWell(
                     onTap: () {
@@ -354,10 +426,11 @@ class SelectCustomerCount extends StatelessWidget {
               text: 'TIẾP THEO',
               press: () {
                 NavigationHelper.push(
-                    context: context,
-                    page: SelectCategoryView(
-                        numTable: viewModel.getNumTable() + 1,
-                        numCustomer: viewModel.getNumCustomer() + 1));
+                  context: context,
+                  page: SelectCategoryView(
+                      numTable: viewModel.getNumTable() + 1,
+                      numCustomer: viewModel.getNumCustomer() + 1),
+                );
               },
               color: kPrimaryColor,
               textColor: Colors.white,
