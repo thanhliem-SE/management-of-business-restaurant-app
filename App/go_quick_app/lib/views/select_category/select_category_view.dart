@@ -102,16 +102,20 @@ class SelectCategoryView extends StatelessWidget {
                             height: size.height * 0.1,
                             width: size.width * 0.2,
                           ),
+                          SizedBox(width: size.width * 0.01),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                item.thucPham.ten!,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                              Container(
+                                width: size.width * 0.35,
+                                child: Text(
+                                  item.thucPham.ten!,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
                               ),
                               SizedBox(height: size.height * 0.01),
                               Text(
