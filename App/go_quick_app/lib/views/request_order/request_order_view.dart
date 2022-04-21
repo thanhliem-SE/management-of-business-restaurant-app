@@ -47,7 +47,9 @@ class _RequestOrderViewState extends State<RequestOrderView> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              viewModel.init();
+            },
             icon: Icon(
               Icons.refresh_sharp,
               color: Colors.black,
@@ -115,7 +117,9 @@ class _RequestOrderViewState extends State<RequestOrderView> {
                         HoaDon? hoaDon;
                         listHoaDonChuaThanhToan.forEach((element) {
                           if (element.ban == index + 1) {
-                            hoaDon = listHoaDonChuaThanhToan[index];
+                            hoaDon = listHoaDonChuaThanhToan
+                                .where((element2) => element2.ban == index + 1)
+                                .first;
                           }
                         });
                         return hoaDon != null
@@ -197,7 +201,7 @@ class _RequestOrderViewState extends State<RequestOrderView> {
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
-                    height: size.height * 0.05,
+                    height: size.height * 0.06,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
