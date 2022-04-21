@@ -1,0 +1,2 @@
+Liêm: 1.2, 1.4, Tổng hợp tài liệu
+Vĩnh: 1.1, 2.3, Cập nhật Class Diagram
