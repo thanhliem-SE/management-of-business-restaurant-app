@@ -52,9 +52,13 @@ public class ThucPham implements Serializable {
     @NotBlank
     private String trangThai;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "thucPham", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<LieuLuong> lieuLuongs;
+    @ManyToOne
+    @JoinColumn(name = "maNhaCungCap")
+    private NhaCungCap nhaCungCap;
+
+    @ManyToOne
+    @JoinColumn(name = "maDanhMuc")
+    private DanhMuc danhMuc;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

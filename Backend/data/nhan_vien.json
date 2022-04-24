@@ -1,9 +1,37 @@
 [
   {
-    "tenNhanVien": "tenNhanVien",
+    "tenNhanVien": "admin",
     "soDienThoai": "0123456789",
     "taiKhoan": {
-      "tenTaiKhoan": "tenTaiKhoan1"
+      "tenTaiKhoan": "admin"
+    }
+  },
+  {
+    "tenNhanVien": "nhân viên 1",
+    "soDienThoai": "0123456789",
+    "taiKhoan": {
+      "tenTaiKhoan": "nhanvien1"
+    }
+  },
+  {
+    "tenNhanVien": "thu ngân 1",
+    "soDienThoai": "0123456789",
+    "taiKhoan": {
+      "tenTaiKhoan": "thungan1"
+    }
+  },
+  {
+    "tenNhanVien": "chế biến 1",
+    "soDienThoai": "0123456789",
+    "taiKhoan": {
+      "tenTaiKhoan": "chebien1"
+    }
+  },
+  {
+    "tenNhanVien": "quản lý 1",
+    "soDienThoai": "0123456789",
+    "taiKhoan": {
+      "tenTaiKhoan": "quanly1"
     }
   }
 ]

@@ -2,7 +2,7 @@ package com.example.easynotes.service;
 
 import com.example.easynotes.model.CustomUserDetails;
 import com.example.easynotes.model.TaiKhoan;
-import com.example.easynotes.repository.TaiKhoanRepository;
+import com.example.easynotes.service.repository.TaiKhoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,8 +1,7 @@
 package com.example.easynotes.service;
 
 import com.example.easynotes.model.ChiTietThucPham;
-import com.example.easynotes.model.ThucPham;
-import com.example.easynotes.repository.ChiTietThucPhamRepository;
+import com.example.easynotes.service.repository.ChiTietThucPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 @Service
 public class ChiTietThucPhamService {

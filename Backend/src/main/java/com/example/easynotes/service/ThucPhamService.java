@@ -1,7 +1,7 @@
 package com.example.easynotes.service;
 
 import com.example.easynotes.model.ThucPham;
-import com.example.easynotes.repository.ThucPhamRepository;
+import com.example.easynotes.service.repository.ThucPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

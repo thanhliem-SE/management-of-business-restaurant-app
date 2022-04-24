@@ -1,13 +1,12 @@
 [
   {
     "nguoiLapHoaDon": {
-      "maNhanVien": 1
-    },
-    "khachHang": {
-      "maKhachHang": 1
+      "maNhanVien": 2
     },
     "tongThanhTien": 100000.0,
-    "ban": 1,
+    "ban": {
+      "maSoBan": 1
+    },
     "soNguoi": 5,
     "tinhTrang": "WAIT",
     "thanhToan": {
@@ -16,13 +15,12 @@
   },
   {
     "nguoiLapHoaDon": {
-      "maNhanVien": 1
-    },
-    "khachHang": {
-      "maKhachHang": 1
+      "maNhanVien": 2
     },
     "tongThanhTien": 100000.0,
-    "ban": 2,
+    "ban": {
+      "maSoBan": 2
+    },
     "soNguoi": 2,
     "tinhTrang": "WAIT",
     "thanhToan": {
@@ -31,13 +29,12 @@
   },
   {
     "nguoiLapHoaDon": {
-      "maNhanVien": 1
-    },
-    "khachHang": {
-      "maKhachHang": 1
+      "maNhanVien": 2
     },
     "tongThanhTien": 100000.0,
-    "ban": 3,
+    "ban": {
+      "maSoBan": 3
+    },
     "soNguoi": 4,
     "tinhTrang": "WAIT",
     "thanhToan": {
@@ -46,13 +43,12 @@
   },
   {
     "nguoiLapHoaDon": {
-      "maNhanVien": 1
-    },
-    "khachHang": {
-      "maKhachHang": 1
+      "maNhanVien": 2
     },
     "tongThanhTien": 100000.0,
-    "ban": 4,
+    "ban": {
+      "maSoBan": 4
+    },
     "soNguoi": 2,
     "tinhTrang": "WAIT",
     "thanhToan": {
