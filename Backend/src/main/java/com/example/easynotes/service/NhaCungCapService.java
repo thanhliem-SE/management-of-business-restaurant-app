@@ -1,7 +1,7 @@
 package com.example.easynotes.service;
 
 import com.example.easynotes.model.NhaCungCap;
-import com.example.easynotes.repository.NhaCungCapRepository;
+import com.example.easynotes.service.repository.NhaCungCapRepository;
 import com.google.gson.Gson;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
