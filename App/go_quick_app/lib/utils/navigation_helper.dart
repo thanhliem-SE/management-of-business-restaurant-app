@@ -18,23 +18,27 @@ class NavigationHelper {
     required BuildContext context,
     required Widget page,
     bool withNavBar = false,
+    String? routeName,
   }) {
     Navigator.of(context, rootNavigator: !withNavBar).push(
-      MaterialPageRoute(builder: (context) {
-        return page;
-      }),
+      MaterialPageRoute(
+          builder: (context) {
+            return page;
+          },
+          settings: RouteSettings(name: routeName ?? '')),
     );
   }
 
-  static pushReplacement({
-    required BuildContext context,
-    required Widget page,
-  }) {
+  static pushReplacement(
+      {required BuildContext context,
+      required Widget page,
+      String? routeName}) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
           return page;
         },
+        settings: RouteSettings(name: routeName ?? ''),
       ),
     );
   }

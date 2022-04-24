@@ -5,22 +5,22 @@ part 'nhan_vien.g.dart';
 @HiveType(typeId: 1)
 class NhanVien {
   NhanVien({
-    required this.maNhanVien,
-    required this.tenNhanVien,
-    required this.soDienThoai,
-    required this.taiKhoan,
+    this.maNhanVien,
+    this.tenNhanVien,
+    this.soDienThoai,
+    this.taiKhoan,
     this.createdAt,
     this.updatedAt,
   });
 
   @HiveField(0)
-  int maNhanVien;
+  int? maNhanVien;
 
   @HiveField(1)
-  String tenNhanVien;
+  String? tenNhanVien;
 
   @HiveField(2)
-  String soDienThoai;
+  String? soDienThoai;
 
   @HiveField(3)
   DateTime? createdAt;
@@ -29,7 +29,7 @@ class NhanVien {
   DateTime? updatedAt;
 
   @HiveField(5)
-  TaiKhoan taiKhoan;
+  TaiKhoan? taiKhoan;
 
   factory NhanVien.fromJson(Map<String, dynamic> json) => NhanVien(
         maNhanVien: json["maNhanVien"],
@@ -48,6 +48,6 @@ class NhanVien {
         "maNhanVien": maNhanVien,
         "tenNhanVien": tenNhanVien,
         "soDienThoai": soDienThoai,
-        "taiKhoan": taiKhoan.toJson(),
+        "taiKhoan": taiKhoan?.toJson(),
       };
 }

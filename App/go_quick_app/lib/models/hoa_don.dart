@@ -16,36 +16,39 @@ String listHoaDonToJson(List<HoaDon> data) =>
 
 class HoaDon {
   HoaDon({
-    required this.nguoiLapHoaDon,
-    required this.khachHang,
-    required this.tongThanhTien,
-    required this.thanhToan,
-    required this.ban,
-    required this.soNguoi,
-    required this.tinhTrang,
+    this.nguoiLapHoaDon,
+    this.khachHang,
+    this.tongThanhTien,
+    this.thanhToan,
+    this.ban,
+    this.soNguoi,
+    this.tinhTrang,
     this.maHoaDon,
     this.createdAt,
     this.updatedAt,
   });
 
-  NhanVien nguoiLapHoaDon;
-  KhachHang khachHang;
-  double tongThanhTien;
-  ThanhToan thanhToan;
-  int ban;
-  int soNguoi;
-  String tinhTrang;
-
   int? maHoaDon;
+  NhanVien? nguoiLapHoaDon;
+  KhachHang? khachHang;
+  double? tongThanhTien;
+  ThanhToan? thanhToan;
+  int? ban;
+  int? soNguoi;
+  String? tinhTrang;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
         nguoiLapHoaDon: NhanVien.fromJson(json["nguoiLapHoaDon"]),
-        khachHang: KhachHang.fromJson(json["khachHang"]),
+        khachHang: json["khachHang"] != null
+            ? KhachHang.fromJson(json["khachHang"])
+            : null,
         tongThanhTien: json["tongThanhTien"],
-        thanhToan: ThanhToan.fromJson(json["thanhToan"]),
+        thanhToan: json["thanhToan"] != null
+            ? ThanhToan.fromJson(json["thanhToan"])
+            : null,
         ban: json["ban"],
         soNguoi: json["soNguoi"],
         tinhTrang: json["tinhTrang"],
@@ -57,13 +60,18 @@ class HoaDon {
             : null,
       );
 
-  Map<String, dynamic> toJson() => {
-        "nguoiLapHoaDon": nguoiLapHoaDon.toJson(),
-        "khachHang": khachHang.toJson(),
-        "tongThanhTien": tongThanhTien,
-        "thanhToan": thanhToan.toJson(),
-        "ban": ban,
-        "soNguoi": soNguoi,
-        "tinhTrang": tinhTrang,
-      };
+  Map<String, dynamic> toJson() {
+    var json = {
+      "maHoaDon": maHoaDon,
+      "nguoiLapHoaDon": nguoiLapHoaDon!.toJson(),
+      "khachHang": khachHang?.toJson(),
+      "tongThanhTien": tongThanhTien,
+      "thanhToan": thanhToan?.toJson(),
+      "ban": ban,
+      "soNguoi": soNguoi,
+      "tinhTrang": tinhTrang,
+    };
+    json.removeWhere((key, value) => value == null);
+    return json;
+  }
 }

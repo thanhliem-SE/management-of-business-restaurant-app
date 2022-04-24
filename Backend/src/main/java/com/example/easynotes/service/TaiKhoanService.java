@@ -2,7 +2,7 @@ package com.example.easynotes.service;
 
 import com.example.easynotes.model.JwtBody;
 import com.example.easynotes.model.TaiKhoan;
-import com.example.easynotes.repository.TaiKhoanRepository;
+import com.example.easynotes.service.repository.TaiKhoanRepository;
 import com.google.gson.Gson;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;

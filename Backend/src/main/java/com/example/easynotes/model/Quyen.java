@@ -4,5 +4,6 @@ public enum Quyen {
     ADMIN,
     QUANLY,
     NHANVIEN,
-    KHACHHANG
+    CHEBIEN,
+    THUNGAN,
 }

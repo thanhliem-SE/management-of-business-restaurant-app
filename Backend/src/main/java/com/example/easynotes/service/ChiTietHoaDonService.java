@@ -1,8 +1,7 @@
 package com.example.easynotes.service;
 
 import com.example.easynotes.model.ChiTietHoaDon;
-import com.example.easynotes.model.LieuLuong;
-import com.example.easynotes.repository.ChiTietHoaDonRepository;
+import com.example.easynotes.service.repository.ChiTietHoaDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

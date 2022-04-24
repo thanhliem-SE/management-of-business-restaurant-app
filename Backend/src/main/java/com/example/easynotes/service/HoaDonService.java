@@ -1,10 +1,9 @@
 package com.example.easynotes.service;
 
 import com.example.easynotes.model.HoaDon;
-import com.example.easynotes.repository.HoaDonRepository;
+import com.example.easynotes.service.repository.HoaDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

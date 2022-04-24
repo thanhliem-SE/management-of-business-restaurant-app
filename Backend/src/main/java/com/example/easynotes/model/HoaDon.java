@@ -35,10 +35,6 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maNhanVien")
     private NhanVien nguoiLapHoaDon;
 
-    @ManyToOne
-    @JoinColumn(name = "maKhachHang")
-    private KhachHang khachHang;
-
     @Min(value = 0)
     private double tongThanhTien;
 
@@ -47,14 +43,15 @@ public class HoaDon implements Serializable {
     private ThanhToan thanhToan;
 
     @Min(value = 0)
-    private int ban;
-
-    @Min(value = 0)
     private int soNguoi;
 
     @JsonIgnore
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ChiTietHoaDon> chiTietHoaDons;
+
+    @ManyToOne
+    @JoinColumn(name = "maSoBan")
+    private Ban ban;
 
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;

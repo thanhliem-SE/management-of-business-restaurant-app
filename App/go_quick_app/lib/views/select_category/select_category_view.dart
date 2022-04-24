@@ -4,7 +4,9 @@ import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_diablog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
+import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SelectCategoryView extends StatelessWidget {
@@ -95,25 +97,31 @@ class SelectCategoryView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Image.network(
-                            item.thucPham.urlHinhAnh[0],
+                            item.thucPham.urlHinhAnh![0],
                             fit: BoxFit.cover,
                             height: size.height * 0.1,
                             width: size.width * 0.2,
                           ),
+                          SizedBox(width: size.width * 0.01),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                item.thucPham.ten,
-                                style: const TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black),
+                              Container(
+                                width: size.width * 0.35,
+                                child: Text(
+                                  item.thucPham.ten!,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
                               ),
                               SizedBox(height: size.height * 0.01),
                               Text(
-                                item.thucPham.giaTien.toString() + 'đ',
+                                NumberFormat('###,###')
+                                        .format(item.thucPham.giaTien) +
+                                    'đ',
                                 style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.normal,

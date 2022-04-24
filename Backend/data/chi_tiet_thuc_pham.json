@@ -4,5 +4,17 @@
       "maThucPham": 1
     },
     "soLuong": 10
+  },
+  {
+    "thucPham": {
+      "maThucPham": 2
+    },
+    "soLuong": 10
+  },
+  {
+    "thucPham": {
+      "maThucPham": 3
+    },
+    "soLuong": 10
   }
 ]
