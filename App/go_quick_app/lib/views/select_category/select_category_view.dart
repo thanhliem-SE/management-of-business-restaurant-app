@@ -5,6 +5,8 @@ import 'package:go_quick_app/components/show_alert_diablog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/components/list_view_food.dart';
 import 'package:go_quick_app/views/select_category/components/search_food_dialog.dart';
@@ -61,8 +63,11 @@ class SelectCategoryView extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        showConfirmDialog(
-                            context, () {}, 'Bạn có xác nhận đặt món');
+                        showConfirmDialog(context, () {
+                          Navigator.pop(context);
+                          NavigationHelper.push(
+                              context: context, page: BillView(maHoaDon: 001));
+                        }, 'Bạn có xác nhận đặt món');
                       },
                       child: Container(
                         color: kPrimaryColor,
@@ -181,7 +186,7 @@ class SelectCategoryView extends StatelessWidget {
           thucPham: ThucPham(
               maThucPham: 3,
               ten: 'Lon CocaCola',
-              giaTien: 20000,
+              giaTien: 10000,
               urlHinhAnh: [
                 'https://filebroker-cdn.lazada.vn/kf/S7f8ed4d038d743d4852ab22504a211f8K.jpg'
               ]),
