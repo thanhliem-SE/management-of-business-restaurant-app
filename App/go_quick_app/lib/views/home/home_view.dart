@@ -35,6 +35,7 @@ class _HomeViewState extends State<HomeView> {
           title: Text(
             'GoQuick',
           ),
+          backgroundColor: kPrimaryColor,
           centerTitle: true,
           actions: [
             IconButton(onPressed: () {}, icon: Icon(Icons.search)),
