@@ -63,8 +63,9 @@ class ListViewFood extends StatelessWidget {
               width: size.width * 0.3,
               child: Text(
                 item.thucPham!.ten!,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: Colors.black),
               ),
@@ -72,6 +73,7 @@ class ListViewFood extends StatelessWidget {
             SizedBox(height: size.height * 0.01),
             Text(
               NumberFormat('###,###').format(item.thucPham!.giaTien) + 'đ',
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.normal,

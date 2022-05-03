@@ -61,12 +61,8 @@ class SelectCategoryView extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        // showConfirmDialog(context, () {
-                        //   _viewModel.navigateToHoaDon(
-                        //       soNguoi: numCustomer,
-                        //       ban: numTable,
-                        //       context: context);
-                        // }, 'Bạn có xác nhận đặt món');
+                        showConfirmDialog(
+                            context, () {}, 'Bạn có xác nhận đặt món');
                       },
                       child: Container(
                         color: kPrimaryColor,
