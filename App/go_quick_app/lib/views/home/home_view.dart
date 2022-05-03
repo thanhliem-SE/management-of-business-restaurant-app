@@ -10,6 +10,7 @@ import 'package:go_quick_app/services/nhan_vien_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
+import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,7 @@ class _HomeViewState extends State<HomeView> {
             }
             return Container();
           } else {
-            return WelcomeView();
+            return LoginView();
           }
         },
       ),

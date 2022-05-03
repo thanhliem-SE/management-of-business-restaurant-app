@@ -24,7 +24,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    final _viewModel = Provider.of<LoginViewModel>(context);
+    final viewModel = Provider.of<LoginViewModel>(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -36,12 +36,17 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  "LOGIN",
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  "GoQuicK APP",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: kPrimaryColor,
+                  ),
                 ),
                 SizedBox(height: size.height * 0.03),
-                SvgPicture.asset(
-                  "assets/icons/login.svg",
+                Image.asset(
+                  'assets/images/logo.png',
+                  // color: kPrimaryColor,
                   height: size.height * 0.35,
                 ),
                 SizedBox(height: size.height * 0.03),
@@ -54,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                       return null;
                     },
                     onChanged: (value) {
-                      _viewModel.setUsername(value);
+                      viewModel.setUsername(value);
                     },
                     cursorColor: kPrimaryColor,
                     decoration: const InputDecoration(
@@ -75,46 +80,38 @@ class _LoginViewState extends State<LoginView> {
                       }
                       return null;
                     },
-                    obscureText: true,
+                    obscureText: viewModel.isHidePass,
                     onChanged: (value) {
-                      _viewModel.setPassword(value);
+                      viewModel.setPassword(value);
                     },
                     cursorColor: kPrimaryColor,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Mật khẩu",
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.lock,
                         color: kPrimaryColor,
                       ),
-                      suffixIcon: Icon(
-                        Icons.visibility,
-                        color: kPrimaryColor,
-                      ),
+                      suffixIcon: IconButton(
+                          onPressed: () {
+                            viewModel.setIsHidePass(!viewModel.isHidePass);
+                          },
+                          icon: const Icon(
+                            Icons.visibility,
+                            color: kPrimaryColor,
+                          )),
                       border: InputBorder.none,
                     ),
                   ),
                 ),
                 RoundedButton(
-                  text: "LOGIN",
+                  text: "ĐĂNG NHẬP",
                   press: () {
                     if (_formKey.currentState!.validate()) {
-                      _viewModel.login(context);
+                      viewModel.login(context);
                     }
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
-                AlreadyHaveAnAccountCheck(
-                  press: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return SignUpView();
-                        },
-                      ),
-                    );
-                  },
-                ),
               ],
             ),
           ),

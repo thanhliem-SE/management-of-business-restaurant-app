@@ -25,7 +25,7 @@ class _GoQuickAppState extends State<GoQuickApp> {
         if (snapshot.data == true) {
           return HomeView();
         } else {
-          return WelcomeView();
+          return LoginView();
         }
       },
     );

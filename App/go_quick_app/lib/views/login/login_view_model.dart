@@ -11,6 +11,14 @@ class LoginViewModel extends ChangeNotifier {
   String _password = '';
   bool _loading = false;
   String _token = '';
+  bool _isHidePass = true;
+
+  setIsHidePass(bool value) {
+    _isHidePass = value;
+    notifyListeners();
+  }
+
+  get isHidePass => this._isHidePass;
 
   String get username => this._username;
 
