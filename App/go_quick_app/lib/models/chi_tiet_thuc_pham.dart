@@ -15,33 +15,35 @@ String listChiTietThucPhamToJson(List<ChiTietThucPham> data) =>
 
 class ChiTietThucPham {
   ChiTietThucPham({
-    required this.maChiTietThucPham,
-    required this.thucPham,
-    required this.soLuong,
-    required this.createdAt,
-    required this.updatedAt,
+    this.maChiTietThucPham,
+    this.thucPham,
+    this.soLuong,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  int maChiTietThucPham;
-  ThucPham thucPham;
-  int soLuong;
-  DateTime createdAt;
-  DateTime updatedAt;
+  int? maChiTietThucPham;
+  ThucPham? thucPham;
+  int? soLuong;
+  DateTime? createdAt;
+  DateTime? updatedAt;
 
   factory ChiTietThucPham.fromJson(Map<String, dynamic> json) =>
       ChiTietThucPham(
         maChiTietThucPham: json["maChiTietThucPham"],
         thucPham: ThucPham.fromJson(json["thucPham"]),
         soLuong: json["soLuong"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] != null
+            ? DateTime.parse(json["createdAt"])
+            : null,
+        updatedAt: json["updatedAt"] != null
+            ? DateTime.parse(json["updatedAt"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
         "maChiTietThucPham": maChiTietThucPham,
-        "thucPham": thucPham.toJson(),
+        "thucPham": thucPham?.toJson(),
         "soLuong": soLuong,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
       };
 }
