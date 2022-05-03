@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 showConfirmDialog(BuildContext context, VoidCallback method, String title) {
   // set up the buttons
   Widget cancelButton = TextButton(
-    child: Text("No"),
+    child: Text("Hủy"),
     onPressed: () {
       Navigator.of(context).pop();
     },
   );
   Widget continueButton = TextButton(
-    child: Text("Yes"),
+    child: Text("Đồng ý"),
     onPressed: () {
       method();
     },

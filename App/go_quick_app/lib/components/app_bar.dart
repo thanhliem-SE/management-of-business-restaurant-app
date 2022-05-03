@@ -7,16 +7,16 @@ buildAppBar(
     List<Widget>? actions}) {
   Size size = MediaQuery.of(context).size;
   return AppBar(
-    backgroundColor: kPrimaryLightColor,
+    backgroundColor: kPrimaryColor,
     title: Text(
       title,
-      style: TextStyle(color: Colors.black),
+      style: TextStyle(color: Colors.white),
     ),
     centerTitle: true,
     leading: IconButton(
       icon: Icon(
         Icons.arrow_back,
-        color: Colors.black,
+        color: Colors.white,
         size: size.height * 0.05,
       ),
       onPressed: () => Navigator.pop(context),

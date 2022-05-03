@@ -2,7 +2,7 @@
 //
 //     final hoaDon = hoaDonFromJson(jsonString);
 
-import 'package:go_quick_app/models/khach_hang.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:meta/meta.dart';
@@ -16,25 +16,23 @@ String listHoaDonToJson(List<HoaDon> data) =>
 
 class HoaDon {
   HoaDon({
+    this.maHoaDon,
     this.nguoiLapHoaDon,
-    this.khachHang,
     this.tongThanhTien,
     this.thanhToan,
-    this.ban,
     this.soNguoi,
+    this.ban,
     this.tinhTrang,
-    this.maHoaDon,
     this.createdAt,
     this.updatedAt,
   });
 
   int? maHoaDon;
   NhanVien? nguoiLapHoaDon;
-  KhachHang? khachHang;
-  double? tongThanhTien;
+  int? tongThanhTien;
   ThanhToan? thanhToan;
-  int? ban;
   int? soNguoi;
+  Ban? ban;
   String? tinhTrang;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -42,15 +40,10 @@ class HoaDon {
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
         nguoiLapHoaDon: NhanVien.fromJson(json["nguoiLapHoaDon"]),
-        khachHang: json["khachHang"] != null
-            ? KhachHang.fromJson(json["khachHang"])
-            : null,
         tongThanhTien: json["tongThanhTien"],
-        thanhToan: json["thanhToan"] != null
-            ? ThanhToan.fromJson(json["thanhToan"])
-            : null,
-        ban: json["ban"],
+        thanhToan: ThanhToan.fromJson(json["thanhToan"]),
         soNguoi: json["soNguoi"],
+        ban: Ban.fromJson(json["ban"]),
         tinhTrang: json["tinhTrang"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
@@ -60,18 +53,13 @@ class HoaDon {
             : null,
       );
 
-  Map<String, dynamic> toJson() {
-    var json = {
-      "maHoaDon": maHoaDon,
-      "nguoiLapHoaDon": nguoiLapHoaDon!.toJson(),
-      "khachHang": khachHang?.toJson(),
-      "tongThanhTien": tongThanhTien,
-      "thanhToan": thanhToan?.toJson(),
-      "ban": ban,
-      "soNguoi": soNguoi,
-      "tinhTrang": tinhTrang,
-    };
-    json.removeWhere((key, value) => value == null);
-    return json;
-  }
+  Map<String, dynamic> toJson() => {
+        "maHoaDon": maHoaDon,
+        "nguoiLapHoaDon": nguoiLapHoaDon?.toJson(),
+        "tongThanhTien": tongThanhTien,
+        "thanhToan": thanhToan?.toJson(),
+        "soNguoi": soNguoi,
+        "ban": ban?.toJson(),
+        "tinhTrang": tinhTrang,
+      };
 }

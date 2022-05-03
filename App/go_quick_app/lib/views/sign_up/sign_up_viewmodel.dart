@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_quick_app/models/khach_hang.dart';
 import 'package:go_quick_app/models/quyen.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
@@ -51,23 +50,22 @@ class SignUpViewModel extends ChangeNotifier {
 
   SignUp(context) async {
     setLoading(true);
-    KhachHang khachHang = KhachHang();
-    khachHang.tenKhachHang = tenKhachHang;
-    khachHang.soDienThoai = soDienthoai;
-    TaiKhoan taikhoan = TaiKhoan();
-    taikhoan.tenTaiKhoan = tenTaikhoan;
-    taikhoan.matKhau = matKhau;
-    taikhoan.quyen = "KHACHHANG";
-    khachHang.taiKhoan = taikhoan;
-    var response = await KhachHangService().dangKyTaiKhoanKhachHang(khachHang);
-    if (response is Success) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text("dang ky thanh cong")));
-    }
-    if (response is Failure) {
-      String errorResponse = (response).errrorResponse as String;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(errorResponse)));
-    }
+    // khachHang.tenKhachHang = tenKhachHang;
+    // khachHang.soDienThoai = soDienthoai;
+    // TaiKhoan taikhoan = TaiKhoan();
+    // taikhoan.tenTaiKhoan = tenTaikhoan;
+    // taikhoan.matKhau = matKhau;
+    // taikhoan.quyen = "KHACHHANG";
+    // khachHang.taiKhoan = taikhoan;
+    // var response = await KhachHangService().dangKyTaiKhoanKhachHang(khachHang);
+    // if (response is Success) {
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(const SnackBar(content: Text("dang ky thanh cong")));
+    // }
+    // if (response is Failure) {
+    //   String errorResponse = (response).errrorResponse as String;
+    //   ScaffoldMessenger.of(context)
+    //       .showSnackBar(SnackBar(content: Text(errorResponse)));
+    // }
   }
 }
