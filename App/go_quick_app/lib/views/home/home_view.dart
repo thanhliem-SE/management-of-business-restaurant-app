@@ -11,6 +11,7 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
@@ -103,6 +104,10 @@ class WidgetForAdmin extends StatelessWidget {
           NavigationHelper.push(
               context: context, page: const ResponseOrderView());
         }),
+        cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
+          NavigationHelper.push(
+              context: context, page: const ManageTableView());
+        }),
         cardItemMenu(
             size, Icons.person, 'Quản lý bàn', Colors.limeAccent, () {}),
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
@@ -111,8 +116,11 @@ class WidgetForAdmin extends StatelessWidget {
             Colors.orangeAccent, () {}),
         cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
             Colors.indigoAccent, () {}),
-        cardItemMenu(
-            size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent, () {}),
+        cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
+            () {
+          NavigationHelper.clearAllAndNavigateTo(
+              context: context, page: LoginView());
+        }),
       ],
     );
   }
