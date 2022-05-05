@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/welcome/welcome_view.dart';
 
 class NavBar extends StatelessWidget {
@@ -74,7 +75,7 @@ class NavBar extends StatelessWidget {
             onTap: () => {
               Helper.setToken(''),
               NavigationHelper.pushReplacement(
-                  context: context, page: WelcomeView())
+                  context: context, page: LoginView())
             },
           ),
         ],
