@@ -34,22 +34,24 @@ class SearchFoodDialog extends StatelessWidget {
         'TÌM KIẾM MÓN ĂN',
         textAlign: TextAlign.center,
       ),
-      content: Column(
-        children: [
-          RoundedInputField(
-            hintText: 'Nhập tên món',
-            onChanged: (value) {},
-            icon: Icons.fastfood_outlined,
-          ),
-          SizedBox(
-            height: size.height * 0.5,
-            width: size.width,
-            child: ListViewFood(
-              listChiTietThucPham: listChiTietThucPham,
-              isDialog: true,
+      content: SingleChildScrollView(
+        child: Column(
+          children: [
+            RoundedInputField(
+              hintText: 'Nhập tên món',
+              onChanged: (value) {},
+              icon: Icons.fastfood_outlined,
             ),
-          )
-        ],
+            SizedBox(
+              height: size.height * 0.5,
+              width: size.width,
+              child: ListViewFood(
+                listChiTietThucPham: listChiTietThucPham,
+                isDialog: true,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
