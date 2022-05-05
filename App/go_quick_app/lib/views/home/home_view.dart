@@ -104,10 +104,15 @@ class WidgetForAdmin extends StatelessWidget {
           NavigationHelper.push(
               context: context, page: const ResponseOrderView());
         }),
+<<<<<<< HEAD
         cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
           NavigationHelper.push(
               context: context, page: const ManageTableView());
         }),
+=======
+        cardItemMenu(
+            size, Icons.person, 'Quản lý bàn', Colors.limeAccent, () {}),
+>>>>>>> 8a895b9c2b0006b8cb2a6f86708082bce73602e5
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
             Colors.lightBlueAccent, () {}),
         cardItemMenu(size, Icons.restaurant, 'Quản lý món ăn',
