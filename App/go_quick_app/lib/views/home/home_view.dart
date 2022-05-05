@@ -12,6 +12,8 @@ import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
+import 'package:go_quick_app/views/response_order/response_order_view.dart';
+import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
@@ -33,13 +35,13 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
+          title: const Text(
             'GoQuick',
           ),
           backgroundColor: kPrimaryColor,
           centerTitle: true,
           actions: [
-            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           ]),
       body: FutureBuilder(
         future: future,
@@ -48,15 +50,15 @@ class _HomeViewState extends State<HomeView> {
             taiKhoan = snapshot.data as TaiKhoan;
             storedSignedData(taiKhoan);
             if (taiKhoan.quyen == 'ADMIN') {
-              return WidgetForAdmin();
+              return const WidgetForAdmin();
             }
             return Container();
           } else {
-            return LoginView();
+            return const LoginView();
           }
         },
       ),
-      drawer: NavBar(),
+      drawer: const NavBar(),
     );
   }
 
@@ -95,16 +97,18 @@ class WidgetForAdmin extends StatelessWidget {
               page: const RequestOrderView(),
               routeName: 'RequestOrderView');
         }),
-        cardItemMenu(size, Icons.library_books, 'Tiếp nhận đặt món',
-            Colors.pinkAccent, () {}),
+        cardItemMenu(
+            size, Icons.library_books, 'Tiếp nhận đặt món', Colors.pinkAccent,
+            () {
+          NavigationHelper.push(
+              context: context, page: const ResponseOrderView());
+        }),
+        cardItemMenu(
+            size, Icons.person, 'Quản lý bàn', Colors.limeAccent, () {}),
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
             Colors.lightBlueAccent, () {}),
-        cardItemMenu(
-            size, Icons.person, 'Quản lý khách hàng', Colors.limeAccent, () {}),
         cardItemMenu(size, Icons.restaurant, 'Quản lý món ăn',
             Colors.orangeAccent, () {}),
-        cardItemMenu(size, Icons.home_repair_service_outlined,
-            'Quản lý nguyên liệu', Colors.purpleAccent, () {}),
         cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
             Colors.indigoAccent, () {}),
         cardItemMenu(
