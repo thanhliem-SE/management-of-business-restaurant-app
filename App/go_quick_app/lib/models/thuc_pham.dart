@@ -1,3 +1,5 @@
+import 'package:go_quick_app/models/danh_muc.dart';
+
 class ThucPham {
   ThucPham({
     this.maThucPham,
@@ -7,6 +9,7 @@ class ThucPham {
     this.urlHinhAnh,
     this.chiTiet,
     this.trangThai,
+    this.danhMuc,
     this.createdAt,
     this.updatedAt,
   });
@@ -16,6 +19,8 @@ class ThucPham {
   String? moTa;
   double? giaTien;
   List<String>? urlHinhAnh;
+  DanhMuc? danhMuc;
+
   String? chiTiet;
   String? trangThai;
   DateTime? createdAt;
@@ -28,6 +33,7 @@ class ThucPham {
         giaTien: json["giaTien"],
         urlHinhAnh: List<String>.from(json["urlHinhAnh"].map((x) => x)),
         chiTiet: json["chiTiet"],
+        danhMuc: DanhMuc.fromJson(json["danhMuc"]),
         trangThai: json["trangThai"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
@@ -45,5 +51,6 @@ class ThucPham {
         "urlHinhAnh": List<dynamic>.from(urlHinhAnh!.map((x) => x)),
         "chiTiet": chiTiet,
         "trangThai": trangThai,
+        "danhMuc": danhMuc?.toJson(),
       };
 }

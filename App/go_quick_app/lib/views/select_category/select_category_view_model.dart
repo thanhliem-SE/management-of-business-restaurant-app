@@ -15,15 +15,39 @@ import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
+  bool _isInit = false;
+  List<ChiTietThucPham> _listChiTietThucPham = [];
   double _totalPrice = 0;
 
+  getIsInit() => _isInit;
+
+  setListChiTietThucPham(List<ChiTietThucPham> listChiTietThucPham) {
+    _listChiTietThucPham = listChiTietThucPham;
+    notifyListeners();
+  }
+
+  getListChiTietThucPham() {
+    return _listChiTietThucPham;
+  }
+
   getTotalPrice() {
-    // double sum = 0;
-    // for (int i = 0; i < listAmoutFoodOrder.length; i++) {
-    //   sum += listChiTietThucPham[i].thucPham.giaTien! * listAmoutFoodOrder[i];
-    // }
-    // return sum;
     return 100000;
+  }
+
+  init() {
+    _isInit = true;
+    getChiTietThucPhamFromServer();
+  }
+
+  getChiTietThucPhamFromServer() async {
+    String token = await Helper.getToken();
+    var response =
+        await ChiTietThucPhamService().getChiTietThucPhamHomNay(token);
+    if (response is Success) {
+      setListChiTietThucPham(response.response as List<ChiTietThucPham>);
+    } else {
+      return null;
+    }
   }
 }
 
