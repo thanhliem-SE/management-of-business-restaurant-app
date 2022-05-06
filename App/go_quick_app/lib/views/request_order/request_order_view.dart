@@ -3,6 +3,7 @@ import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
@@ -19,6 +20,11 @@ class RequestOrderView extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<RequestOrderViewModel>(context);
     Size size = MediaQuery.of(context).size;
+
+    if (viewModel.getIsInit() == false) {
+      viewModel.init();
+    }
+
     return Scaffold(
       appBar: buildAppBar(
         context: context,
@@ -39,7 +45,7 @@ class RequestOrderView extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {
-              // viewModel.init();
+              viewModel.init();
             },
             icon: Icon(
               Icons.refresh_sharp,
@@ -53,60 +59,33 @@ class RequestOrderView extends StatelessWidget {
         color: kPrimaryLightColor,
         child: Column(
           children: [
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.grid_view_sharp,
-                      size: size.width * 0.12,
-                      color: Colors.blueGrey,
-                    ),
-                  ),
-                  Image.asset(
-                    'assets/icons/icon_table.png',
-                    color: kPrimaryColor,
-                    width: size.width * 0.2,
-                    height: size.height * 0.12,
-                    fit: BoxFit.fill,
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.table_rows_sharp,
-                      size: size.width * 0.12,
-                      color: Colors.black,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: size.height * 0.01),
+            SizedBox(height: size.height * 0.03),
             Text('DANH SÁCH BÀN ĂN',
                 style: TextStyle(
                     fontSize: size.height * 0.03,
                     fontWeight: FontWeight.bold,
                     color: Colors.black)),
             Expanded(
-              child: GridView.builder(
-                primary: false,
-                padding: const EdgeInsets.all(20),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10,
-                ),
-                itemCount: 20,
-                itemBuilder: (BuildContext context, int index) {
-                  return cardTableOrder(
-                      size: size, numTable: index + 1, context: context);
-                },
-              ),
+              child: (viewModel.getListBan().length > 0)
+                  ? GridView.builder(
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: viewModel.getListBan().length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return cardTableOrder(
+                            size: size,
+                            context: context,
+                            ban: viewModel.getListBan()[index],
+                            viewModel: viewModel);
+                      },
+                    )
+                  : Container(),
             ),
           ],
         ),
@@ -115,11 +94,11 @@ class RequestOrderView extends StatelessWidget {
   }
 }
 
-Container cardTableOrder({
-  required Size size,
-  required int numTable,
-  required BuildContext context,
-}) {
+Container cardTableOrder(
+    {required Size size,
+    required BuildContext context,
+    required Ban ban,
+    required RequestOrderViewModel viewModel}) {
   return Container(
     padding: const EdgeInsets.all(8),
     margin: const EdgeInsets.symmetric(horizontal: 5),
@@ -127,37 +106,43 @@ Container cardTableOrder({
       boxShadow: [
         customBoxShadow(color: Colors.grey),
       ],
-      color: Colors.white,
+      color: ban.tinhTrang == null ? Colors.white : kPrimaryColor,
       border: Border.all(
         color: Colors.blueGrey,
         width: 2,
       ),
     ),
     child: InkWell(
-      onTap: () {},
+      onTap: () {
+        if (ban.tinhTrang != null) {
+          viewModel.showHoaDon(maSoBan: ban.maSoBan!, context: context);
+        }
+      },
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                numTable.toString(),
-                style: const TextStyle(
+                ban.viTri.toString(),
+                style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
-                    color: kPrimaryColor),
+                    color:
+                        ban.tinhTrang == null ? kPrimaryColor : Colors.white),
               ),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
-                'Trống',
+                ban.tinhTrang == null ? 'Trống' : 'Phục Vụ',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: kPrimaryColor),
+                    color:
+                        ban.tinhTrang == null ? kPrimaryColor : Colors.white),
               ),
             ],
           ),
@@ -166,230 +151,3 @@ Container cardTableOrder({
     ),
   );
 }
-
-
-
-
-// class RequestOrderView extends StatefulWidget {
-//   const RequestOrderView({Key? key}) : super(key: key);
-
-//   @override
-//   State<RequestOrderView> createState() => _RequestOrderViewState();
-// }
-
-// class _RequestOrderViewState extends State<RequestOrderView> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final viewModel = Provider.of<RequestOrderViewModel>(context);
-
-//     if (viewModel.isInit == false) {
-//       viewModel.init();
-//     }
-
-//     Size size = MediaQuery.of(context).size;
-//     List<HoaDon> listHoaDonChuaThanhToan = viewModel.getListHoaDon();
-
-//     return Scaffold(
-//       appBar: buildAppBar(
-//         context: context,
-//         title: 'Yêu cầu đặt món',
-//         actions: [
-//           IconButton(
-//             onPressed: () {
-//               showDialog(
-//                   context: context, builder: (context) => SelectTableCount());
-//             },
-//             icon: Icon(
-//               Icons.add,
-//               color: Colors.black,
-//               size: size.height * 0.05,
-//             ),
-//           ),
-//           IconButton(
-//             onPressed: () {
-//               viewModel.init();
-//             },
-//             icon: Icon(
-//               Icons.refresh_sharp,
-//               color: Colors.black,
-//               size: size.height * 0.04,
-//             ),
-//           ),
-//         ],
-//       ),
-//       body: Container(
-//         color: kPrimaryLightColor,
-//         child: Column(
-//           children: [
-//             Container(
-//               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-//               margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
-//               color: Colors.white,
-//               child: Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   IconButton(
-//                     onPressed: () {},
-//                     icon: Icon(
-//                       Icons.grid_view_sharp,
-//                       size: size.width * 0.12,
-//                       color: Colors.blueGrey,
-//                     ),
-//                   ),
-//                   Image.asset(
-//                     'assets/icons/icon_table.png',
-//                     color: kPrimaryColor,
-//                     width: size.width * 0.2,
-//                     height: size.height * 0.12,
-//                     fit: BoxFit.fill,
-//                   ),
-//                   IconButton(
-//                     onPressed: () {},
-//                     icon: Icon(
-//                       Icons.table_rows_sharp,
-//                       size: size.width * 0.12,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             SizedBox(height: size.height * 0.01),
-//             Text('DANH SÁCH BÀN ĂN',
-//                 style: TextStyle(
-//                     fontSize: size.height * 0.03,
-//                     fontWeight: FontWeight.bold,
-//                     color: Colors.black)),
-//             Expanded(
-//               child: listHoaDonChuaThanhToan.length > 0
-//                   ? GridView.builder(
-//                       primary: false,
-//                       padding: const EdgeInsets.all(20),
-//                       gridDelegate:
-//                           const SliverGridDelegateWithFixedCrossAxisCount(
-//                         crossAxisCount: 3,
-//                         crossAxisSpacing: 10,
-//                         mainAxisSpacing: 10,
-//                       ),
-//                       itemCount: 20,
-//                       itemBuilder: (BuildContext context, int index) {
-//                         HoaDon? hoaDon;
-//                         listHoaDonChuaThanhToan.forEach((element) {
-//                           if (element.ban == index + 1) {
-//                             hoaDon = listHoaDonChuaThanhToan
-//                                 .where((element2) => element2.ban == index + 1)
-//                                 .first;
-//                           }
-//                         });
-//                         return hoaDon != null
-//                             ? cardTableOrder(
-//                                 size: size,
-//                                 people: hoaDon!.soNguoi!,
-//                                 numTable: hoaDon!.ban!,
-//                                 context: context,
-//                                 hoaDon: hoaDon)
-//                             : cardTableOrder(
-//                                 size: size,
-//                                 people: 0,
-//                                 numTable: index + 1,
-//                                 context: context,
-//                                 hoaDon: hoaDon);
-//                       },
-//                     )
-//                   : const Text(
-//                       'Không có bàn ăn nào đang phục vụ',
-//                       style: TextStyle(fontSize: 18),
-//                     ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-  
-
-
-
-// class SelectCustomerCount extends StatelessWidget {
-//   const SelectCustomerCount({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final viewModel = Provider.of<RequestOrderViewModel>(context);
-//     Size size = MediaQuery.of(context).size;
-//     return AlertDialog(
-//       title: const Text(
-//         'CHỌN SỐ KHÁCH',
-//         textAlign: TextAlign.center,
-//       ),
-//       content: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             Icon(
-//               Icons.people,
-//               size: size.height * 0.08,
-//             ),
-//             SizedBox(
-//               height: size.height * 0.01,
-//             ),
-//             Container(
-//               width: size.width,
-//               height: size.height * 0.38,
-//               child: GridView.builder(
-//                 physics: const NeverScrollableScrollPhysics(),
-//                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-//                   crossAxisCount: 5,
-//                 ),
-//                 itemCount: 20,
-//                 itemBuilder: (BuildContext context, int index) {
-//                   var color = viewModel.getNumCustomer() == index
-//                       ? kPrimaryColor
-//                       : kPrimaryLightColor;
-//                   return InkWell(
-//                     onTap: () {
-//                       viewModel.setNumCustomer(index);
-//                     },
-//                     child: Card(
-//                       color: color,
-//                       child: Center(
-//                           child: Text(
-//                         (index + 1).toString(),
-//                         style: TextStyle(
-//                             fontWeight: FontWeight.bold,
-//                             color: viewModel.getNumCustomer() == index
-//                                 ? Colors.white
-//                                 : Colors.black),
-//                       )),
-//                     ),
-//                   );
-//                 },
-//               ),
-//             ),
-//             RoundedButton(
-//               text: 'TIẾP THEO',
-//               press: () {
-//                 NavigationHelper.push(
-//                   context: context,
-//                   page: SelectCategoryView(
-//                       numTable: viewModel.getNumTable() + 1,
-//                       numCustomer: viewModel.getNumCustomer() + 1),
-//                 );
-//               },
-//               color: kPrimaryColor,
-//               textColor: Colors.white,
-//             ),
-//             RoundedButton(
-//               text: 'QUAY LẠI',
-//               press: () {
-//                 Navigator.pop(context);
-//               },
-//               color: Colors.red,
-//               textColor: Colors.white,
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

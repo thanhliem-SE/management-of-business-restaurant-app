@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/quyen.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
-import 'package:go_quick_app/services/khach_hang_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class SignUpViewModel extends ChangeNotifier {

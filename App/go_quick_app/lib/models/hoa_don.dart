@@ -29,7 +29,7 @@ class HoaDon {
 
   int? maHoaDon;
   NhanVien? nguoiLapHoaDon;
-  int? tongThanhTien;
+  double? tongThanhTien;
   ThanhToan? thanhToan;
   int? soNguoi;
   Ban? ban;

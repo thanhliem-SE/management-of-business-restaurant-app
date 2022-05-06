@@ -93,7 +93,7 @@ class ManageTableView extends StatelessWidget {
               boxShadow: [
                 customBoxShadow(color: Colors.grey),
               ],
-              color: Colors.red,
+              color: kPrimaryColor,
               border: Border.all(
                 color: Colors.blueGrey,
                 width: 2,

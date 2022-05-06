@@ -1,11 +1,31 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/services/api_status.dart';
+import 'package:go_quick_app/services/ban_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/bill/bill_view.dart';
 
 class RequestOrderViewModel extends ChangeNotifier {
+  bool isInit = false;
+  List<Ban> _listBan = [];
   int _numTable = 0;
+
+  getIsInit() {
+    return isInit;
+  }
+
+  setListBan(List<Ban> listBan) {
+    _listBan = listBan;
+    notifyListeners();
+  }
+
+  getListBan() {
+    return _listBan;
+  }
 
   getNumTable() => _numTable;
 
@@ -13,55 +33,29 @@ class RequestOrderViewModel extends ChangeNotifier {
     _numTable = num;
     notifyListeners();
   }
+
+  getListBanFromServer() async {
+    String token = await Helper.getToken();
+    var response = await BanService().getListBan(token);
+    if (response is Success) {
+      setListBan(response.response as List<Ban>);
+    } else {
+      return null;
+    }
+  }
+
+  init() {
+    getListBanFromServer();
+    isInit = true;
+    notifyListeners();
+  }
+
+  showHoaDon({required int maSoBan, required BuildContext context}) async {
+    String token = await Helper.getToken();
+    var response = await HoaDonService().getHoaDonPhucVuTaiBan(token, maSoBan);
+    if (response is Success) {
+      HoaDon hoaDon = response.response as HoaDon;
+      NavigationHelper.push(context: context, page: BillView(hoaDon: hoaDon));
+    }
+  }
 }
-// class RequestOrderViewModel extends ChangeNotifier {
-//   int? _numCustomer;
-//   List<HoaDon> _listHoaDon = [];
-//   List<Ban> _listBan = [];
-//   List<int> _listTableDangPhucVu = [];
-//   bool _isInit = false;
-
-//   get isInit => _isInit;
-
-//   setListHoaDon(List<HoaDon> listHoaDon) {
-//     _listHoaDon = listHoaDon;
-//     listHoaDon.forEach((element) {
-//       _listTableDangPhucVu.add(element.ban!);
-//     });
-//     notifyListeners();
-//   }
-
-//   getListTableDangPhucVu() => _listTableDangPhucVu;
-
-//   getListHoaDon() => _listHoaDon;
-
-//   setNumCustomer(int? numCustomer) {
-//     _numCustomer = numCustomer;
-//     notifyListeners();
-//   }
-
-//   getNumCustomer() => _numCustomer;
-
-//   setNumTable(int? numTable) {
-//     _numTable = numTable;
-//     notifyListeners();
-//   }
-
-//   getNumTable() => _numTable;
-
-//   init() async {
-//     String token = await Helper.getToken();
-//     var response = await HoaDonService().getHoaDonChuaThanhToan(token);
-//     if (response is Success) {
-//       _isInit = true;
-//       setListHoaDon(response.response as List<HoaDon>);
-//     } else {
-//       return null;
-//     }
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//   }
-// }
