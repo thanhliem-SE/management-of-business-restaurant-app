@@ -45,9 +45,8 @@ class RequestOrderViewModel extends ChangeNotifier {
   }
 
   init() {
-    getListBanFromServer();
     isInit = true;
-    notifyListeners();
+    getListBanFromServer();
   }
 
   showHoaDon({required int maSoBan, required BuildContext context}) async {

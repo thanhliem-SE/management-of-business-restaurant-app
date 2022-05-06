@@ -20,26 +20,48 @@ class SelectCategoryView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final requestOrderModel =
-        Provider.of<RequestOrderViewModel>(context, listen: false);
+    final requestOrderModel = Provider.of<RequestOrderViewModel>(context);
     final viewModel = Provider.of<SelectCategoryViewModel>(context);
+
+    if (viewModel.getIsInit() == false) {
+      viewModel.init();
+    }
+
+    List<ChiTietThucPham> listChiTietThucPham =
+        viewModel.getListChiTietThucPham();
+
+    List<ChiTietThucPham> listFoodTab = listChiTietThucPham
+        .where(
+            (element) => element.thucPham!.danhMuc!.loaiDanhMuc! == 'Thức ăn')
+        .toList();
+    List<ChiTietThucPham> listDrinkTab = listChiTietThucPham
+        .where(
+            (element) => element.thucPham!.danhMuc!.loaiDanhMuc! == 'Thức uống')
+        .toList();
+    List<ChiTietThucPham> listSnackTab = listChiTietThucPham
+        .where((element) =>
+            element.thucPham!.danhMuc!.loaiDanhMuc! == 'Tráng miệng')
+        .toList();
+    List<ChiTietThucPham> listOtherTab = listChiTietThucPham
+        .where((element) => element.thucPham!.danhMuc!.loaiDanhMuc! == 'Khác')
+        .toList();
 
     Size size = MediaQuery.of(context).size;
 
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        appBar: buildAppBar(size, context),
+        appBar: buildAppBar(size, context, viewModel),
         body: Column(
           children: [
             SizedBox(
               height: size.height * 0.7,
               child: TabBarView(
                 children: [
-                  getFoodTab(),
-                  getDrinkTab(),
-                  getSnackTab(),
-                  getOtherTab()
+                  getFoodTab(listChiTietThucPham: listFoodTab),
+                  getDrinkTab(listChiTietThucPham: listDrinkTab),
+                  getSnackTab(listChiTietThucPham: listSnackTab),
+                  getOtherTab(listChiTietThucPham: listOtherTab)
                 ],
               ),
             ),
@@ -97,7 +119,8 @@ class SelectCategoryView extends StatelessWidget {
     );
   }
 
-  AppBar buildAppBar(Size size, BuildContext context) {
+  AppBar buildAppBar(
+      Size size, BuildContext context, SelectCategoryViewModel viewModel) {
     return AppBar(
       backgroundColor: kPrimaryColor,
       bottom: const TabBar(
@@ -129,7 +152,12 @@ class SelectCategoryView extends StatelessWidget {
             );
           },
           icon: const Icon(Icons.search),
-        )
+        ),
+        IconButton(
+            onPressed: () {
+              viewModel.init();
+            },
+            icon: Icon(Icons.refresh))
       ],
       title: const Text(
         'Danh Sách Món',
@@ -147,73 +175,25 @@ class SelectCategoryView extends StatelessWidget {
     );
   }
 
-  getFoodTab() {
-    List<ChiTietThucPham> listChiTietThucPham = [
-      ChiTietThucPham(
-          maChiTietThucPham: 1,
-          thucPham: ThucPham(
-              maThucPham: 1,
-              ten: 'Cơm tấm',
-              giaTien: 30000,
-              urlHinhAnh: [
-                'https://statics.vinpearl.com/com-tam-ngon-o-sai-gon-0_1630562640.jpg'
-              ]),
-          soLuong: 5),
-    ];
+  getFoodTab({required List<ChiTietThucPham> listChiTietThucPham}) {
     return ListViewFood(
       listChiTietThucPham: listChiTietThucPham,
     );
   }
 
-  getSnackTab() {
-    List<ChiTietThucPham> listChiTietThucPham = [
-      ChiTietThucPham(
-          maChiTietThucPham: 1,
-          thucPham: ThucPham(
-              maThucPham: 2,
-              ten: 'Kem ly',
-              giaTien: 20000,
-              urlHinhAnh: [
-                'https://cf.shopee.vn/file/893443060f2c6b9fbfab897c0cd59b08'
-              ]),
-          soLuong: 5),
-    ];
+  getSnackTab({required List<ChiTietThucPham> listChiTietThucPham}) {
     return ListViewFood(
       listChiTietThucPham: listChiTietThucPham,
     );
   }
 
-  getDrinkTab() {
-    List<ChiTietThucPham> listChiTietThucPham = [
-      ChiTietThucPham(
-          maChiTietThucPham: 1,
-          thucPham: ThucPham(
-              maThucPham: 3,
-              ten: 'Lon CocaCola',
-              giaTien: 10000,
-              urlHinhAnh: [
-                'https://filebroker-cdn.lazada.vn/kf/S7f8ed4d038d743d4852ab22504a211f8K.jpg'
-              ]),
-          soLuong: 5),
-    ];
+  getDrinkTab({required List<ChiTietThucPham> listChiTietThucPham}) {
     return ListViewFood(
       listChiTietThucPham: listChiTietThucPham,
     );
   }
 
-  getOtherTab() {
-    List<ChiTietThucPham> listChiTietThucPham = [
-      ChiTietThucPham(
-          maChiTietThucPham: 4,
-          thucPham: ThucPham(
-              maThucPham: 4,
-              ten: 'Thuốc bắc hầm gà',
-              giaTien: 20000,
-              urlHinhAnh: [
-                'https://ytamduong.vn/wp-content/uploads/2017/11/ga-ham-2.jpg'
-              ]),
-          soLuong: 5),
-    ];
+  getOtherTab({required List<ChiTietThucPham> listChiTietThucPham}) {
     return ListViewFood(
       listChiTietThucPham: listChiTietThucPham,
     );

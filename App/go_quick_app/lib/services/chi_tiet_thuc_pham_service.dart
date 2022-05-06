@@ -18,7 +18,9 @@ class ChiTietThucPhamService {
           });
 
       if (response.statusCode == 200) {
-        return Success(response: listChiTietThucPhamFromJson(response.body));
+        return Success(
+            response:
+                listChiTietThucPhamFromJson(utf8.decode(response.bodyBytes)));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
