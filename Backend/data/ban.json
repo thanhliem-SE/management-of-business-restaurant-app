@@ -1,18 +1,42 @@
 [
   {
     "viTri": 1,
-    "tinhTrang": "WAIT"
+    "tinhTrang": "CHO"
   },
   {
     "viTri": 2,
-    "tinhTrang": "WAIT"
+    "tinhTrang": "CHO"
   },
   {
     "viTri": 3,
-    "tinhTrang": "WAIT"
+    "tinhTrang": "CHO"
   },
   {
     "viTri": 4,
-    "tinhTrang": "WAIT"
-  }
+    "tinhTrang": "CHO"
+  },
+  {
+    "viTri": 5,
+    "tinhTrang": null
+  },
+  {
+    "viTri": 6,
+    "tinhTrang": null
+  },
+  {
+    "viTri": 7,
+    "tinhTrang": null
+  },
+  {
+    "viTri": 8,
+    "tinhTrang": null
+  },
+  {
+    "viTri": 9,
+    "tinhTrang": null
+  },
+  {
+    "viTri": 10,
+    "tinhTrang": null
+  },
 ]

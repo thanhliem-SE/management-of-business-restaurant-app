@@ -8,7 +8,7 @@
       "maSoBan": 1
     },
     "soNguoi": 5,
-    "tinhTrang": "WAIT",
+    "tinhTrang": "CHO",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -22,7 +22,7 @@
       "maSoBan": 2
     },
     "soNguoi": 2,
-    "tinhTrang": "WAIT",
+    "tinhTrang": "CHO",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -36,7 +36,7 @@
       "maSoBan": 3
     },
     "soNguoi": 4,
-    "tinhTrang": "WAIT",
+    "tinhTrang": "CHO",
     "thanhToan": {
       "maThanhToan": 1
     }
@@ -50,7 +50,7 @@
       "maSoBan": 4
     },
     "soNguoi": 2,
-    "tinhTrang": "WAIT",
+    "tinhTrang": "CHO",
     "thanhToan": {
       "maThanhToan": 1
     }

@@ -1,9 +1,10 @@
 package com.example.easynotes.model;
 
 public enum TinhTrang {
-    PROCESSED,
-    RESERVE,
-    PROCESSING,
-    WAIT,
-    PAYMENTED
+    CHO,
+    DANGCHEBIEN,
+    HOANTHANH,
+    CHUATHANHTOAN,
+    DATHANHTOAN,
+    HUY
 }

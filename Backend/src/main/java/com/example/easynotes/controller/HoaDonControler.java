@@ -65,4 +65,9 @@ public class HoaDonControler  {
     public List<HoaDon> getHoaDonBeforPaymented(){
         return service.getHoaDonBeforePaymented();
     }
+
+    @GetMapping("/phucvutaiban/{masoban}")
+    public HoaDon getHoaDonDangPhucVuTaiBan(@PathVariable(value = "masoban") int masoban){
+        return service.getHoaDonDangPhucVuTaiBan(masoban);
+    }
 }
