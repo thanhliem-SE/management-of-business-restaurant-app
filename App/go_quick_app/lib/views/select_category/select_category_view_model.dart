@@ -8,7 +8,6 @@ import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
-import 'package:go_quick_app/services/khach_hang_service.dart';
 import 'package:go_quick_app/services/thanh_toan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';

@@ -28,7 +28,7 @@ class ChiTietHoaDon {
   int? maChiTietHoaDon;
   ThucPham? thucPham;
   int? soLuong;
-  int? thanhTien;
+  double? thanhTien;
   HoaDon? hoaDon;
   DateTime? createdAt;
   DateTime? updatedAt;

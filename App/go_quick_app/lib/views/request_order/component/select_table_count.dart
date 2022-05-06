@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
@@ -13,10 +14,13 @@ class SelectTableCount extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<RequestOrderViewModel>(context);
+    List<Ban> listBanTrong =
+        viewModel.getListBan().where((ban) => ban.tinhTrang == null).toList();
     return AlertDialog(
       title: const Text(
         'DANH SÁCH BÀN TRỐNG',
         textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -26,6 +30,7 @@ class SelectTableCount extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/icons/icon_table.png',
+                  color: kPrimaryColor,
                 ),
               ],
             ),
@@ -35,13 +40,15 @@ class SelectTableCount extends StatelessWidget {
             Container(
               width: size.width,
               height: size.height * 0.38,
+              alignment: Alignment.center,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 5,
                 ),
-                itemCount: 20,
+                itemCount: listBanTrong.length,
                 itemBuilder: (BuildContext context, int index) {
+                  Ban ban = listBanTrong[index];
                   return InkWell(
                     onTap: () {
                       viewModel.setNumTable(index + 1);
@@ -52,7 +59,7 @@ class SelectTableCount extends StatelessWidget {
                           : kPrimaryLightColor,
                       child: Center(
                           child: Text(
-                        (index + 1).toString(),
+                        ban.viTri.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: viewModel.getNumTable() == (index + 1)

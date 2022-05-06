@@ -4,6 +4,7 @@ import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_diablog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
+import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
@@ -66,7 +67,10 @@ class SelectCategoryView extends StatelessWidget {
                         showConfirmDialog(context, () {
                           Navigator.pop(context);
                           NavigationHelper.push(
-                              context: context, page: BillView(maHoaDon: 001));
+                              context: context,
+                              page: BillView(
+                                hoaDon: HoaDon(maHoaDon: 1),
+                              ));
                         }, 'Bạn có xác nhận đặt món');
                       },
                       child: Container(

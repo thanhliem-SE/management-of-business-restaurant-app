@@ -1,3 +1,13 @@
+import 'dart:convert';
+
+import 'package:go_quick_app/models/hoa_don.dart';
+
+List<Ban> listBanFromJson(String str) =>
+    List<Ban>.from(json.decode(str).map((x) => Ban.fromJson(x)));
+
+String listBanToJson(List<Ban> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class Ban {
   Ban({
     this.maSoBan,
