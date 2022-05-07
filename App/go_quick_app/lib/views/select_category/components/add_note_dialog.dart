@@ -11,42 +11,31 @@ import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:provider/provider.dart';
 
-class SearchFoodDialog extends StatelessWidget {
-  const SearchFoodDialog({Key? key}) : super(key: key);
+class AddNoteDialog extends StatelessWidget {
+  const AddNoteDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<SelectCategoryViewModel>(context);
-    List<ChiTietThucPham> listChiTietThucPham =
-        viewModel.getListThucPhamByTenMon();
     return AlertDialog(
       title: const Text(
-        'TÌM KIẾM MÓN ĂN',
+        'GHI CHÚ',
         textAlign: TextAlign.center,
       ),
       content: SingleChildScrollView(
         child: Column(
           children: [
             RoundedInputField(
-              hintText: 'Nhập tên món',
+              hintText: 'Thêm ghi chú',
               onChanged: (value) {
-                viewModel.setTenMonTimKiem(value);
+                viewModel.setGhiChu(value);
               },
               icon: Icons.fastfood_outlined,
             ),
-            SizedBox(
-              height: size.height * 0.5,
-              width: size.width,
-              child: listChiTietThucPham.length > 0
-                  ? ListViewFood(
-                      listChiTietThucPham: listChiTietThucPham,
-                      isDialog: true,
-                    )
-                  : Container(
-                      alignment: Alignment.center,
-                      child: Text('Không tìm thấy món ăn nào'),
-                    ),
+            Container(
+              alignment: Alignment.topCenter,
+              child: Text(viewModel.getGhiChu()),
             )
           ],
         ),

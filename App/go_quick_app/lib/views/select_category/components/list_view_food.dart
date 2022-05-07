@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
+import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ListViewFood extends StatelessWidget {
   final List<ChiTietThucPham> listChiTietThucPham;
@@ -13,14 +15,14 @@ class ListViewFood extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final viewModel = Provider.of<SelectCategoryViewModel>(context);
     return ListView.builder(
       shrinkWrap: true,
       itemCount: listChiTietThucPham.length,
       padding: EdgeInsets.all(size.width * 0.05),
       itemBuilder: (BuildContext context, int index) {
         ChiTietThucPham item = listChiTietThucPham[index];
-        // int amount = _viewModel.getAmoutFoodOrder(index);
-        int amount = 1;
+        int amount = viewModel.getSoLuongChonMon(item.maChiTietThucPham!);
         return Container(
           padding: EdgeInsets.all(size.width * 0.02),
           color: Colors.white,
@@ -30,14 +32,22 @@ class ListViewFood extends StatelessWidget {
               ? Column(
                   children: [
                     foodView(item: item, size: size),
-                    quantityChangeView(amount: amount, size: size, item: item),
+                    quantityChangeView(
+                        amount: amount,
+                        size: size,
+                        item: item,
+                        viewModel: viewModel),
                   ],
                 )
               : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     foodView(item: item, size: size),
-                    quantityChangeView(amount: amount, size: size, item: item),
+                    quantityChangeView(
+                        amount: amount,
+                        size: size,
+                        item: item,
+                        viewModel: viewModel),
                   ],
                 ),
         );
@@ -88,15 +98,15 @@ class ListViewFood extends StatelessWidget {
   Row quantityChangeView(
       {required int amount,
       required Size size,
-      required ChiTietThucPham item}) {
+      required ChiTietThucPham item,
+      required SelectCategoryViewModel viewModel}) {
     return Row(
       children: [
         IconButton(
           onPressed: () {
-            // if (amount > 0) {
-            //   _viewModel.setAmoutFoodOrder(
-            //       index, amount - 1);
-            // }
+            if (amount > 0) {
+              viewModel.setSoLuongChonMon(item.maChiTietThucPham!, amount - 1);
+            }
           },
           icon: Icon(Icons.remove_circle_outlined),
           color: (amount > 0) ? kPrimaryColor : Colors.blueGrey,
@@ -108,10 +118,9 @@ class ListViewFood extends StatelessWidget {
         ),
         IconButton(
           onPressed: () {
-            // if (amount < item.soLuong) {
-            //   _viewModel.setAmoutFoodOrder(
-            //       index, amount + 1);
-            // }
+            if (amount < item.soLuong!) {
+              viewModel.setSoLuongChonMon(item.maChiTietThucPham!, amount + 1);
+            }
           },
           icon: Icon(Icons.add_circle_outlined),
           color: (amount < item.soLuong!) ? kPrimaryColor : Colors.blueGrey,

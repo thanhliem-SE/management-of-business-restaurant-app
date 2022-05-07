@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -15,14 +16,57 @@ import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
+  String _tenMonTimKiem = '';
+  String _ghiChu = '';
   bool _isInit = false;
+  Map<int, int> _soLuongChonMon = {};
   List<ChiTietThucPham> _listChiTietThucPham = [];
-  double _totalPrice = 0;
+
+  setGhiChu(String value) {
+    _ghiChu = value;
+    notifyListeners();
+  }
+
+  getGhiChu() {
+    return _ghiChu;
+  }
+
+  get tenMonTimKiem => _tenMonTimKiem;
+
+  setTenMonTimKiem(String value) {
+    _tenMonTimKiem = value;
+    notifyListeners();
+  }
+
+  getListThucPhamByTenMon() {
+    List<ChiTietThucPham> listMonTimKiem = [];
+    print(_tenMonTimKiem);
+    if (_tenMonTimKiem.isNotEmpty) {
+      return _listChiTietThucPham
+          .where((element) =>
+              element.thucPham!.ten!.toLowerCase().contains(_tenMonTimKiem))
+          .toList();
+    } else {
+      return listMonTimKiem;
+    }
+  }
 
   getIsInit() => _isInit;
 
+  getSoLuongChonMon(int maMon) {
+    return _soLuongChonMon[maMon];
+  }
+
+  setSoLuongChonMon(int maChiTietThucPham, int soLuong) {
+    _soLuongChonMon[maChiTietThucPham] = soLuong;
+    notifyListeners();
+  }
+
   setListChiTietThucPham(List<ChiTietThucPham> listChiTietThucPham) {
     _listChiTietThucPham = listChiTietThucPham;
+    listChiTietThucPham.forEach((chiTietThucPham) {
+      _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
+    });
     notifyListeners();
   }
 
@@ -31,7 +75,12 @@ class SelectCategoryViewModel extends ChangeNotifier {
   }
 
   getTotalPrice() {
-    return 100000;
+    double totalPrice = 0;
+    _listChiTietThucPham.forEach((element) {
+      totalPrice += element.thucPham!.giaTien! *
+          _soLuongChonMon[element.maChiTietThucPham]!;
+    });
+    return totalPrice;
   }
 
   init() {
@@ -49,94 +98,51 @@ class SelectCategoryViewModel extends ChangeNotifier {
       return null;
     }
   }
+
+  navigateToHoaDon({required Ban ban, required BuildContext context}) async {
+    var response;
+
+    String token = await Helper.getToken();
+    NhanVien nguoiLapHoaDon = await Helper.getNhanVienSigned();
+
+    HoaDon hoaDon = HoaDon(
+        nguoiLapHoaDon: nguoiLapHoaDon,
+        tongThanhTien: getTotalPrice(),
+        ban: ban,
+        tinhTrang: 'CHO');
+
+    response = await HoaDonService().createHoaDon(token, hoaDon);
+    HoaDon hoaDonCreated = response.response as HoaDon;
+
+    if (response is Success) {
+      _listChiTietThucPham.forEach((element) {
+        if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
+          ChiTietHoaDonService().addChiTietHoaDon(
+              token,
+              ChiTietHoaDon(
+                thucPham: element.thucPham,
+                soLuong: _soLuongChonMon[element.maChiTietThucPham!],
+                hoaDon: hoaDonCreated,
+              ));
+        }
+      });
+
+      Navigator.popUntil(context, (route) {
+        return route.settings.name == 'RequestOrderView';
+      });
+
+      NavigationHelper.push(
+          context: context, page: BillView(hoaDon: hoaDonCreated));
+
+      clear();
+    }
+  }
+
+  clear() {
+    _ghiChu = '';
+    _tenMonTimKiem = '';
+    _isInit = false;
+    _soLuongChonMon = {};
+    _listChiTietThucPham = [];
+  }
 }
-
-//   bool _isInit = false;
-//   List<ChiTietThucPham> listChiTietThucPham = [];
-//   List<int> listAmoutFoodOrder = [];
-
-
-//   getAmoutFoodOrder(int index) {
-//     return listAmoutFoodOrder[index];
-//   }
-
-//   setAmoutFoodOrder(int index, int value) {
-//     listAmoutFoodOrder[index] = value;
-//     notifyListeners();
-//   }
-
-//   getIsInit() {
-//     return _isInit;
-//   }
-
-//   setListChiTietThucPham(List<ChiTietThucPham> value) {
-//     listChiTietThucPham = value;
-//     listAmoutFoodOrder = List.generate(listChiTietThucPham.length, (index) {
-//       return 0;
-//     });
-//     notifyListeners();
-//   }
-
-//   getListChiTietThucPham() {
-//     return listChiTietThucPham;
-//   }
-
-//   init() async {
-//     String token = await Helper.getToken();
-//     var response =
-//         await ChiTietThucPhamService().getChiTietThucPhamHomNay(token);
-//     if (response is Success) {
-//       _isInit = true;
-//       setListChiTietThucPham(response.response as List<ChiTietThucPham>);
-//     } else {
-//       return null;
-//     }
-//   }
-
-//   navigateToHoaDon(
-//       {required int soNguoi,
-//       required int ban,
-//       required BuildContext context}) async {
-//     var response;
-
-//     String token = await Helper.getToken();
-//     NhanVien nguoiLapHoaDon = await Helper.getNhanVienSigned();
-
-//     HoaDon hoaDon = HoaDon(
-//         nguoiLapHoaDon: nguoiLapHoaDon,
-//         tongThanhTien: _totalPrice,
-//         ban: ban,
-//         soNguoi: soNguoi,
-//         tinhTrang: 'WAIT');
-
-//     response = await HoaDonService().createHoaDon(token, hoaDon);
-//     HoaDon hoaDonCreated = response.response as HoaDon;
-
-//     for (int i = 0; i < listChiTietThucPham.length; i++) {
-//       if (listAmoutFoodOrder[i] > 0) {
-//         ChiTietHoaDon chiTietHoaDon = ChiTietHoaDon(
-//             thucPham: listChiTietThucPham[i].thucPham,
-//             soLuong: listAmoutFoodOrder[i],
-//             hoaDon: hoaDonCreated);
-//         ChiTietHoaDonService().addChiTietHoaDon(token, chiTietHoaDon);
-//       }
-//     }
-
-//     if (response is Success) {
-//       SelectCategoryViewModel().init();
-
-//       Navigator.popUntil(context, (route) {
-//         return route.settings.name == 'RequestOrderView';
-//       });
-
-//       NavigationHelper.pushReplacement(
-//           context: context, page: BillView(maHoaDon: hoaDonCreated.maHoaDon!));
-//     }
-//   }
-
-//   @override
-//   void dispose() {
-//     // TODO: implement dispose
-//     super.dispose();
-//   }
-// }
