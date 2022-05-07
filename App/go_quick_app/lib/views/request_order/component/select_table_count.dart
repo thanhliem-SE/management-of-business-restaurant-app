@@ -51,10 +51,10 @@ class SelectTableCount extends StatelessWidget {
                   Ban ban = listBanTrong[index];
                   return InkWell(
                     onTap: () {
-                      viewModel.setNumTable(index + 1);
+                      viewModel.setNumTable(ban.maSoBan!);
                     },
                     child: Card(
-                      color: viewModel.getNumTable() == (index + 1)
+                      color: viewModel.getNumTable() == ban.maSoBan
                           ? kPrimaryColor
                           : kPrimaryLightColor,
                       child: Center(
@@ -62,7 +62,7 @@ class SelectTableCount extends StatelessWidget {
                         ban.viTri.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: viewModel.getNumTable() == (index + 1)
+                            color: viewModel.getNumTable() == ban.maSoBan
                                 ? Colors.white
                                 : Colors.black),
                       )),

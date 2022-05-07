@@ -54,6 +54,7 @@ class RequestOrderView extends StatelessWidget {
             ),
           ),
         ],
+        viewModel: viewModel,
       ),
       body: Container(
         color: kPrimaryLightColor,

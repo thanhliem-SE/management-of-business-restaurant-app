@@ -4,7 +4,8 @@ import 'package:go_quick_app/config/palette.dart';
 buildAppBar(
     {required BuildContext context,
     required String title,
-    List<Widget>? actions}) {
+    List<Widget>? actions,
+    viewModel}) {
   Size size = MediaQuery.of(context).size;
   return AppBar(
     backgroundColor: kPrimaryColor,
@@ -19,7 +20,10 @@ buildAppBar(
         color: Colors.white,
         size: size.height * 0.05,
       ),
-      onPressed: () => Navigator.pop(context),
+      onPressed: () {
+        Navigator.pop(context);
+        viewModel.clear();
+      },
     ),
     actions: actions,
   );

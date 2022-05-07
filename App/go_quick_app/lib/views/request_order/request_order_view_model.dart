@@ -57,4 +57,14 @@ class RequestOrderViewModel extends ChangeNotifier {
       NavigationHelper.push(context: context, page: BillView(hoaDon: hoaDon));
     }
   }
+
+  getBanByNumTable() {
+    return _listBan.firstWhere((element) => element.maSoBan == _numTable);
+  }
+
+  clear() {
+    isInit = false;
+    _listBan = [];
+    _numTable = 0;
+  }
 }
