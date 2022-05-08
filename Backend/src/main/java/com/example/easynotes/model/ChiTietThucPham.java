@@ -42,4 +42,15 @@ public class ChiTietThucPham implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+
+    @Override
+    public String toString() {
+        return "ChiTietThucPham{" +
+                "maChiTietThucPham=" + maChiTietThucPham +
+                ", thucPham=" + thucPham +
+                ", soLuong=" + soLuong +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

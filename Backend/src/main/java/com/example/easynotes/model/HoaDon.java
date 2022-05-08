@@ -11,12 +11,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Data
 @NoArgsConstructor
@@ -35,15 +33,9 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maNhanVien")
     private NhanVien nguoiLapHoaDon;
 
-    @Min(value = 0)
-    private double tongThanhTien;
-
     @OneToOne
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;
-
-    @Min(value = 0)
-    private int soNguoi;
 
     @JsonIgnore
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -65,4 +57,12 @@ public class HoaDon implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
+
+    public Double tongThanhTien(){
+        AtomicReference<Double> tongTien = new AtomicReference<>((double) 0);
+        this.chiTietHoaDons.forEach(x -> {
+            tongTien.set(tongTien.get() + x.getThanhTien());
+        });
+        return tongTien.get();
+    }
 }
