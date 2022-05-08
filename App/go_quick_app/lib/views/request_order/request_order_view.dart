@@ -140,7 +140,7 @@ Container cardTableOrder(
               Text(
                 ban.tinhTrang == null ? 'Trống' : 'Phục Vụ',
                 style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color:
                         ban.tinhTrang == null ? kPrimaryColor : Colors.white),

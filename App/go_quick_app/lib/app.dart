@@ -23,9 +23,9 @@ class _GoQuickAppState extends State<GoQuickApp> {
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
         // Kiểm tra xem có dữ liệu token lưu trong bộ nhớ ko
         if (snapshot.data == true) {
-          return HomeView();
+          return const HomeView();
         } else {
-          return LoginView();
+          return const LoginView();
         }
       },
     );
