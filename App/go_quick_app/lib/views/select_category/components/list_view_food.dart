@@ -26,8 +26,6 @@ class ListViewFood extends StatelessWidget {
         return Container(
           padding: EdgeInsets.all(size.width * 0.02),
           color: Colors.white,
-          // width: size.width * 1,
-          // height: size.height * 0.2,
           child: isDialog
               ? Column(
                   children: [

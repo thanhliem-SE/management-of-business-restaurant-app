@@ -18,7 +18,6 @@ class HoaDon {
   HoaDon({
     this.maHoaDon,
     this.nguoiLapHoaDon,
-    this.nguoiCheBien,
     this.tongThanhTien,
     this.thanhToan,
     this.ban,
@@ -30,7 +29,6 @@ class HoaDon {
 
   int? maHoaDon;
   NhanVien? nguoiLapHoaDon;
-  NhanVien? nguoiCheBien;
   double? tongThanhTien;
   ThanhToan? thanhToan;
   Ban? ban;
@@ -42,9 +40,6 @@ class HoaDon {
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
         nguoiLapHoaDon: NhanVien.fromJson(json["nguoiLapHoaDon"]),
-        nguoiCheBien: json["nguoiCheBien"] != null
-            ? NhanVien.fromJson(json["nguoiCheBien"])
-            : null,
         tongThanhTien: json["tongThanhTien"],
         thanhToan: json["thanhToan"] != null
             ? ThanhToan.fromJson(json["thanhToan"])
@@ -64,7 +59,6 @@ class HoaDon {
         "maHoaDon": maHoaDon,
         "nguoiLapHoaDon": nguoiLapHoaDon?.toJson(),
         // ignore: prefer_null_aware_operators
-        "nguoiCheBien": nguoiCheBien != null ? nguoiCheBien?.toJson() : null,
         "tongThanhTien": tongThanhTien,
         "thanhToan": thanhToan?.toJson(),
         "ghiChu": ghiChu,
