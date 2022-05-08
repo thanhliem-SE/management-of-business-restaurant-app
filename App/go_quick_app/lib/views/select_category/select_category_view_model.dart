@@ -116,9 +116,10 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
     if (response is Success) {
       HoaDon hoaDonCreated = response.response as HoaDon;
-      _listChiTietThucPham.forEach((element) {
+      for (int i = 0; i < _listChiTietThucPham.length; i++) {
+        var element = _listChiTietThucPham[i];
         if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
-          ChiTietHoaDonService().addChiTietHoaDon(
+          await ChiTietHoaDonService().addChiTietHoaDon(
               token,
               ChiTietHoaDon(
                 thucPham: element.thucPham,
@@ -126,18 +127,16 @@ class SelectCategoryViewModel extends ChangeNotifier {
                 hoaDon: hoaDonCreated,
               ));
         }
-      });
-
-      Navigator.popUntil(context, (route) {
-        return route.settings.name == 'RequestOrderView';
-      });
-
-      Navigator.pop(context);
-
-      NavigationHelper.push(
-          context: context, page: BillView(hoaDon: hoaDonCreated));
-
-      clear();
+        if (_listChiTietThucPham.length == i + 1) {
+          Navigator.popUntil(context, (route) {
+            return route.settings.name == 'RequestOrderView';
+          });
+          Navigator.pop(context);
+          NavigationHelper.push(
+              context: context, page: BillView(hoaDon: hoaDonCreated));
+          clear();
+        }
+      }
     }
   }
 

@@ -22,6 +22,8 @@ class BillView extends StatelessWidget {
       viewModel.init(hoaDon.maHoaDon!);
     }
 
+    final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(
@@ -99,9 +101,8 @@ class BillView extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-              viewModel.getListChiTietHoaDon().length > 0
-                  ? buildListOrder(
-                      context: context, list: viewModel.getListChiTietHoaDon())
+              listChiTietHoaDon.length > 0
+                  ? buildListOrder(context: context, list: listChiTietHoaDon)
                   : Container(),
               SizedBox(height: size.height * 0.04),
               Row(
@@ -236,7 +237,7 @@ class BillView extends StatelessWidget {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              SizedBox(width: size.width * 0.2),
+              SizedBox(width: size.width * 0.1),
               Text(
                 NumberFormat('###,###').format(item.thucPham!.giaTien) + 'đ',
                 style:
