@@ -32,7 +32,9 @@ public class ChiTietHoaDon implements Serializable {
     @Min(value = 1)
     private int soLuong;
 
-
+    @ManyToOne
+    @JoinColumn(name = "maNhanVien")
+    private NhanVien nguoiCheBien;
 
     private boolean daCheBien;
 
@@ -124,5 +126,13 @@ public class ChiTietHoaDon implements Serializable {
 
     public void setDaCheBien(boolean daCheBien) {
         this.daCheBien = daCheBien;
+    }
+
+    public NhanVien getNguoiCheBien() {
+        return nguoiCheBien;
+    }
+
+    public void setNguoiCheBien(NhanVien nguoiCheBien) {
+        this.nguoiCheBien = nguoiCheBien;
     }
 }
