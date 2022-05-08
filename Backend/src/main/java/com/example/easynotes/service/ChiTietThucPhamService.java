@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class ChiTietThucPhamService {
@@ -50,4 +51,14 @@ public class ChiTietThucPhamService {
        return result;
     }
 
+    public ChiTietThucPham getChiTietThucPhamHomNayTheoMaThucPham(Long maThucPham){
+        AtomicReference<ChiTietThucPham> result = new AtomicReference<>(new ChiTietThucPham());
+        SimpleDateFormat fmt = new SimpleDateFormat("ddMMyyyy");
+        getList().forEach((item) -> {
+            if(fmt.format(item.getCreatedAt()).equals(fmt.format(new Date())) && item.getThucPham().getMaThucPham() == maThucPham){
+                result.set(item);
+            }
+        });
+        return result.get();
+    }
 }
