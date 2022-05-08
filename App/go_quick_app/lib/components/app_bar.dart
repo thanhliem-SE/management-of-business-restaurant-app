@@ -13,7 +13,6 @@ buildAppBar(
       title,
       style: TextStyle(color: Colors.white),
     ),
-    centerTitle: true,
     leading: IconButton(
       icon: Icon(
         Icons.arrow_back,
