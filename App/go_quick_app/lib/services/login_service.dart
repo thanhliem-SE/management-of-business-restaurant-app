@@ -42,7 +42,9 @@ class LoginService {
           body: jsonEncode({'token': token}));
 
       if (response.statusCode == 200) {
-        return Success(response: TaiKhoan.fromJson(jsonDecode(response.body)));
+        return Success(
+            response:
+                TaiKhoan.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
       }
       return Failure(
           code: USER_INVALID_RESPONSE,

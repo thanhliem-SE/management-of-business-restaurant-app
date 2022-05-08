@@ -18,10 +18,11 @@ class HoaDon {
   HoaDon({
     this.maHoaDon,
     this.nguoiLapHoaDon,
+    this.nguoiCheBien,
     this.tongThanhTien,
     this.thanhToan,
-    this.soNguoi,
     this.ban,
+    this.ghiChu,
     this.tinhTrang,
     this.createdAt,
     this.updatedAt,
@@ -29,10 +30,11 @@ class HoaDon {
 
   int? maHoaDon;
   NhanVien? nguoiLapHoaDon;
+  NhanVien? nguoiCheBien;
   double? tongThanhTien;
   ThanhToan? thanhToan;
-  int? soNguoi;
   Ban? ban;
+  String? ghiChu;
   String? tinhTrang;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -40,11 +42,16 @@ class HoaDon {
   factory HoaDon.fromJson(Map<String, dynamic> json) => HoaDon(
         maHoaDon: json["maHoaDon"],
         nguoiLapHoaDon: NhanVien.fromJson(json["nguoiLapHoaDon"]),
+        nguoiCheBien: json["nguoiCheBien"] != null
+            ? NhanVien.fromJson(json["nguoiCheBien"])
+            : null,
         tongThanhTien: json["tongThanhTien"],
-        thanhToan: ThanhToan.fromJson(json["thanhToan"]),
-        soNguoi: json["soNguoi"],
+        thanhToan: json["thanhToan"] != null
+            ? ThanhToan.fromJson(json["thanhToan"])
+            : null,
         ban: Ban.fromJson(json["ban"]),
         tinhTrang: json["tinhTrang"],
+        ghiChu: json["ghiChu"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
             : null,
@@ -56,9 +63,11 @@ class HoaDon {
   Map<String, dynamic> toJson() => {
         "maHoaDon": maHoaDon,
         "nguoiLapHoaDon": nguoiLapHoaDon?.toJson(),
+        // ignore: prefer_null_aware_operators
+        "nguoiCheBien": nguoiCheBien != null ? nguoiCheBien?.toJson() : null,
         "tongThanhTien": tongThanhTien,
         "thanhToan": thanhToan?.toJson(),
-        "soNguoi": soNguoi,
+        "ghiChu": ghiChu,
         "ban": ban?.toJson(),
         "tinhTrang": tinhTrang,
       };

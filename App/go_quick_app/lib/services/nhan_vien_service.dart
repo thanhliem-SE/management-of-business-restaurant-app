@@ -19,7 +19,9 @@ class NhanVienService {
           });
 
       if (response.statusCode == 200) {
-        return Success(response: NhanVien.fromJson(jsonDecode(response.body)));
+        return Success(
+            response:
+                NhanVien.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
       }
       return Failure(
           code: USER_INVALID_RESPONSE,

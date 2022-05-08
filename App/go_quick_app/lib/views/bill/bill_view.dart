@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/utils/helper.dart';
+import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class BillView extends StatelessWidget {
   final HoaDon hoaDon;
@@ -12,216 +16,155 @@ class BillView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = Provider.of<BillViewModel>(context);
+
+    if (viewModel.getIsInit() == false) {
+      viewModel.init(hoaDon.maHoaDon!);
+    }
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(
           context: context,
           title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
+          viewModel: viewModel,
           actions: [
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
             ),
             IconButton(
               onPressed: () {},
-              icon: Icon(Icons.add),
+              icon: const Icon(Icons.add),
             ),
+            IconButton(
+                onPressed: () {
+                  viewModel.init(hoaDon.maHoaDon!);
+                },
+                icon: const Icon(Icons.refresh))
           ]),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                buildTextSpan(
-                    boldText: 'Trạng thái: ', normalText: 'chờ tiếp nhận'),
-                buildTextSpan(
-                    boldText: 'Thời gian: ', normalText: '02 May 20:12'),
-              ],
-            ),
-            Container(
-              width: size.width,
-              margin: EdgeInsets.only(top: 10),
-              child: buildTextSpan(
-                  boldText: 'Người lập hóa đơn: ',
-                  normalText: 'Nguyễn Thanh Liêm'),
-            ),
-            Container(
-              width: size.width,
-              margin: EdgeInsets.only(top: 10),
-              child: buildTextSpan(
-                  boldText: 'Người chế biến: ', normalText: 'Đoàn Văn Vĩnh'),
-            ),
-            Container(
-              width: size.width,
-              margin: EdgeInsets.only(top: 10),
-              child: buildTextSpan(
-                  boldText: 'Hình thức thanh toán: ', normalText: 'tiền mặt'),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
-              padding: const EdgeInsets.all(5.0),
-              width: size.width,
-              color: Colors.blueGrey[50],
-              child: const Text(
-                'Danh Sách Đặt Món - Bàn 11',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Trạng thái: ',
+                    normalText: Helper.getTrangThaiHoaDon(hoaDon.tinhTrang!)),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.network(
-                    'https://statics.vinpearl.com/com-tam-ngon-o-sai-gon-0_1630562640.jpg',
-                    width: size.width * 0.2,
-                    height: size.height * 0.1,
-                    fit: BoxFit.fill,
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.3,
-                        child: const Text(
-                          'Cơm tấm',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.01),
-                      SizedBox(
-                        width: size.width * 0.3,
-                        child: Text(
-                          NumberFormat('###,###').format(30000) + 'đ',
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.blueGrey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    'x2',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: size.width * 0.2),
-                  Text(
-                    NumberFormat('###,###').format(60000) + 'đ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ],
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Thời gian: ',
+                    normalText: DateFormat('dd/MM/yyyy HH:mm')
+                        .format(hoaDon.createdAt!)),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Image.network(
-                    'https://filebroker-cdn.lazada.vn/kf/S7f8ed4d038d743d4852ab22504a211f8K.jpg',
-                    width: size.width * 0.2,
-                    height: size.height * 0.1,
-                    fit: BoxFit.fill,
-                  ),
-                  Column(
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.3,
-                        child: const Text(
-                          'Lon CocaCola',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                      SizedBox(height: size.height * 0.01),
-                      SizedBox(
-                        width: size.width * 0.3,
-                        child: Text(
-                          NumberFormat('###,###').format(10000) + 'đ',
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.blueGrey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    'x2',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                  SizedBox(width: size.width * 0.2),
-                  Text(
-                    NumberFormat('###,###').format(20000) + 'đ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                  ),
-                ],
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Người lập hóa đơn: ',
+                    normalText: hoaDon.nguoiLapHoaDon!.tenNhanVien!),
               ),
-            ),
-            SizedBox(height: size.height * 0.04),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text('Tổng tiền',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-                Text(NumberFormat('###,###').format(80000) + 'đ',
-                    style:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              ],
-            ),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        color: kPrimaryColor,
-                        width: size.width * 0.9,
-                        height: size.height * 0.05,
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Thanh Toán',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: size.height * 0.02),
-                    InkWell(
-                      onTap: () {},
-                      child: Container(
-                        color: Colors.redAccent[700],
-                        width: size.width * 0.9,
-                        height: size.height * 0.05,
-                        alignment: Alignment.center,
-                        child: const Text(
-                          'Hủy',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
-                  ],
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Người chế biến: ', normalText: 'Đoàn Văn Vĩnh'),
+              ),
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Ghi chú: ',
+                    normalText: hoaDon.ghiChu == null || hoaDon.ghiChu!.isEmpty
+                        ? 'Không có'
+                        : hoaDon.ghiChu!),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                padding: const EdgeInsets.all(5.0),
+                width: size.width,
+                color: Colors.blueGrey[50],
+                child: Text(
+                  'Danh Sách Đặt Món - Bàn ' + hoaDon.ban!.viTri.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-            ),
-          ],
+              viewModel.getListChiTietHoaDon().length > 0
+                  ? buildListOrder(
+                      context: context, list: viewModel.getListChiTietHoaDon())
+                  : Container(),
+              SizedBox(height: size.height * 0.04),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Tổng tiền',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  Text(
+                      NumberFormat('###,###')
+                              .format(viewModel.getTotalPrice()) +
+                          'đ',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
+                ],
+              ),
+              SizedBox(height: size.height * 0.04),
+              Flexible(
+                fit: FlexFit.loose,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          color: kPrimaryColor,
+                          width: size.width * 0.9,
+                          height: size.height * 0.05,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Thanh Toán',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: size.height * 0.02),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          color: Colors.redAccent[700],
+                          width: size.width * 0.9,
+                          height: size.height * 0.05,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Hủy',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -239,5 +182,70 @@ class BillView extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.normal)),
       ],
     ));
+  }
+
+  buildListOrder(
+      {required BuildContext context, required List<ChiTietHoaDon> list}) {
+    Size size = MediaQuery.of(context).size;
+    return ListView.builder(
+      itemCount: list.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        ChiTietHoaDon item = list[index];
+        return Container(
+          padding: const EdgeInsets.only(bottom: 10),
+          margin: const EdgeInsets.only(top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Image.network(
+                item.thucPham!.urlHinhAnh![0],
+                width: size.width * 0.2,
+                height: size.height * 0.1,
+                fit: BoxFit.fill,
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                    width: size.width * 0.3,
+                    child: Text(
+                      item.thucPham!.ten!,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  SizedBox(
+                    width: size.width * 0.3,
+                    child: Text(
+                      NumberFormat('###,###').format(item.thucPham!.giaTien!) +
+                          'đ',
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blueGrey),
+                    ),
+                  ),
+                ],
+              ),
+              Text(
+                'x' + item.soLuong.toString(),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              SizedBox(width: size.width * 0.2),
+              Text(
+                NumberFormat('###,###').format(item.thucPham!.giaTien) + 'đ',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
