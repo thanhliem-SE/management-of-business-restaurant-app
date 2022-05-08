@@ -5,6 +5,7 @@
 import 'dart:convert';
 
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 
 List<ChiTietHoaDon> listChiTietHoaDonFromJson(String str) =>
@@ -18,6 +19,7 @@ class ChiTietHoaDon {
   ChiTietHoaDon({
     this.maChiTietHoaDon,
     this.thucPham,
+    this.nguoiCheBien,
     this.soLuong,
     this.thanhTien,
     this.hoaDon,
@@ -27,6 +29,7 @@ class ChiTietHoaDon {
 
   int? maChiTietHoaDon;
   ThucPham? thucPham;
+  NhanVien? nguoiCheBien;
   int? soLuong;
   double? thanhTien;
   HoaDon? hoaDon;
@@ -37,6 +40,9 @@ class ChiTietHoaDon {
         maChiTietHoaDon: json["maChiTietHoaDon"],
         thucPham: ThucPham.fromJson(json["thucPham"]),
         soLuong: json["soLuong"],
+        nguoiCheBien: json["nguoiCheBien"] != null
+            ? NhanVien.fromJson(json["nguoiCheBien"])
+            : null,
         thanhTien: json["thanhTien"],
         hoaDon: HoaDon.fromJson(json["hoaDon"]),
         createdAt: json["createdAt"] != null
@@ -53,6 +59,7 @@ class ChiTietHoaDon {
       "thucPham": thucPham?.toJson(),
       "soLuong": soLuong,
       "thanhTien": thanhTien,
+      "nguoiCheBien": nguoiCheBien != null ? nguoiCheBien?.toJson() : null,
       "hoaDon": hoaDon?.toJson(),
     };
     json.removeWhere((key, value) => value == null);

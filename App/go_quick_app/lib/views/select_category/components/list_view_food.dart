@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
@@ -23,33 +24,39 @@ class ListViewFood extends StatelessWidget {
       itemBuilder: (BuildContext context, int index) {
         ChiTietThucPham item = listChiTietThucPham[index];
         int amount = viewModel.getSoLuongChonMon(item.maChiTietThucPham!);
-        return Container(
-          padding: EdgeInsets.all(size.width * 0.02),
-          color: Colors.white,
-          // width: size.width * 1,
-          // height: size.height * 0.2,
-          child: isDialog
-              ? Column(
-                  children: [
-                    foodView(item: item, size: size),
-                    quantityChangeView(
-                        amount: amount,
-                        size: size,
-                        item: item,
-                        viewModel: viewModel),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    foodView(item: item, size: size),
-                    quantityChangeView(
-                        amount: amount,
-                        size: size,
-                        item: item,
-                        viewModel: viewModel),
-                  ],
-                ),
+        return InkWell(
+          onLongPress: () {
+            showAlertDialog(
+                context: context,
+                title: item.thucPham!.ten!,
+                message: item.thucPham!.moTa!);
+          },
+          child: Container(
+            padding: EdgeInsets.all(size.width * 0.02),
+            color: Colors.white,
+            child: isDialog
+                ? Column(
+                    children: [
+                      foodView(item: item, size: size),
+                      quantityChangeView(
+                          amount: amount,
+                          size: size,
+                          item: item,
+                          viewModel: viewModel),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      foodView(item: item, size: size),
+                      quantityChangeView(
+                          amount: amount,
+                          size: size,
+                          item: item,
+                          viewModel: viewModel),
+                    ],
+                  ),
+          ),
         );
       },
     );

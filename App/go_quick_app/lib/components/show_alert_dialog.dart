@@ -39,7 +39,7 @@ showAlertDialog(
     required String message}) {
   // set up the button
   Widget okButton = TextButton(
-    child: Text("Đồng ý"),
+    child: Text("Đóng"),
     onPressed: () {
       Navigator.pop(context);
     },
