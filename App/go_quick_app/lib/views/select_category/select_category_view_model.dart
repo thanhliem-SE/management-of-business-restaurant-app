@@ -109,12 +109,13 @@ class SelectCategoryViewModel extends ChangeNotifier {
         nguoiLapHoaDon: nguoiLapHoaDon,
         tongThanhTien: getTotalPrice(),
         ban: ban,
+        ghiChu: _ghiChu,
         tinhTrang: 'CHO');
 
     response = await HoaDonService().createHoaDon(token, hoaDon);
-    HoaDon hoaDonCreated = response.response as HoaDon;
 
     if (response is Success) {
+      HoaDon hoaDonCreated = response.response as HoaDon;
       _listChiTietThucPham.forEach((element) {
         if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
           ChiTietHoaDonService().addChiTietHoaDon(
@@ -130,6 +131,8 @@ class SelectCategoryViewModel extends ChangeNotifier {
       Navigator.popUntil(context, (route) {
         return route.settings.name == 'RequestOrderView';
       });
+
+      Navigator.pop(context);
 
       NavigationHelper.push(
           context: context, page: BillView(hoaDon: hoaDonCreated));

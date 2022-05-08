@@ -41,7 +41,9 @@ class HoaDonService {
           });
 
       if (response.statusCode == 200) {
-        return Success(response: HoaDon.fromJson(json.decode(response.body)));
+        return Success(
+            response:
+                HoaDon.fromJson(json.decode(utf8.decode(response.bodyBytes))));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
@@ -68,7 +70,9 @@ class HoaDonService {
       );
 
       if (response.statusCode == 200) {
-        return Success(response: HoaDon.fromJson(jsonDecode(response.body)));
+        return Success(
+            response:
+                HoaDon.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');

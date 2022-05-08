@@ -24,31 +24,5 @@
     "thanhToan": {
       "maThanhToan": 1
     }
-  },
-  {
-    "nguoiLapHoaDon": {
-      "maNhanVien": 2
-    },
-    "tongThanhTien": 100000.0,
-    "ban": {
-      "maSoBan": 3
-    },
-    "tinhTrang": "CHO",
-    "thanhToan": {
-      "maThanhToan": 1
-    }
-  },
-  {
-    "nguoiLapHoaDon": {
-      "maNhanVien": 2
-    },
-    "tongThanhTien": 100000.0,
-    "ban": {
-      "maSoBan": 4
-    },
-    "tinhTrang": "CHO",
-    "thanhToan": {
-      "maThanhToan": 1
-    }
   }
 ]

@@ -56,4 +56,23 @@ class Helper {
     TaiKhoan taiKhoan = box.get('taiKhoan');
     return taiKhoan;
   }
+
+  static getTrangThaiHoaDon(String trangThai) {
+    switch (trangThai) {
+      case 'CHO':
+        return 'Chờ xử lý';
+      case 'DANGCHEBIEN':
+        return 'Đang chế biến';
+      case 'HOANTHANH':
+        return 'Hoàn thành';
+      case 'CHUATHANHTOAN':
+        return 'Chưa thanh toán';
+      case 'DATHANHTOAN':
+        return 'Đã thanh toán';
+      case 'HUY':
+        return 'Hủy';
+      default:
+        return 'Chưa xác định';
+    }
+  }
 }

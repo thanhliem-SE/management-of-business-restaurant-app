@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Nationalized;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -44,6 +45,9 @@ public class HoaDon implements Serializable {
     @ManyToOne
     @JoinColumn(name = "maSoBan")
     private Ban ban;
+
+    @Nationalized
+    private String ghiChu;
 
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;

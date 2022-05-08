@@ -3,7 +3,7 @@ package com.example.easynotes.model;
 public enum Quyen {
     ADMIN,
     QUANLY,
-    NHANVIEN,
+    PHUCVU,
     CHEBIEN,
     THUNGAN,
 }

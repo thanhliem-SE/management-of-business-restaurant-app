@@ -29,6 +29,8 @@ public class Ban implements Serializable {
     @Min(value = 0)
     private int viTri;
 
+    private boolean khongSuDung;
+
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;
 

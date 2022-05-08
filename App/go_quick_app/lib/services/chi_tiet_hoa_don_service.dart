@@ -18,7 +18,9 @@ class ChiTietHoaDonService {
           });
 
       if (response.statusCode == 200) {
-        return Success(response: listChiTietHoaDonFromJson(response.body));
+        return Success(
+            response:
+                listChiTietHoaDonFromJson(utf8.decode(response.bodyBytes)));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
@@ -47,7 +49,8 @@ class ChiTietHoaDonService {
 
       if (response.statusCode == 200) {
         return Success(
-            response: ChiTietHoaDon.fromJson(jsonDecode(response.body)));
+            response: ChiTietHoaDon.fromJson(
+                jsonDecode(utf8.decode(response.bodyBytes))));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
