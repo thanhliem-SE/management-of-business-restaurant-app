@@ -1,14 +1,14 @@
 [
   {
-    "loaiDanhMuc": "món chính"
+    "loaiDanhMuc": "Thức ăn"
   },
   {
-    "loaiDanhMuc": "nước uống"
+    "loaiDanhMuc": "Thức uống"
   },
   {
-    "loaiDanhMuc": "món tráng miệng"
+    "loaiDanhMuc": "Tráng miệng"
   },
   {
-    "loaiDanhMuc": "món khai vị"
+    "loaiDanhMuc": "Khác"
   }
 ]

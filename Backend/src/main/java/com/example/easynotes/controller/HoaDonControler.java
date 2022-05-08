@@ -2,7 +2,10 @@ package com.example.easynotes.controller;
 
 
 import com.example.easynotes.exception.ResourceNotFoundException;
+import com.example.easynotes.model.Ban;
 import com.example.easynotes.model.HoaDon;
+import com.example.easynotes.model.TinhTrang;
+import com.example.easynotes.service.BanService;
 import com.example.easynotes.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,9 @@ public class HoaDonControler  {
     @Autowired
     private HoaDonService service;
 
+    @Autowired
+    private BanService banService;
+
     @GetMapping("/")
     public List<HoaDon> getAll() {
         return service.getList();
@@ -29,7 +35,19 @@ public class HoaDonControler  {
 
     @PostMapping("/")
     public HoaDon addItem(@Valid @RequestBody HoaDon hoaDon) {
-        return service.add(hoaDon);
+        Ban ban = banService.getById(hoaDon.getBan().getMaSoBan());
+        ban.setTinhTrang(TinhTrang.CHO);
+        Ban resultBan = banService.update(ban, ban.getMaSoBan());
+        if (resultBan!=null){
+            HoaDon hoaDon1 = service.add(hoaDon);
+            if (hoaDon1!=null){
+                return hoaDon1;
+            }else {
+                return new HoaDon();
+            }
+        }else {
+            return new HoaDon();
+        }
     }
 
     @GetMapping("/{id}")
@@ -45,6 +63,9 @@ public class HoaDonControler  {
     public HoaDon update(@PathVariable(value = "id") Long id,
                       @Valid @RequestBody HoaDon hoaDon) {
         HoaDon rs = service.update(hoaDon, id);
+        Ban ban = banService.getById(rs.getBan().getMaSoBan());
+        ban.setTinhTrang(hoaDon.getTinhTrang());
+        banService.update(ban, ban.getMaSoBan());
         if (rs != null) {
             return rs;
         } else {
@@ -64,5 +85,10 @@ public class HoaDonControler  {
     @GetMapping("/chuathanhtoan")
     public List<HoaDon> getHoaDonBeforPaymented(){
         return service.getHoaDonBeforePaymented();
+    }
+
+    @GetMapping("/phucvutaiban/{masoban}")
+    public HoaDon getHoaDonDangPhucVuTaiBan(@PathVariable(value = "masoban") int masoban){
+        return service.getHoaDonDangPhucVuTaiBan(masoban);
     }
 }

@@ -6,9 +6,9 @@ import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:intl/intl.dart';
 
 class BillView extends StatelessWidget {
-  final int maHoaDon;
+  final HoaDon hoaDon;
 
-  const BillView({Key? key, required this.maHoaDon}) : super(key: key);
+  const BillView({Key? key, required this.hoaDon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class BillView extends StatelessWidget {
     return Scaffold(
       appBar: buildAppBar(
           context: context,
-          title: 'Hóa đơn #' + maHoaDon.toString(),
+          title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
           actions: [
             IconButton(
               onPressed: () {},

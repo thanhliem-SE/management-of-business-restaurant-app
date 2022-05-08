@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
-import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:provider/provider.dart';
 
-class SelectTableCount extends StatelessWidget {
-  const SelectTableCount({Key? key}) : super(key: key);
+class RemoveTableDialog extends StatelessWidget {
+  const RemoveTableDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final viewModel = Provider.of<RequestOrderViewModel>(context);
-    List<Ban> listBanTrong =
-        viewModel.getListBan().where((ban) => ban.tinhTrang == null).toList();
+    final viewModel = Provider.of<ManageTableViewModel>(context);
     return AlertDialog(
       title: const Text(
         'DANH SÁCH BÀN TRỐNG',
         textAlign: TextAlign.center,
-        style: TextStyle(fontWeight: FontWeight.bold),
       ),
       content: SingleChildScrollView(
         child: Column(
@@ -30,7 +27,6 @@ class SelectTableCount extends StatelessWidget {
               children: [
                 Image.asset(
                   'assets/icons/icon_table.png',
-                  color: kPrimaryColor,
                 ),
               ],
             ),
@@ -40,29 +36,33 @@ class SelectTableCount extends StatelessWidget {
             Container(
               width: size.width,
               height: size.height * 0.38,
-              alignment: Alignment.center,
               child: GridView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 5,
                 ),
-                itemCount: listBanTrong.length,
+                itemCount: 20,
                 itemBuilder: (BuildContext context, int index) {
-                  Ban ban = listBanTrong[index];
                   return InkWell(
                     onTap: () {
-                      viewModel.setNumTable(ban.maSoBan!);
+                      if (viewModel.getListRemoveTable().contains(index + 1)) {
+                        viewModel.removeRemoveTable(index + 1);
+                      } else {
+                        viewModel.addRemoveTable(index + 1);
+                      }
                     },
                     child: Card(
-                      color: viewModel.getNumTable() == ban.maSoBan
+                      color: viewModel.getListRemoveTable().contains(index + 1)
                           ? kPrimaryColor
                           : kPrimaryLightColor,
                       child: Center(
                           child: Text(
-                        ban.viTri.toString(),
+                        (index + 1).toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: viewModel.getNumTable() == ban.maSoBan
+                            color: viewModel
+                                    .getListRemoveTable()
+                                    .contains(index + 1)
                                 ? Colors.white
                                 : Colors.black),
                       )),
@@ -72,12 +72,12 @@ class SelectTableCount extends StatelessWidget {
               ),
             ),
             RoundedButton(
-              text: 'TIẾP THEO',
+              text: 'XÓA BÀN',
               press: () {
                 NavigationHelper.push(
                     context: context, page: SelectCategoryView());
               },
-              color: kPrimaryColor,
+              color: Colors.red,
               textColor: Colors.white,
             ),
           ],

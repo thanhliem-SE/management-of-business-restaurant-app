@@ -1,8 +1,8 @@
 [
   {
-    "ten": "ca loc nuong",
+    "ten": "Cá lóc nướng",
     "moTa": "thom ngon moi ban an nha",
-    "giaTien": 2000.0,
+    "giaTien": 60000.0,
     "urlHinhAnh": [
       "https://cdn.tgdd.vn/Files/2020/02/03/1234029/cach-nuong-ca-loc-cung-than-tai-202002030844121410.jpg"
     ],
@@ -53,6 +53,51 @@
     },
     "urlHinhAnh": [
       "https://cdn.tgdd.vn/2020/10/CookRecipe/Avatar/ca-linh-kho-tieu-thumbnail-1.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Lon Pepsi",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 15000.0,
+    "danhMuc": {
+      "maDanhMuc": 2
+    },
+    "urlHinhAnh": [
+      "https://cdn.tgdd.vn/Products/Images/2443/227309/bhx/nuoc-ngot-pepsi-khong-calo-vi-chanh-320ml-202107142058178722.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Kem Ly Thủy Tinh",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 35000.0,
+    "danhMuc": {
+      "maDanhMuc": 3
+    },
+    "urlHinhAnh": [
+      "https://emvaobep.com/wp-content/uploads/2018/05/cach-lam-kem-ly-ngon-don-gian-1.jpg"
+    ],
+    "chiTiet": "được làm từ mắm sạch",
+    "trangThai": "enough",
+    "createdAt": "2019-08-20T03:22:34.000+00:00",
+    "updatedAt": "2019-08-20T03:22:34.000+00:00"
+  },
+  {
+    "ten": "Mỳ gói",
+    "moTa": "thom ngon moi ban an nha",
+    "giaTien": 35000.0,
+    "danhMuc": {
+      "maDanhMuc": 4
+    },
+    "urlHinhAnh": [
+      "https://cafebiz.cafebizcdn.vn/thumb_w/600/2018/photo1544924521799-1544924521992-crop-15449245645731143335805.jpg"
     ],
     "chiTiet": "được làm từ mắm sạch",
     "trangThai": "enough",

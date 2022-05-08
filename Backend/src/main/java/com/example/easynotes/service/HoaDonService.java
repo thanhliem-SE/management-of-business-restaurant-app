@@ -38,4 +38,8 @@ public class HoaDonService {
     public List<HoaDon> getHoaDonBeforePaymented(){
         return repository.getHoaDonBeforePaymented();
     }
+
+    public HoaDon getHoaDonDangPhucVuTaiBan(int maSoBan){
+        return repository.getHoaDonDangPhucVuTaiBan(maSoBan);
+    }
 }

@@ -32,8 +32,9 @@ public class ChiTietHoaDon implements Serializable {
     @Min(value = 1)
     private int soLuong;
 
-    @Min(value = 0)
-    private double thanhTien;
+
+
+    private boolean daCheBien;
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")
@@ -52,7 +53,6 @@ public class ChiTietHoaDon implements Serializable {
     public ChiTietHoaDon(ThucPham thucPham, int soLuong,HoaDon hoaDon, Date createdAt, Date updatedAt) {
         this.thucPham = thucPham;
         this.soLuong = soLuong;
-        this.thanhTien = tinhThanhTien();
         this.hoaDon = hoaDon;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -91,11 +91,7 @@ public class ChiTietHoaDon implements Serializable {
     }
 
     public double getThanhTien() {
-        return thanhTien;
-    }
-
-    public void setThanhTien(double thanhTien) {
-        this.thanhTien = thanhTien;
+        return this.soLuong * this.thucPham.getGiaTien();
     }
 
     public Date getCreatedAt() {
@@ -120,5 +116,13 @@ public class ChiTietHoaDon implements Serializable {
 
     public void setHoaDon(HoaDon hoaDon) {
         this.hoaDon = hoaDon;
+    }
+
+    public boolean isDaCheBien() {
+        return daCheBien;
+    }
+
+    public void setDaCheBien(boolean daCheBien) {
+        this.daCheBien = daCheBien;
     }
 }
