@@ -1,4 +1,12 @@
+import 'dart:convert';
+
 import 'package:go_quick_app/models/danh_muc.dart';
+
+List<ThucPham> listThucPhamFromJson(String str) =>
+    List<ThucPham>.from(json.decode(str).map((x) => ThucPham.fromJson(x)));
+
+String listThucPhamToJson(List<ThucPham> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ThucPham {
   ThucPham({
