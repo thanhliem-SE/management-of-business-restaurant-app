@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
@@ -59,8 +60,12 @@ class ResponseOrderViewModel extends ChangeNotifier {
   }
 
   updateTrangThaiDaCheBien(ChiTietHoaDon chiTietHoaDon) async {
+    NhanVien nguoiCheBien = await Helper.getNhanVienSigned();
     String token = await Helper.getToken();
+
     chiTietHoaDon.daCheBien = true;
+    chiTietHoaDon.nguoiCheBien = nguoiCheBien;
+
     var response =
         await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
     if (response is Success) {

@@ -52,42 +52,57 @@ buildTabTiepNhan(
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Column(
                             children: [
-                              Image.network(
-                                item.thucPham!.urlHinhAnh![0],
-                                fit: BoxFit.fill,
-                                width: size.width * 0.2,
-                                height: size.height * 0.1,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Image.network(
+                                    item.thucPham!.urlHinhAnh![0],
+                                    fit: BoxFit.fill,
+                                    width: size.width * 0.2,
+                                    height: size.height * 0.1,
+                                  ),
+                                  Text(
+                                    item.thucPham!.ten! + ' (X${item.soLuong})',
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  item.daCheBien == true
+                                      ? IconButton(
+                                          onPressed: () {},
+                                          icon: const Icon(Icons.done_outlined),
+                                          iconSize: 30,
+                                          color: Colors.green,
+                                        )
+                                      : ElevatedButton(
+                                          onPressed: () {
+                                            viewModel
+                                                .updateTrangThaiDaCheBien(item);
+                                          },
+                                          child: const Text('Đã Chế Biến'),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Colors.green,
+                                          ),
+                                        ),
+                                ],
                               ),
-                              Text(
-                                item.thucPham!.ten! + ' (X${item.soLuong})',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              item.daCheBien == true
-                                  ? IconButton(
-                                      onPressed: () {},
-                                      icon: const Icon(Icons.done_outlined),
-                                      iconSize: 30,
-                                      color: Colors.green,
+                              item.nguoiCheBien != null
+                                  ? Container(
+                                      child: Text('Người chế biến: ' +
+                                          item.nguoiCheBien!.tenNhanVien!),
                                     )
-                                  : ElevatedButton(
-                                      onPressed: () {
-                                        viewModel
-                                            .updateTrangThaiDaCheBien(item);
-                                      },
-                                      child: const Text('Đã Chế Biến'),
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.green,
-                                      ),
-                                    ),
+                                  : Container(),
                             ],
                           ),
                         );
                       },
                     ),
+                    Container(
+                        width: size.width,
+                        height: size.height * 0.003,
+                        color: Colors.grey)
                   ],
                 ),
               ),
