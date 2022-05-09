@@ -11,6 +11,8 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
+import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
@@ -36,14 +38,12 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'GoQuick',
-          ),
-          backgroundColor: kPrimaryColor,
-          centerTitle: true,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          ]),
+        title: const Text(
+          'GoQuick',
+        ),
+        backgroundColor: kPrimaryColor,
+        centerTitle: true,
+      ),
       body: FutureBuilder(
         future: future,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -109,11 +109,14 @@ class WidgetForAdmin extends StatelessWidget {
               context: context, page: const ManageTableView());
         }),
         cardItemMenu(
-            size, Icons.person, 'Quản lý bàn', Colors.limeAccent, () {}),
+            size, Icons.person, 'Tài khoản cá nhân', Colors.amberAccent, () {}),
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
             Colors.lightBlueAccent, () {}),
-        cardItemMenu(size, Icons.restaurant, 'Quản lý món ăn',
-            Colors.orangeAccent, () {}),
+        cardItemMenu(
+            size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent, () {
+          NavigationHelper.push(
+              context: context, page: const ManageAllFoodView());
+        }),
         cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
             Colors.indigoAccent, () {}),
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,

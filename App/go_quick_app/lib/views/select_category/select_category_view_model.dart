@@ -4,16 +4,13 @@ import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
-import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
-import 'package:go_quick_app/services/thanh_toan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
-import 'package:go_quick_app/views/request_order/request_order_view.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
   String _tenMonTimKiem = '';
@@ -116,28 +113,28 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
     if (response is Success) {
       HoaDon hoaDonCreated = response.response as HoaDon;
-      _listChiTietThucPham.forEach((element) {
+      for (int i = 0; i < _listChiTietThucPham.length; i++) {
+        var element = _listChiTietThucPham[i];
         if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
-          ChiTietHoaDonService().addChiTietHoaDon(
+          await ChiTietHoaDonService().addChiTietHoaDon(
               token,
               ChiTietHoaDon(
                 thucPham: element.thucPham,
                 soLuong: _soLuongChonMon[element.maChiTietThucPham!],
+                daCheBien: false,
                 hoaDon: hoaDonCreated,
               ));
         }
-      });
-
-      Navigator.popUntil(context, (route) {
-        return route.settings.name == 'RequestOrderView';
-      });
-
-      Navigator.pop(context);
-
-      NavigationHelper.push(
-          context: context, page: BillView(hoaDon: hoaDonCreated));
-
-      clear();
+        if (_listChiTietThucPham.length == i + 1) {
+          Navigator.popUntil(context, (route) {
+            return route.settings.name == 'RequestOrderView';
+          });
+          Navigator.pop(context);
+          NavigationHelper.push(
+              context: context, page: BillView(hoaDon: hoaDonCreated));
+          clear();
+        }
+      }
     }
   }
 

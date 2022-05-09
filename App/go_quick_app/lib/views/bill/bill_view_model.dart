@@ -39,8 +39,8 @@ class BillViewModel extends ChangeNotifier {
   }
 
   init(int maHoaDon) {
-    _isInit = true;
     getListChiTietHoaDonFromServer(maHoaDon);
+    _isInit = true;
   }
 
   clear() {

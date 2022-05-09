@@ -22,6 +22,8 @@ class BillView extends StatelessWidget {
       viewModel.init(hoaDon.maHoaDon!);
     }
 
+    final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(
@@ -76,12 +78,6 @@ class BillView extends StatelessWidget {
                 width: size.width,
                 margin: const EdgeInsets.only(top: 10),
                 child: buildTextSpan(
-                    boldText: 'Người chế biến: ', normalText: 'Đoàn Văn Vĩnh'),
-              ),
-              Container(
-                width: size.width,
-                margin: const EdgeInsets.only(top: 10),
-                child: buildTextSpan(
                     boldText: 'Ghi chú: ',
                     normalText: hoaDon.ghiChu == null || hoaDon.ghiChu!.isEmpty
                         ? 'Không có'
@@ -99,9 +95,8 @@ class BillView extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 16),
                 ),
               ),
-              viewModel.getListChiTietHoaDon().length > 0
-                  ? buildListOrder(
-                      context: context, list: viewModel.getListChiTietHoaDon())
+              listChiTietHoaDon.length > 0
+                  ? buildListOrder(context: context, list: listChiTietHoaDon)
                   : Container(),
               SizedBox(height: size.height * 0.04),
               Row(
@@ -236,7 +231,7 @@ class BillView extends StatelessWidget {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              SizedBox(width: size.width * 0.2),
+              SizedBox(width: size.width * 0.1),
               Text(
                 NumberFormat('###,###').format(item.thucPham!.giaTien) + 'đ',
                 style:

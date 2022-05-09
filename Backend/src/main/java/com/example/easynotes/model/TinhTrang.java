@@ -6,5 +6,6 @@ public enum TinhTrang {
     HOANTHANH,
     CHUATHANHTOAN,
     DATHANHTOAN,
+    KHONGTIEPNHAN,
     HUY
 }
