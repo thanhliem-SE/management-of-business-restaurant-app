@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/views/response_order/components/build_tab_hoan_thanh.dart';
+import 'package:go_quick_app/views/response_order/components/build_tab_huy.dart';
 import 'package:go_quick_app/views/response_order/components/search_order_dialog.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:provider/provider.dart';
@@ -48,127 +50,24 @@ class ResponseOrderView extends StatelessWidget {
                       .toList(),
                   mapListChiTietHoaDon: mapListChiTietHoaDon,
                   viewModel: viewModel),
-              buildTabHoanThanh(size: size),
-              buildTabDaHuy(size: size),
+              buildTabHoanThanh(
+                  size: size,
+                  listHoaDon: listHoaDon
+                      .where((element) => element.tinhTrang == 'HOANTHANH')
+                      .toList(),
+                  mapListChiTietHoaDon: mapListChiTietHoaDon,
+                  viewModel: viewModel),
+              buildTabHuy(
+                  size: size,
+                  listHoaDon: listHoaDon
+                      .where((element) =>
+                          ['KHONGTIEPNHAN', 'HUY'].contains(element.tinhTrang))
+                      .toList(),
+                  mapListChiTietHoaDon: mapListChiTietHoaDon,
+                  viewModel: viewModel),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  buildTabHoanThanh({required Size size}) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Hóa đơn #001',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Icon(Icons.done_all_rounded, color: Colors.green, size: 30),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://statics.vinpearl.com/com-tam-ngon-o-sai-gon-0_1630562640.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Com tấm',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text('x2'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://nghethuat365.com/wp-content/uploads/2021/08/Cach-Nau-Canh-Chua-Ca-Loc-Don-Gian-Ma-Ngon.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Canh chua cá lóc',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text('x1'),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  buildTabDaHuy({required Size size}) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Hóa đơn #001',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Icon(Icons.cancel_outlined, color: Colors.red, size: 30),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://statics.vinpearl.com/com-tam-ngon-o-sai-gon-0_1630562640.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Com tấm',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text('x2'),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://nghethuat365.com/wp-content/uploads/2021/08/Cach-Nau-Canh-Chua-Ca-Loc-Don-Gian-Ma-Ngon.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Canh chua cá lóc',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const Text('x1'),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -178,15 +77,15 @@ class ResponseOrderView extends StatelessWidget {
     return AppBar(
       backgroundColor: kPrimaryColor,
       actions: [
-        IconButton(
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) => const SearchOrderDialog(),
-            );
-          },
-          icon: const Icon(Icons.search),
-        ),
+        // IconButton(
+        //   onPressed: () {
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) => const SearchOrderDialog(),
+        //     );
+        //   },
+        //   icon: const Icon(Icons.search),
+        // ),
         IconButton(
           onPressed: () {
             viewModel.init();
