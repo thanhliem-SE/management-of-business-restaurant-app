@@ -11,6 +11,7 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
@@ -113,7 +114,8 @@ class WidgetForAdmin extends StatelessWidget {
             Colors.lightBlueAccent, () {}),
         cardItemMenu(
             size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent, () {
-          NavigationHelper.push(context: context, page: const ManageFoodView());
+          NavigationHelper.push(
+              context: context, page: const ManageAllFoodView());
         }),
         cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
             Colors.indigoAccent, () {}),

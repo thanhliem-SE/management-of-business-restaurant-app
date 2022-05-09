@@ -8,6 +8,7 @@ import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view_model.dart';
+import 'package:go_quick_app/views/manage_food/manager_all_food_view_model.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
@@ -63,6 +64,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ManageFoodViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ManageAllFoodViewModel(),
         ),
       ],
       child: MaterialApp(
