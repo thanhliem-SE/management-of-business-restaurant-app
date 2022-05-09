@@ -9,14 +9,14 @@ import 'package:go_quick_app/utils/helper.dart';
 class ResponseOrderViewModel extends ChangeNotifier {
   bool _isInit = false;
   List<HoaDon> _listHoaDon = [];
-  Map<int, List<ChiTietHoaDon>> _mapChiTietHoaDon = {};
+  Map<int, List<ChiTietHoaDon>> _mapListChiTietHoaDon = {};
   String _ghiChu = '';
 
   getListHoaDon() => _listHoaDon;
 
   getIsInit() => _isInit;
 
-  getMapChiTietHoaDon() => _mapChiTietHoaDon;
+  getMapChiTietHoaDon() => _mapListChiTietHoaDon;
 
   getGhiChu() => _ghiChu;
 
@@ -41,7 +41,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
     var response = await ChiTietHoaDonService()
         .getChiTietHoaDonByMaHoaDon(token, maHoaDon);
     if (response is Success) {
-      _mapChiTietHoaDon[maHoaDon] = response.response as List<ChiTietHoaDon>;
+      _mapListChiTietHoaDon[maHoaDon] =
+          response.response as List<ChiTietHoaDon>;
       notifyListeners();
     } else {
       return [];
@@ -54,6 +55,35 @@ class ResponseOrderViewModel extends ChangeNotifier {
     var response = await HoaDonService().updateHoaDon(token, hoaDon);
     if (response is Success) {
       init();
+    }
+  }
+
+  updateTrangThaiDaCheBien(ChiTietHoaDon chiTietHoaDon) async {
+    String token = await Helper.getToken();
+    chiTietHoaDon.daCheBien = true;
+    var response =
+        await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
+    if (response is Success) {
+      init();
+      bool rs = checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+      checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+    }
+  }
+
+  checkHoanThanhHoaDon(int maHoaDon) async {
+    String token = await Helper.getToken();
+    List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
+    bool isHoanThanh = true;
+
+    for (int i = 0; i < listChiTietHoaDon.length; i++) {
+      if (listChiTietHoaDon[i].daCheBien == false) {
+        isHoanThanh = false;
+        break;
+      }
+
+      if (i == listChiTietHoaDon.length - 1 && isHoanThanh == true) {
+        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'HOANTHANH');
+      }
     }
   }
 
@@ -72,7 +102,7 @@ class ResponseOrderViewModel extends ChangeNotifier {
   clear() {
     _isInit = false;
     _listHoaDon = [];
-    _mapChiTietHoaDon = {};
+    _mapListChiTietHoaDon = {};
     _ghiChu = '';
   }
 }

@@ -8,7 +8,7 @@ import 'package:go_quick_app/views/response_order/components/add_note_huy.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:intl/intl.dart';
 
-buildTabDangCho(
+buildTabTiepNhan(
     {required Size size,
     required List<HoaDon> listHoaDon,
     required Map<int, List<ChiTietHoaDon>> mapListChiTietHoaDon,
@@ -33,7 +33,7 @@ buildTabDangCho(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Hóa đơn #' + '${hoaDon.maHoaDon}',
+                          'Hóa đơn #' + hoaDon.maHoaDon.toString(),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
@@ -62,65 +62,32 @@ buildTabDangCho(
                                 height: size.height * 0.1,
                               ),
                               Text(
-                                item.thucPham!.ten!,
+                                item.thucPham!.ten! + ' (X${item.soLuong})',
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
-                              Text(
-                                'x${item.soLuong}',
-                                style: const TextStyle(fontSize: 16),
-                              ),
+                              item.daCheBien == true
+                                  ? IconButton(
+                                      onPressed: () {},
+                                      icon: const Icon(Icons.done_outlined),
+                                      iconSize: 30,
+                                      color: Colors.green,
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        viewModel
+                                            .updateTrangThaiDaCheBien(item);
+                                      },
+                                      child: const Text('Đã Chế Biến'),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.green,
+                                      ),
+                                    ),
                             ],
                           ),
                         );
                       },
                     ),
-                    hoaDon.ghiChu == null || hoaDon.ghiChu == ''
-                        ? Container()
-                        : Text(
-                            'Ghi chú: ' + hoaDon.ghiChu!,
-                            style: const TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AddNoteCancelDialog(
-                                      hoaDon: hoaDon,
-                                    ));
-                          },
-                          child: const Text('Hủy'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            showConfirmDialog(context, () {
-                              viewModel.updateTrangThaiHoaDon(
-                                  hoaDon, 'DANGCHEBIEN');
-                              Navigator.pop(context);
-                            }, 'Bạn có muốn tiếp nhận hóa đơn này?');
-                          },
-                          child: const Text('Tiếp nhận'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: size.height * 0.01,
-                    ),
-                    Container(
-                        width: size.width,
-                        height: size.height * 0.003,
-                        color: Colors.grey)
                   ],
                 ),
               ),

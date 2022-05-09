@@ -7,6 +7,7 @@ import 'package:go_quick_app/views/response_order/response_order_view_model.dart
 import 'package:provider/provider.dart';
 
 import 'components/build_tab_dang_cho.dart';
+import 'components/build_tab_tiep_nhan.dart';
 
 class ResponseOrderView extends StatelessWidget {
   const ResponseOrderView({Key? key}) : super(key: key);
@@ -40,90 +41,18 @@ class ResponseOrderView extends StatelessWidget {
                       .toList(),
                   mapListChiTietHoaDon: mapListChiTietHoaDon,
                   viewModel: viewModel),
-              buildTabTiepNhan(size: size),
+              buildTabTiepNhan(
+                  size: size,
+                  listHoaDon: listHoaDon
+                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
+                      .toList(),
+                  mapListChiTietHoaDon: mapListChiTietHoaDon,
+                  viewModel: viewModel),
               buildTabHoanThanh(size: size),
               buildTabDaHuy(size: size),
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  buildTabTiepNhan({required Size size}) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              Text(
-                'Hóa đơn #001',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              Text(
-                '10ph trước',
-                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 16),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://statics.vinpearl.com/com-tam-ngon-o-sai-gon-0_1630562640.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Com tấm (X2)',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                // IconButton(
-                //   onPressed: () {},
-                //   icon: Icon(Icons.done_outlined),
-                //   iconSize: 30,
-                //   color: Colors.green,
-                // )
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text('Đã Chế Biến'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.network(
-                  'https://nghethuat365.com/wp-content/uploads/2021/08/Cach-Nau-Canh-Chua-Ca-Loc-Don-Gian-Ma-Ngon.jpg',
-                  fit: BoxFit.fill,
-                  width: size.width * 0.2,
-                  height: size.height * 0.1,
-                ),
-                const Text(
-                  'Canh chua cá lóc (X1)',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.done_outlined),
-                  iconSize: 30,
-                  color: Colors.green,
-                )
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

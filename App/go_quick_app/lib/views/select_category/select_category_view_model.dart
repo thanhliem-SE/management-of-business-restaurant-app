@@ -121,6 +121,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
               ChiTietHoaDon(
                 thucPham: element.thucPham,
                 soLuong: _soLuongChonMon[element.maChiTietThucPham!],
+                daCheBien: false,
                 hoaDon: hoaDonCreated,
               ));
         }
