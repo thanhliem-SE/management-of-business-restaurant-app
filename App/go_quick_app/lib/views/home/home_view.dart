@@ -36,14 +36,12 @@ class _HomeViewState extends State<HomeView> {
 
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            'GoQuick',
-          ),
-          backgroundColor: kPrimaryColor,
-          centerTitle: true,
-          actions: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          ]),
+        title: const Text(
+          'GoQuick',
+        ),
+        backgroundColor: kPrimaryColor,
+        centerTitle: true,
+      ),
       body: FutureBuilder(
         future: future,
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -109,7 +107,7 @@ class WidgetForAdmin extends StatelessWidget {
               context: context, page: const ManageTableView());
         }),
         cardItemMenu(
-            size, Icons.person, 'Quản lý bàn', Colors.limeAccent, () {}),
+            size, Icons.person, 'Tài khoản cá nhân', Colors.amberAccent, () {}),
         cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
             Colors.lightBlueAccent, () {}),
         cardItemMenu(size, Icons.restaurant, 'Quản lý món ăn',

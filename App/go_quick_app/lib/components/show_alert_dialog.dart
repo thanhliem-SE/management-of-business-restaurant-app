@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/config/palette.dart';
 
 showConfirmDialog(BuildContext context, VoidCallback method, String title) {
   // set up the buttons
@@ -17,7 +18,9 @@ showConfirmDialog(BuildContext context, VoidCallback method, String title) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text(title),
+    title: Text(
+      title,
+    ),
     actions: [
       cancelButton,
       continueButton,
