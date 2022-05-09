@@ -22,6 +22,7 @@ class DanhMuc {
   DateTime? createdAt;
   DateTime? updatedAt;
   List<ChiTietThucPham>? thucphams;
+  List<ThucPham>? thucPhamList;
 
   factory DanhMuc.fromJson(Map<String, dynamic> json) => DanhMuc(
         maDanhMuc: json["maDanhMuc"],
