@@ -38,6 +38,7 @@ public class ChiTietThucPhamController {
     @PutMapping("/{id}")
     public ChiTietThucPham update(@PathVariable(value = "id") Long id,
                                 @Valid @RequestBody ChiTietThucPham chiTietHoaDon) {
+        System.out.println(chiTietHoaDon);
         ChiTietThucPham rs = service.update(chiTietHoaDon, id);
         if (rs != null) {
             return rs;
