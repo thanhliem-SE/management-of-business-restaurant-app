@@ -78,12 +78,6 @@ class BillView extends StatelessWidget {
                 width: size.width,
                 margin: const EdgeInsets.only(top: 10),
                 child: buildTextSpan(
-                    boldText: 'Người chế biến: ', normalText: 'Đoàn Văn Vĩnh'),
-              ),
-              Container(
-                width: size.width,
-                margin: const EdgeInsets.only(top: 10),
-                child: buildTextSpan(
                     boldText: 'Ghi chú: ',
                     normalText: hoaDon.ghiChu == null || hoaDon.ghiChu!.isEmpty
                         ? 'Không có'

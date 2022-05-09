@@ -49,26 +49,41 @@ buildTabHoanThanh(
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: Column(
                               children: [
-                                Image.network(
-                                  item.thucPham!.urlHinhAnh![0],
-                                  fit: BoxFit.fill,
-                                  width: size.width * 0.2,
-                                  height: size.height * 0.1,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.network(
+                                      item.thucPham!.urlHinhAnh![0],
+                                      fit: BoxFit.fill,
+                                      width: size.width * 0.2,
+                                      height: size.height * 0.1,
+                                    ),
+                                    Text(
+                                      item.thucPham!.ten!,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text('x${item.soLuong}'),
+                                  ],
                                 ),
-                                Text(
-                                  item.thucPham!.ten!,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text('x${item.soLuong}'),
+                                item.nguoiCheBien != null
+                                    ? Container(
+                                        child: Text('Người chế biến: ' +
+                                            item.nguoiCheBien!.tenNhanVien!),
+                                      )
+                                    : Container(),
                               ],
                             ),
                           );
                         },
                       ),
+                      Container(
+                          width: size.width,
+                          height: size.height * 0.003,
+                          color: Colors.grey)
                     ],
                   ),
                 ));
