@@ -18,6 +18,8 @@ import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@AllArgsConstructor
+@Data
 @Entity
 public class ChiTietHoaDon implements Serializable {
 
@@ -37,6 +39,10 @@ public class ChiTietHoaDon implements Serializable {
     private NhanVien nguoiCheBien;
 
     private boolean daCheBien;
+
+    @Column
+    private boolean daPhucVu;
+
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")
@@ -135,4 +141,6 @@ public class ChiTietHoaDon implements Serializable {
     public void setNguoiCheBien(NhanVien nguoiCheBien) {
         this.nguoiCheBien = nguoiCheBien;
     }
+
+
 }

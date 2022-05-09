@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/login_service.dart';
@@ -11,6 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeViewModel extends ChangeNotifier {
   bool _loading = false;
   late TaiKhoan _taiKhoan;
+  NhanVien _nhanVien = NhanVien();
+
+  get nhanVien => _nhanVien;
+
+  setNhanVien() async {
+    _nhanVien = await Helper.getNhanVienSigned();
+    notifyListeners();
+  }
 
   get loading => this._loading;
 

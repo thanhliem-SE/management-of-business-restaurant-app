@@ -34,12 +34,16 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
     final future = viewModel.getTaiKhoan(context);
-    Size size = MediaQuery.of(context).size;
 
+    if (viewModel.nhanVien.taiKhoan == null) {
+      viewModel.setNhanVien();
+    }
+
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'GoQuick',
+          'GOQUICK',
         ),
         backgroundColor: kPrimaryColor,
         centerTitle: true,
@@ -50,16 +54,15 @@ class _HomeViewState extends State<HomeView> {
           if (snapshot.hasData) {
             taiKhoan = snapshot.data as TaiKhoan;
             storedSignedData(taiKhoan);
-            if (taiKhoan.quyen == 'ADMIN') {
-              return const WidgetForAdmin();
-            }
-            return Container();
+            return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
           } else {
             return const LoginView();
           }
         },
       ),
-      drawer: const NavBar(),
+      drawer: viewModel.nhanVien.taiKhoan != null
+          ? NavBar(nhanVien: viewModel.nhanVien)
+          : Container(),
     );
   }
 
@@ -76,9 +79,11 @@ class _HomeViewState extends State<HomeView> {
   }
 }
 
-class WidgetForAdmin extends StatelessWidget {
-  const WidgetForAdmin({
+class WidgetGridViewMenu extends StatelessWidget {
+  final String quyen;
+  const WidgetGridViewMenu({
     Key? key,
+    required this.quyen,
   }) : super(key: key);
 
   @override
@@ -91,34 +96,42 @@ class WidgetForAdmin extends StatelessWidget {
       mainAxisSpacing: 10,
       crossAxisCount: 2,
       children: <Widget>[
-        cardItemMenu(size, Icons.app_registration_outlined, 'Yêu cầu đặt món',
-            Colors.lightGreen, () {
-          NavigationHelper.push(
-              context: context,
-              page: const RequestOrderView(),
-              routeName: 'RequestOrderView');
-        }),
-        cardItemMenu(
-            size, Icons.library_books, 'Tiếp nhận đặt món', Colors.pinkAccent,
-            () {
-          NavigationHelper.push(
-              context: context, page: const ResponseOrderView());
-        }),
-        cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
-          NavigationHelper.push(
-              context: context, page: const ManageTableView());
-        }),
-        cardItemMenu(
-            size, Icons.person, 'Tài khoản cá nhân', Colors.amberAccent, () {}),
-        cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
-            Colors.lightBlueAccent, () {}),
-        cardItemMenu(
-            size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent, () {
-          NavigationHelper.push(
-              context: context, page: const ManageAllFoodView());
-        }),
-        cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
-            Colors.indigoAccent, () {}),
+        if (['QUANLY', 'PHUCVU'].contains(quyen))
+          cardItemMenu(size, Icons.app_registration_outlined, 'Yêu cầu đặt món',
+              Colors.lightGreen, () {
+            NavigationHelper.push(
+                context: context,
+                page: const RequestOrderView(),
+                routeName: 'RequestOrderView');
+          }),
+        if (['QUANLY', 'PHUCVU', 'CHEBIEN'].contains(quyen))
+          cardItemMenu(
+              size, Icons.library_books, 'Tiếp nhận đặt món', Colors.pinkAccent,
+              () {
+            NavigationHelper.push(
+                context: context, page: const ResponseOrderView());
+          }),
+        if (['QUANLY', 'PHUCVU'].contains(quyen))
+          cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ManageTableView());
+          }),
+        if (['QUANLY', 'THUNGAN'].contains(quyen))
+          cardItemMenu(size, Icons.money, 'Quản  lý thanh toán',
+              Colors.amberAccent, () {}),
+        if (['QUANLY'].contains(quyen))
+          cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
+              Colors.lightBlueAccent, () {}),
+        if (['QUANLY', 'CHEBIEN'].contains(quyen))
+          cardItemMenu(
+              size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent,
+              () {
+            NavigationHelper.push(
+                context: context, page: const ManageAllFoodView());
+          }),
+        if (['QUANLY'].contains(quyen))
+          cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
+              Colors.indigoAccent, () {}),
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(

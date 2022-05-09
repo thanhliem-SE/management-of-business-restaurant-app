@@ -3,7 +3,7 @@ package com.example.easynotes.model;
 public enum TinhTrang {
     CHO,
     DANGCHEBIEN,
-    HOANTHANH,
+    DACHEBIEN,
     CHUATHANHTOAN,
     DATHANHTOAN,
     KHONGTIEPNHAN,

@@ -37,8 +37,11 @@ buildTabHoanThanh(
                             style: const TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
-                          const Icon(Icons.done_all_rounded,
-                              color: Colors.green, size: 30),
+                          Text(
+                            DateFormat('HH:mm').format(hoaDon.createdAt!),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 16),
+                          ),
                         ],
                       ),
                       ListView.builder(
@@ -62,11 +65,36 @@ buildTabHoanThanh(
                                       height: size.height * 0.1,
                                     ),
                                     Text(
-                                      item.thucPham!.ten!,
+                                      item.thucPham!.ten! + ' x${item.soLuong}',
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    Text('x${item.soLuong}'),
+                                    ['QUANLY', 'PHUCVU']
+                                            .contains(viewModel.quyenTaiKhoan)
+                                        ? item.daPhucVu == true
+                                            ? IconButton(
+                                                onPressed: () {},
+                                                icon: const Icon(
+                                                    Icons.done_outlined),
+                                                iconSize: 30,
+                                                color: Colors.green,
+                                              )
+                                            : ElevatedButton(
+                                                onPressed: () {
+                                                  showConfirmDialog(context,
+                                                      () {
+                                                    viewModel
+                                                        .updateTrangThaiDaPhucVu(
+                                                            item);
+                                                    Navigator.pop(context);
+                                                  }, 'Bạn có chắc chắn đã phục vụ món ăn này không?');
+                                                },
+                                                child: const Text('Phục Vụ'),
+                                                style: ElevatedButton.styleFrom(
+                                                  primary: Colors.green,
+                                                ),
+                                              )
+                                        : Container()
                                   ],
                                 ),
                                 item.nguoiCheBien != null

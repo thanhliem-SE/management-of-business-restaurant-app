@@ -1,26 +1,21 @@
 [
   {
-    "tenTaiKhoan": "admin",
-    "matKhau": "matKhau1",
-    "quyen": "ADMIN"
-  },
-  {
-    "tenTaiKhoan": "nhanvien1",
+    "tenTaiKhoan": "vanvinh",
     "matKhau": "matKhau1",
     "quyen": "PHUCVU"
   },
   {
-    "tenTaiKhoan": "chebien1",
+    "tenTaiKhoan": "myhanh",
     "matKhau": "matKhau1",
     "quyen": "CHEBIEN"
   },
   {
-    "tenTaiKhoan": "thungan1",
+    "tenTaiKhoan": "thuydung",
     "matKhau": "matKhau1",
     "quyen": "THUNGAN"
   },
   {
-    "tenTaiKhoan": "quanly1",
+    "tenTaiKhoan": "thanhliem",
     "matKhau": "matKhau1",
     "quyen": "QUANLY"
   }
