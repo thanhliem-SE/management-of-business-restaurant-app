@@ -17,7 +17,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SelectCategoryView extends StatelessWidget {
-  const SelectCategoryView({Key? key}) : super(key: key);
+  final HoaDon? hoaDon;
+  const SelectCategoryView({Key? key, this.hoaDon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,9 +94,15 @@ class SelectCategoryView extends StatelessWidget {
                         onTap: () {
                           viewModel.getTotalPrice() > 0
                               ? showConfirmDialog(context, () {
-                                  viewModel.navigateToHoaDon(
-                                      ban: requestOrderModel.getBanByNumTable(),
-                                      context: context);
+                                  if (hoaDon == null) {
+                                    viewModel.navigateToHoaDon(
+                                        ban: requestOrderModel
+                                            .getBanByNumTable(),
+                                        context: context);
+                                  } else {
+                                    viewModel.addOrderToHoaDon(
+                                        hoaDon: hoaDon!, context: context);
+                                  }
                                   requestOrderModel.clear();
                                 }, 'Bạn có xác nhận đặt món')
                               : showAlertDialog(

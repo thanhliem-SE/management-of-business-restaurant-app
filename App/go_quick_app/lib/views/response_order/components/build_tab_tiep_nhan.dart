@@ -19,7 +19,10 @@ buildTabTiepNhan(
           itemBuilder: (context, index) {
             HoaDon hoaDon = listHoaDon[index];
             List<ChiTietHoaDon> listChiTietHoaDon =
-                mapListChiTietHoaDon[hoaDon.maHoaDon] ?? [];
+                mapListChiTietHoaDon[hoaDon.maHoaDon]
+                        ?.where((element) => element.daCheBien == false)
+                        .toList() ??
+                    [];
             return InkWell(
               onLongPress: () => NavigationHelper.push(
                 context: context,

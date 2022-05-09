@@ -104,7 +104,6 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
     HoaDon hoaDon = HoaDon(
         nguoiLapHoaDon: nguoiLapHoaDon,
-        tongThanhTien: getTotalPrice(),
         ban: ban,
         ghiChu: _ghiChu,
         tinhTrang: 'CHO');
@@ -134,6 +133,37 @@ class SelectCategoryViewModel extends ChangeNotifier {
               context: context, page: BillView(hoaDon: hoaDonCreated));
           clear();
         }
+      }
+    }
+  }
+
+  addOrderToHoaDon(
+      {required HoaDon hoaDon, required BuildContext context}) async {
+    String token = await Helper.getToken();
+
+    hoaDon.ghiChu = _ghiChu;
+    hoaDon.tinhTrang = "CHO";
+    await HoaDonService().updateHoaDon(token, hoaDon);
+
+    for (int i = 0; i < _listChiTietThucPham.length; i++) {
+      var element = _listChiTietThucPham[i];
+      if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
+        await ChiTietHoaDonService().addChiTietHoaDon(
+            token,
+            ChiTietHoaDon(
+              thucPham: element.thucPham,
+              soLuong: _soLuongChonMon[element.maChiTietThucPham!],
+              daCheBien: false,
+              hoaDon: hoaDon,
+            ));
+      }
+      if (_listChiTietThucPham.length == i + 1) {
+        Navigator.popUntil(context, (route) {
+          return route.settings.name == 'RequestOrderView';
+        });
+        Navigator.pop(context);
+        NavigationHelper.push(context: context, page: BillView(hoaDon: hoaDon));
+        clear();
       }
     }
   }
