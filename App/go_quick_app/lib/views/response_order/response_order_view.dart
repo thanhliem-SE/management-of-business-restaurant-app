@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
-import 'package:go_quick_app/views/response_order/components/build_tab_hoan_thanh.dart';
-import 'package:go_quick_app/views/response_order/components/build_tab_huy.dart';
+import 'package:go_quick_app/views/response_order/components/build_tab_da_che_bien.dart';
+import 'package:go_quick_app/views/response_order/components/build_tab_khong_tiep_nhan.dart';
 import 'package:go_quick_app/views/response_order/components/search_order_dialog.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:provider/provider.dart';
@@ -53,15 +53,14 @@ class ResponseOrderView extends StatelessWidget {
               buildTabHoanThanh(
                   size: size,
                   listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'HOANTHANH')
+                      .where((element) => element.tinhTrang == 'DACHEBIEN')
                       .toList(),
                   mapListChiTietHoaDon: mapListChiTietHoaDon,
                   viewModel: viewModel),
               buildTabHuy(
                   size: size,
                   listHoaDon: listHoaDon
-                      .where((element) =>
-                          ['KHONGTIEPNHAN', 'HUY'].contains(element.tinhTrang))
+                      .where((element) => element.tinhTrang == 'KHONGTIEPNHAN')
                       .toList(),
                   mapListChiTietHoaDon: mapListChiTietHoaDon,
                   viewModel: viewModel),
@@ -77,15 +76,6 @@ class ResponseOrderView extends StatelessWidget {
     return AppBar(
       backgroundColor: kPrimaryColor,
       actions: [
-        // IconButton(
-        //   onPressed: () {
-        //     showDialog(
-        //       context: context,
-        //       builder: (context) => const SearchOrderDialog(),
-        //     );
-        //   },
-        //   icon: const Icon(Icons.search),
-        // ),
         IconButton(
           onPressed: () {
             viewModel.init();
@@ -96,19 +86,19 @@ class ResponseOrderView extends StatelessWidget {
       bottom: const TabBar(
         tabs: [
           Tab(
-            text: 'Đang chờ',
+            text: 'Đang Chờ',
             icon: Icon(Icons.hourglass_bottom),
           ),
           Tab(
-            text: 'Tiếp nhận',
+            text: 'Tiếp Nhận',
             icon: Icon(Icons.receipt_long),
           ),
           Tab(
-            text: 'Hoàn thành',
+            text: 'Đã Chế Biến',
             icon: Icon(Icons.done_outline_sharp),
           ),
           Tab(
-            text: 'Đã hủy',
+            text: 'Không Tiếp Nhận',
             icon: Icon(Icons.cancel_outlined),
           ),
         ],

@@ -75,4 +75,6 @@ class Helper {
         return 'Chưa xác định';
     }
   }
+
+  static getNhanVien() {}
 }

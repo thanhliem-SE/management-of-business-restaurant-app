@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -12,6 +15,9 @@ class ResponseOrderViewModel extends ChangeNotifier {
   List<HoaDon> _listHoaDon = [];
   Map<int, List<ChiTietHoaDon>> _mapListChiTietHoaDon = {};
   String _ghiChu = '';
+  String _quyenTaiKhoan = '';
+
+  get quyenTaiKhoan => _quyenTaiKhoan;
 
   getListHoaDon() => _listHoaDon;
 
@@ -70,12 +76,25 @@ class ResponseOrderViewModel extends ChangeNotifier {
         await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
     if (response is Success) {
       init();
-      bool rs = checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
-      checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+      checkDaCheBienHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }
   }
 
-  checkHoanThanhHoaDon(int maHoaDon) async {
+  updateTrangThaiDaPhucVu(ChiTietHoaDon chiTietHoaDon) async {
+    NhanVien nguoiCheBien = await Helper.getNhanVienSigned();
+    String token = await Helper.getToken();
+
+    chiTietHoaDon.daPhucVu = true;
+
+    var response =
+        await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
+    if (response is Success) {
+      init();
+      checkDaPhucVuHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+    }
+  }
+
+  checkDaCheBienHoaDon(int maHoaDon) async {
     String token = await Helper.getToken();
     List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
     bool isHoanThanh = true;
@@ -85,15 +104,33 @@ class ResponseOrderViewModel extends ChangeNotifier {
         isHoanThanh = false;
         break;
       }
-
       if (i == listChiTietHoaDon.length - 1 && isHoanThanh == true) {
-        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'HOANTHANH');
+        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'DACHEBIEN');
+      }
+    }
+  }
+
+  checkDaPhucVuHoaDon(int maHoaDon) async {
+    String token = await Helper.getToken();
+    List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
+    bool rs = true;
+
+    for (int i = 0; i < listChiTietHoaDon.length; i++) {
+      if (listChiTietHoaDon[i].daPhucVu == false) {
+        rs = false;
+        break;
+      }
+
+      if (i == listChiTietHoaDon.length - 1 && rs == true) {
+        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'CHUATHANHTOAN');
       }
     }
   }
 
   init() async {
     String token = await Helper.getToken();
+    NhanVien nhanVien = await Helper.getNhanVienSigned();
+    _quyenTaiKhoan = nhanVien.taiKhoan!.quyen!;
     var response = await HoaDonService().getDanhSachHoaDon(token);
     if (response is Success) {
       _isInit = true;
