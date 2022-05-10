@@ -3,6 +3,7 @@ import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
@@ -18,7 +19,9 @@ import 'package:provider/provider.dart';
 
 class SelectCategoryView extends StatelessWidget {
   final HoaDon? hoaDon;
-  const SelectCategoryView({Key? key, this.hoaDon}) : super(key: key);
+  final List<ChiTietHoaDon>? listChiTietHoaDon;
+  const SelectCategoryView({Key? key, this.hoaDon, this.listChiTietHoaDon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +30,9 @@ class SelectCategoryView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      if (listChiTietHoaDon != null) {
+        viewModel.setListChiTietHoaDon(listChiTietHoaDon!);
+      }
     }
 
     List<ChiTietThucPham> listChiTietThucPham =

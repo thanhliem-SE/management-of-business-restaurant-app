@@ -34,7 +34,15 @@ class BillView extends StatelessWidget {
           viewModel: viewModel,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                NavigationHelper.pushReplacement(
+                    context: context,
+                    page: SelectCategoryView(
+                      hoaDon: hoaDon,
+                      listChiTietHoaDon: listChiTietHoaDon,
+                    ));
+                viewModel.clear();
+              },
               icon: const Icon(Icons.edit),
             ),
             IconButton(

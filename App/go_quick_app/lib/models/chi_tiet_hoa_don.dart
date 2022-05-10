@@ -21,6 +21,7 @@ class ChiTietHoaDon {
     this.thucPham,
     this.nguoiCheBien,
     this.soLuong,
+    this.khongTiepNhan,
     this.hoaDon,
     this.daCheBien,
     this.daPhucVu,
@@ -34,6 +35,7 @@ class ChiTietHoaDon {
   int? soLuong;
   bool? daCheBien;
   bool? daPhucVu;
+  bool? khongTiepNhan;
   HoaDon? hoaDon;
   DateTime? createdAt;
   DateTime? updatedAt;
@@ -47,6 +49,7 @@ class ChiTietHoaDon {
             : null,
         daCheBien: json["daCheBien"],
         daPhucVu: json["daPhucVu"],
+        khongTiepNhan: json["khongTiepNhan"],
         hoaDon: HoaDon.fromJson(json["hoaDon"]),
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
@@ -63,6 +66,7 @@ class ChiTietHoaDon {
       "soLuong": soLuong,
       "daCheBien": daCheBien,
       "daPhucVu": daPhucVu,
+      "khongTiepNhan": khongTiepNhan ?? false,
       "nguoiCheBien": nguoiCheBien != null ? nguoiCheBien?.toJson() : null,
       "hoaDon": hoaDon?.toJson(),
     };
