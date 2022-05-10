@@ -27,6 +27,21 @@ class ResponseOrderViewModel extends ChangeNotifier {
 
   getGhiChu() => _ghiChu;
 
+  getListChiTietHonDonByMaHoaDon(int maHoaDon) {
+    return _mapListChiTietHoaDon[maHoaDon] ?? [];
+  }
+
+  setKhongTiepNhanForChiTietHoaDon(int maHoaDon, int maChiTietHoaDon) {
+    var list = _mapListChiTietHoaDon[maHoaDon];
+    for (int i = 0; i < list!.length; i++) {
+      if (list[i].maChiTietHoaDon == maChiTietHoaDon) {
+        list[i].khongTiepNhan = list[i].khongTiepNhan == false ? true : false;
+        break;
+      }
+    }
+    notifyListeners();
+  }
+
   setGhiChu(String value) {
     _ghiChu = value;
     notifyListeners();
@@ -59,10 +74,22 @@ class ResponseOrderViewModel extends ChangeNotifier {
   updateTrangThaiHoaDon(HoaDon hoaDon, String trangThai) async {
     String token = await Helper.getToken();
     hoaDon.tinhTrang = trangThai;
+
     var response = await HoaDonService().updateHoaDon(token, hoaDon);
     if (response is Success) {
       init();
     }
+  }
+
+  updateKhongTiepNhanChiTietHoaDon(
+      List<ChiTietHoaDon> listChiTietHoaDon) async {
+    String token = await Helper.getToken();
+
+    listChiTietHoaDon.forEach((element) {
+      if (element.khongTiepNhan == true) {
+        ChiTietHoaDonService().updateChiTietHoaDon(token, element);
+      }
+    });
   }
 
   updateTrangThaiDaCheBien(ChiTietHoaDon chiTietHoaDon) async {

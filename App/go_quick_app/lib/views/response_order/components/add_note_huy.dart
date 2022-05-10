@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/components/rounded_input_field.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
+import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:provider/provider.dart';
@@ -14,41 +16,86 @@ class AddNoteCancelDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<ResponseOrderViewModel>(context);
+    List<ChiTietHoaDon> listChiTietHoaDon =
+        viewModel.getListChiTietHonDonByMaHoaDon(hoaDon.maHoaDon!);
     return AlertDialog(
       title: const Text(
-        'GHI CHÚ LÝ DO HỦY',
+        'Không Tiếp Nhận Món Ăn',
         textAlign: TextAlign.center,
       ),
       content: SingleChildScrollView(
-        child: Column(
-          children: [
-            RoundedInputField(
-              hintText: 'Thêm ghi chú',
-              onChanged: (value) {
-                viewModel.setGhiChu(value);
-              },
-              icon: Icons.fastfood_outlined,
-            ),
-            Container(
-              alignment: Alignment.topCenter,
-              child: Text(viewModel.getGhiChu()),
-            ),
-            RoundedButton(
-                text: 'HỦY',
-                press: () {
-                  if (viewModel.getGhiChu() == '') {
-                    showAlertDialog(
-                        context: context,
-                        title: 'Thất bại',
-                        message: 'Vui lòng nhập lý do hủy yêu cầu đặt món');
-                  } else {
-                    hoaDon.ghiChu = viewModel.getGhiChu();
-                    viewModel.setGhiChu('');
-                    viewModel.updateTrangThaiHoaDon(hoaDon, 'KHONGTIEPNHAN');
-                    Navigator.pop(context);
-                  }
-                })
-          ],
+        child: Container(
+          width: size.width,
+          child: Column(
+            children: [
+              ListView.builder(
+                itemCount: listChiTietHoaDon.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  ChiTietHoaDon item = listChiTietHoaDon[index];
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Image.network(
+                        item.thucPham!.urlHinhAnh![0],
+                        fit: BoxFit.fill,
+                        width: size.width * 0.2,
+                        height: size.height * 0.1,
+                      ),
+                      Text(
+                        item.thucPham!.ten!,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      item.khongTiepNhan == false
+                          ? IconButton(
+                              onPressed: () {
+                                viewModel.setKhongTiepNhanForChiTietHoaDon(
+                                    hoaDon.maHoaDon!, item.maChiTietHoaDon!);
+                              },
+                              icon: const Icon(Icons.check_box_outline_blank))
+                          : IconButton(
+                              onPressed: () {
+                                viewModel.setKhongTiepNhanForChiTietHoaDon(
+                                    hoaDon.maHoaDon!, item.maChiTietHoaDon!);
+                              },
+                              icon: const Icon(Icons.check_box_outlined)),
+                    ],
+                  );
+                },
+              ),
+              SizedBox(
+                height: size.height * 0.01,
+              ),
+              TextField(
+                maxLines: 4,
+                onChanged: (value) {
+                  viewModel.setGhiChu(value);
+                },
+                decoration: const InputDecoration(
+                    hintText: 'Lý do hủy', fillColor: kPrimaryLightColor),
+              ),
+              SizedBox(
+                height: size.height * 0.04,
+              ),
+              RoundedButton(
+                  text: 'HỦY',
+                  press: () {
+                    if (viewModel.getGhiChu() == '') {
+                      showAlertDialog(
+                          context: context,
+                          title: 'Thất bại',
+                          message: 'Vui lòng nhập lý do hủy yêu cầu đặt món');
+                    } else {
+                      hoaDon.ghiChu = viewModel.getGhiChu();
+                      viewModel.setGhiChu('');
+                      viewModel
+                          .updateKhongTiepNhanChiTietHoaDon(listChiTietHoaDon);
+                      viewModel.updateTrangThaiHoaDon(hoaDon, 'KHONGTIEPNHAN');
+                      Navigator.pop(context);
+                    }
+                  })
+            ],
+          ),
         ),
       ),
     );

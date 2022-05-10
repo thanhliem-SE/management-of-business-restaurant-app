@@ -208,6 +208,7 @@ class BillView extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.only(bottom: 10),
           margin: const EdgeInsets.only(top: 10),
+          color: item.khongTiepNhan == false ? Colors.white : Colors.red[100],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
