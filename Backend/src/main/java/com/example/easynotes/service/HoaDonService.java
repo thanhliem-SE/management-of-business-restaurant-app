@@ -1,10 +1,12 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.HoaDon;
 import com.example.easynotes.service.repository.HoaDonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,7 +15,7 @@ public class HoaDonService {
     private HoaDonRepository repository;
 
     public List<HoaDon> getList(){
-        return repository.findAll();
+       return repository.getAll();
     }
 
     public HoaDon getById(Long id){
@@ -21,6 +23,7 @@ public class HoaDonService {
     }
 
     public HoaDon add(HoaDon hoaDon){
+        hoaDon.setDeleted(false);
      return repository.save(hoaDon);
     }
 

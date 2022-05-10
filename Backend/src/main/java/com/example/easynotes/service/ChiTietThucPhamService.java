@@ -1,5 +1,6 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.ChiTietThucPham;
 import com.example.easynotes.service.repository.ChiTietThucPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class ChiTietThucPhamService {
     private ChiTietThucPhamRepository repository;
 
     public List<ChiTietThucPham> getList(){
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public ChiTietThucPham getById(Long id){
@@ -25,6 +26,7 @@ public class ChiTietThucPhamService {
     }
 
     public ChiTietThucPham add(ChiTietThucPham chiTietThucPham){
+        chiTietThucPham.setDeleted(false);
         return repository.save(chiTietThucPham);
     }
 

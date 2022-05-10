@@ -1,10 +1,12 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietThucPham;
 import com.example.easynotes.model.DanhMuc;
 import com.example.easynotes.service.repository.DanhMucRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,7 +15,7 @@ public class DanhMucService {
     private DanhMucRepository repository;
 
     public List<DanhMuc> getList(){
-        return repository.findAll();
+       return repository.getAll();
     }
 
     public DanhMuc getById(Long id){
@@ -21,6 +23,7 @@ public class DanhMucService {
     }
 
     public DanhMuc add(DanhMuc danhMuc){
+        danhMuc.setDeleted(false);
         return repository.save(danhMuc);
     }
 

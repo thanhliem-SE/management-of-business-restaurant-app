@@ -33,6 +33,8 @@ public class TaiKhoan implements Serializable {
     @NotBlank
     private String matKhau;
 
+    private boolean isDeleted;
+
     @Enumerated(EnumType.STRING)
     private Quyen quyen;
 
