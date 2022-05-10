@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/services/api_status.dart';
-import 'package:go_quick_app/services/login_service.dart';
+import 'package:go_quick_app/services/tai_khoan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
@@ -48,7 +48,7 @@ class LoginViewModel extends ChangeNotifier {
 
   login(context) async {
     setLoading(true);
-    var response = await LoginService().login(_username, _password);
+    var response = await TaiKhoanService().login(_username, _password);
     if (response is Success) {
       setToken(response.response as String);
       NavigationHelper.push(context: context, page: HomeView());

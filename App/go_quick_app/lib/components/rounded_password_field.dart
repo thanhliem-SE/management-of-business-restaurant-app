@@ -4,9 +4,11 @@ import 'package:go_quick_app/config/palette.dart';
 
 class RoundedPasswordField extends StatelessWidget {
   final ValueChanged<String> onChanged;
+  final String? hintText;
   const RoundedPasswordField({
     Key? key,
     required this.onChanged,
+    this.hintText,
   }) : super(key: key);
 
   @override
@@ -16,16 +18,8 @@ class RoundedPasswordField extends StatelessWidget {
         obscureText: true,
         onChanged: onChanged,
         cursorColor: kPrimaryColor,
-        decoration: const InputDecoration(
-          hintText: "Password",
-          icon: Icon(
-            Icons.lock,
-            color: kPrimaryColor,
-          ),
-          suffixIcon: Icon(
-            Icons.visibility,
-            color: kPrimaryColor,
-          ),
+        decoration: InputDecoration(
+          hintText: hintText ?? "Nhập mật khẩu",
           border: InputBorder.none,
         ),
       ),

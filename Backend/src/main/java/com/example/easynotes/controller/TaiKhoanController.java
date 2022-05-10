@@ -7,6 +7,7 @@ import com.example.easynotes.service.TaiKhoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -63,6 +64,15 @@ public class TaiKhoanController {
         try {
             service.deleteByTenTaiKhoan(id);
             return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
+        }
+    }
+
+    @GetMapping ("/taikhoan/{id}/{oldpass}/{newpass}")
+    public TaiKhoan doiMatKhauTaiKhoan(@PathVariable(value = "id") String id, @PathVariable(value = "oldpass") String oldpass, @PathVariable(value = "newpass") String newpass) {
+        try {
+            return service.doiMatKhauTaiKhoan(id, oldpass, newpass);
         } catch (Exception e) {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
