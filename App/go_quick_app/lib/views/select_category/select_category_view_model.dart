@@ -18,10 +18,20 @@ class SelectCategoryViewModel extends ChangeNotifier {
   bool _isInit = false;
   Map<int, int> _soLuongChonMon = {};
   List<ChiTietThucPham> _listChiTietThucPham = [];
+  List<ChiTietHoaDon>? _listChiTietHoaDon = null;
 
   setGhiChu(String value) {
     _ghiChu = value;
     notifyListeners();
+  }
+
+  setListChiTietHoaDon(List<ChiTietHoaDon> value) {
+    _listChiTietHoaDon = value;
+    notifyListeners();
+  }
+
+  getListChiTietHoaDon() {
+    return _listChiTietHoaDon;
   }
 
   getGhiChu() {
@@ -64,6 +74,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
     listChiTietThucPham.forEach((chiTietThucPham) {
       _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
     });
+    setDataEditOrder(_listChiTietHoaDon!);
     notifyListeners();
   }
 
@@ -85,7 +96,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
     getChiTietThucPhamFromServer();
   }
 
-  getChiTietThucPhamFromServer() async {
+  getChiTietThucPhamFromServer({List<ChiTietHoaDon>? list}) async {
     String token = await Helper.getToken();
     var response =
         await ChiTietThucPhamService().getChiTietThucPhamHomNay(token);
@@ -94,6 +105,16 @@ class SelectCategoryViewModel extends ChangeNotifier {
     } else {
       return null;
     }
+  }
+
+  setDataEditOrder(List<ChiTietHoaDon> listChiTietHoaDon) async {
+    String token = await Helper.getToken();
+    listChiTietHoaDon.forEach((element) {
+      _soLuongChonMon[element.thucPham!.maThucPham!] = element.soLuong!;
+      ChiTietHoaDonService()
+          .deleteChiTietHoaDon(token, element.maChiTietHoaDon!);
+    });
+    notifyListeners();
   }
 
   navigateToHoaDon({required Ban ban, required BuildContext context}) async {
@@ -174,5 +195,6 @@ class SelectCategoryViewModel extends ChangeNotifier {
     _isInit = false;
     _soLuongChonMon = {};
     _listChiTietThucPham = [];
+    _listChiTietHoaDon = null;
   }
 }

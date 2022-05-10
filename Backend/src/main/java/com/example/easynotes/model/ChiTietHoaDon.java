@@ -40,9 +40,9 @@ public class ChiTietHoaDon implements Serializable {
 
     private boolean daCheBien;
 
-    @Column
     private boolean daPhucVu;
 
+    private boolean khongTiepNhan;
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")

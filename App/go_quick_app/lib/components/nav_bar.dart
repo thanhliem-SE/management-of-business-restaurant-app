@@ -145,8 +145,7 @@ class ConfirmPasswordDialog extends StatelessWidget {
     final response = await TaiKhoanService()
         .doiMatKhau(token, taiKhoan.tenTaiKhoan!, matKhauCu, matKhauMoi);
     if (response is Success) {
-      NavigationHelper.pushReplacement(
-          context: context, page: const LoginView());
+      NavigationHelper.push(context: context, page: const LoginView());
       showAlertDialog(
           context: context,
           title: 'Thành công',
