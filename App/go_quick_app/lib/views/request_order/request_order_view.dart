@@ -1,16 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
-import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
-import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
-import 'package:go_quick_app/models/hoa_don.dart';
-import 'package:go_quick_app/utils/navigation_helper.dart';
-import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/component/select_table_count.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
-import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:provider/provider.dart';
 
 class RequestOrderView extends StatelessWidget {
@@ -25,70 +18,68 @@ class RequestOrderView extends StatelessWidget {
       viewModel.init();
     }
 
-    return Scaffold(
-      appBar: buildAppBar(
-        context: context,
-        title: 'Yêu Cầu Đặt Món',
-        actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (context) => (SelectTableCount()),
-              );
-            },
-            icon: Icon(
-              Icons.add,
-              color: Colors.white,
-              size: size.height * 0.05,
-            ),
+    List<Ban> listBanTangTret = viewModel.getListBanByViTri('Tầng Trệt');
+    List<Ban> listBanTang1 = viewModel.getListBanByViTri('Tầng 1');
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: buildAppBar(
+          context,
+          viewModel,
+        ),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: size.height,
+            child: TabBarView(children: [
+              Container(
+                color: kPrimaryLightColor,
+                child: (listBanTangTret.length > 0)
+                    ? GridView.builder(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemCount: listBanTangTret.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return cardTableOrder(
+                              size: size,
+                              context: context,
+                              ban: listBanTangTret[index],
+                              viewModel: viewModel);
+                        },
+                      )
+                    : Container(),
+              ),
+              Container(
+                color: kPrimaryLightColor,
+                child: (listBanTang1.length > 0)
+                    ? GridView.builder(
+                        primary: false,
+                        padding: const EdgeInsets.all(20),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        itemCount: listBanTang1.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return cardTableOrder(
+                              size: size,
+                              context: context,
+                              ban: listBanTang1[index],
+                              viewModel: viewModel);
+                        },
+                      )
+                    : Container(),
+              ),
+            ]),
           ),
-          IconButton(
-            onPressed: () {
-              viewModel.init();
-            },
-            icon: Icon(
-              Icons.refresh_sharp,
-              color: Colors.white,
-              size: size.height * 0.04,
-            ),
-          ),
-        ],
-        viewModel: viewModel,
-      ),
-      body: Container(
-        color: kPrimaryLightColor,
-        child: Column(
-          children: [
-            SizedBox(height: size.height * 0.03),
-            Text('DANH SÁCH BÀN ĂN',
-                style: TextStyle(
-                    fontSize: size.height * 0.03,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black)),
-            Expanded(
-              child: (viewModel.getListBan().length > 0)
-                  ? GridView.builder(
-                      primary: false,
-                      padding: const EdgeInsets.all(20),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                      ),
-                      itemCount: viewModel.getListBan().length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return cardTableOrder(
-                            size: size,
-                            context: context,
-                            ban: viewModel.getListBan()[index],
-                            viewModel: viewModel);
-                      },
-                    )
-                  : Container(),
-            ),
-          ],
         ),
       ),
     );
@@ -125,7 +116,7 @@ Container cardTableOrder(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                ban.viTri.toString(),
+                ban.soBan.toString(),
                 style: TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
@@ -149,6 +140,65 @@ Container cardTableOrder(
           ),
         ],
       ),
+    ),
+  );
+}
+
+AppBar buildAppBar(BuildContext context, RequestOrderViewModel viewModel) {
+  Size size = MediaQuery.of(context).size;
+  return AppBar(
+    backgroundColor: kPrimaryColor,
+    bottom: const TabBar(
+      tabs: [
+        Tab(
+          text: 'Tầng Trệt',
+          icon: Icon(Icons.home),
+        ),
+        Tab(
+          text: 'Tầng 1',
+          icon: Icon(Icons.home_work_sharp),
+        ),
+      ],
+    ),
+    actions: [
+      IconButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => (SelectTableCount()),
+          );
+        },
+        icon: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: size.height * 0.05,
+        ),
+      ),
+      IconButton(
+        onPressed: () {
+          viewModel.init();
+        },
+        icon: Icon(
+          Icons.refresh_sharp,
+          color: Colors.white,
+          size: size.height * 0.04,
+        ),
+      ),
+    ],
+    title: const Text(
+      'Yêu cầu đặt món',
+      style: TextStyle(color: Colors.white),
+    ),
+    leading: IconButton(
+      icon: Icon(
+        Icons.arrow_back,
+        color: Colors.white,
+        size: size.height * 0.05,
+      ),
+      onPressed: () {
+        Navigator.pop(context);
+        viewModel.clear();
+      },
     ),
   );
 }

@@ -1,37 +1,31 @@
 [
+
   {
-    "tenNhanVien": "admin",
-    "soDienThoai": "0123456789",
+    "tenNhanVien": "Đoàn Văn Vĩnh",
+    "soDienThoai": "0123456783",
     "taiKhoan": {
-      "tenTaiKhoan": "admin"
+      "tenTaiKhoan": "vanvinh"
     }
   },
   {
-    "tenNhanVien": "nhân viên 1",
-    "soDienThoai": "0123456789",
+    "tenNhanVien": "Nguyễn Thị Mỹ Hạnh",
+    "soDienThoai": "0323456789",
     "taiKhoan": {
-      "tenTaiKhoan": "nhanvien1"
+      "tenTaiKhoan": "myhanh"
     }
   },
   {
-    "tenNhanVien": "thu ngân 1",
-    "soDienThoai": "0123456789",
+    "tenNhanVien": "Trần Thị Thùy DUng",
+    "soDienThoai": "0123456289",
     "taiKhoan": {
-      "tenTaiKhoan": "thungan1"
+      "tenTaiKhoan": "thuydung"
     }
   },
   {
-    "tenNhanVien": "chế biến 1",
-    "soDienThoai": "0123456789",
+    "tenNhanVien": "Nguyễn Thanh Liêm",
+    "soDienThoai": "012345s789",
     "taiKhoan": {
-      "tenTaiKhoan": "chebien1"
-    }
-  },
-  {
-    "tenNhanVien": "quản lý 1",
-    "soDienThoai": "0123456789",
-    "taiKhoan": {
-      "tenTaiKhoan": "quanly1"
+      "tenTaiKhoan": "thanhliem"
     }
   }
 ]

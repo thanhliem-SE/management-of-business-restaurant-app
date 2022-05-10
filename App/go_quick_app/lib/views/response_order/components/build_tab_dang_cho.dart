@@ -19,7 +19,10 @@ buildTabDangCho(
           itemBuilder: (context, index) {
             HoaDon hoaDon = listHoaDon[index];
             List<ChiTietHoaDon> listChiTietHoaDon =
-                mapListChiTietHoaDon[hoaDon.maHoaDon] ?? [];
+                mapListChiTietHoaDon[hoaDon.maHoaDon]
+                        ?.where((element) => element.daCheBien == false)
+                        .toList() ??
+                    [];
             return InkWell(
               onLongPress: () => NavigationHelper.push(
                 context: context,
@@ -83,37 +86,39 @@ buildTabDangCho(
                               fontStyle: FontStyle.italic,
                             ),
                           ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) => AddNoteCancelDialog(
-                                      hoaDon: hoaDon,
-                                    ));
-                          },
-                          child: const Text('Hủy'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.red,
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            showConfirmDialog(context, () {
-                              viewModel.updateTrangThaiHoaDon(
-                                  hoaDon, 'DANGCHEBIEN');
-                              Navigator.pop(context);
-                            }, 'Bạn có muốn tiếp nhận hóa đơn này?');
-                          },
-                          child: const Text('Tiếp nhận'),
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.blue,
-                          ),
-                        ),
-                      ],
-                    ),
+                    ['QUANLY', 'CHEBIEN'].contains(viewModel.quyenTaiKhoan)
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AddNoteCancelDialog(
+                                            hoaDon: hoaDon,
+                                          ));
+                                },
+                                child: const Text('Không tiếp nhận'),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.red,
+                                ),
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  showConfirmDialog(context, () {
+                                    viewModel.updateTrangThaiHoaDon(
+                                        hoaDon, 'DANGCHEBIEN');
+                                    Navigator.pop(context);
+                                  }, 'Bạn có muốn tiếp nhận hóa đơn này?');
+                                },
+                                child: const Text('Tiếp nhận'),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.blue,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                     SizedBox(
                       height: size.height * 0.01,
                     ),

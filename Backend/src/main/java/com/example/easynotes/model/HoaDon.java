@@ -34,6 +34,8 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maNhanVien")
     private NhanVien nguoiLapHoaDon;
 
+    private boolean isDeleted;
+
     @OneToOne
     @JoinColumn(name = "maThanhToan")
     private ThanhToan thanhToan;

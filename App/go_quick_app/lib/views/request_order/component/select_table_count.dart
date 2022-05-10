@@ -15,7 +15,8 @@ class SelectTableCount extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<RequestOrderViewModel>(context);
     List<Ban> listBanTrong =
-        viewModel.getListBan().where((ban) => ban.tinhTrang == null).toList();
+        viewModel.getListBanByViTri(viewModel.getViTriBanTrong());
+
     return AlertDialog(
       title: const Text(
         'DANH SÁCH BÀN TRỐNG',
@@ -26,11 +27,21 @@ class SelectTableCount extends StatelessWidget {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.asset(
-                  'assets/icons/icon_table.png',
-                  color: kPrimaryColor,
+                DropdownButton(
+                  items: <String>['Tầng Trệt', 'Tầng 1']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    viewModel.setViTriBanTrong(value.toString());
+                  },
+                  value: viewModel.getViTriBanTrong(),
+                  style: const TextStyle(color: Colors.black, fontSize: 18),
                 ),
               ],
             ),
@@ -59,7 +70,7 @@ class SelectTableCount extends StatelessWidget {
                           : kPrimaryLightColor,
                       child: Center(
                           child: Text(
-                        ban.viTri.toString(),
+                        ban.soBan.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: viewModel.getNumTable() == ban.maSoBan
@@ -75,7 +86,7 @@ class SelectTableCount extends StatelessWidget {
               text: 'TIẾP THEO',
               press: () {
                 NavigationHelper.push(
-                    context: context, page: SelectCategoryView());
+                    context: context, page: const SelectCategoryView());
               },
               color: kPrimaryColor,
               textColor: Colors.white,

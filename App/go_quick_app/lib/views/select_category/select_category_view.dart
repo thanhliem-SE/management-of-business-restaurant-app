@@ -3,6 +3,7 @@ import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
@@ -17,7 +18,10 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class SelectCategoryView extends StatelessWidget {
-  const SelectCategoryView({Key? key}) : super(key: key);
+  final HoaDon? hoaDon;
+  final List<ChiTietHoaDon>? listChiTietHoaDon;
+  const SelectCategoryView({Key? key, this.hoaDon, this.listChiTietHoaDon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,9 @@ class SelectCategoryView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      if (listChiTietHoaDon != null) {
+        viewModel.setListChiTietHoaDon(listChiTietHoaDon!);
+      }
     }
 
     List<ChiTietThucPham> listChiTietThucPham =
@@ -93,9 +100,15 @@ class SelectCategoryView extends StatelessWidget {
                         onTap: () {
                           viewModel.getTotalPrice() > 0
                               ? showConfirmDialog(context, () {
-                                  viewModel.navigateToHoaDon(
-                                      ban: requestOrderModel.getBanByNumTable(),
-                                      context: context);
+                                  if (hoaDon == null) {
+                                    viewModel.navigateToHoaDon(
+                                        ban: requestOrderModel
+                                            .getBanByNumTable(),
+                                        context: context);
+                                  } else {
+                                    viewModel.addOrderToHoaDon(
+                                        hoaDon: hoaDon!, context: context);
+                                  }
                                   requestOrderModel.clear();
                                 }, 'Bạn có xác nhận đặt món')
                               : showAlertDialog(

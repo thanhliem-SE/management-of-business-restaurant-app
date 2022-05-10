@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Nationalized;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -26,10 +27,14 @@ public class Ban implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long maSoBan;
 
-    @Min(value = 0)
-    private int viTri;
+    @Nationalized
+    private String viTri;
 
-    private boolean khongSuDung;
+    private int soBan;
+
+    private boolean isDeleted;
+
+    private boolean khongHienThi;
 
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;

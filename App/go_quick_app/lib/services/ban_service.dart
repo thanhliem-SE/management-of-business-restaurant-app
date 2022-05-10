@@ -17,7 +17,8 @@ class BanService {
       });
 
       if (response.statusCode == 200) {
-        return Success(response: listBanFromJson(response.body));
+        return Success(
+            response: listBanFromJson(utf8.decode(response.bodyBytes)));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');

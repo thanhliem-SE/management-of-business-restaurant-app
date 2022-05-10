@@ -19,7 +19,10 @@ buildTabTiepNhan(
           itemBuilder: (context, index) {
             HoaDon hoaDon = listHoaDon[index];
             List<ChiTietHoaDon> listChiTietHoaDon =
-                mapListChiTietHoaDon[hoaDon.maHoaDon] ?? [];
+                mapListChiTietHoaDon[hoaDon.maHoaDon]
+                        ?.where((element) => element.daCheBien == false)
+                        .toList() ??
+                    [];
             return InkWell(
               onLongPress: () => NavigationHelper.push(
                 context: context,
@@ -69,23 +72,31 @@ buildTabTiepNhan(
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold),
                                   ),
-                                  item.daCheBien == true
-                                      ? IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(Icons.done_outlined),
-                                          iconSize: 30,
-                                          color: Colors.green,
-                                        )
-                                      : ElevatedButton(
-                                          onPressed: () {
-                                            viewModel
-                                                .updateTrangThaiDaCheBien(item);
-                                          },
-                                          child: const Text('Đã Chế Biến'),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Colors.green,
-                                          ),
-                                        ),
+                                  ['QUANLY', 'CHEBIEN', 'ADMIN']
+                                          .contains(viewModel.quyenTaiKhoan)
+                                      ? item.daCheBien == true
+                                          ? IconButton(
+                                              onPressed: () {},
+                                              icon: const Icon(
+                                                  Icons.done_outlined),
+                                              iconSize: 30,
+                                              color: Colors.green,
+                                            )
+                                          : ElevatedButton(
+                                              onPressed: () {
+                                                showConfirmDialog(context, () {
+                                                  viewModel
+                                                      .updateTrangThaiDaCheBien(
+                                                          item);
+                                                  Navigator.pop(context);
+                                                }, 'Bạn có chắc chắn đã chế biến thức ăn này?');
+                                              },
+                                              child: const Text('Chế Biến'),
+                                              style: ElevatedButton.styleFrom(
+                                                primary: Colors.green,
+                                              ),
+                                            )
+                                      : Container()
                                 ],
                               ),
                               item.nguoiCheBien != null

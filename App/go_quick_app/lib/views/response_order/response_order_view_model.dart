@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -12,6 +15,9 @@ class ResponseOrderViewModel extends ChangeNotifier {
   List<HoaDon> _listHoaDon = [];
   Map<int, List<ChiTietHoaDon>> _mapListChiTietHoaDon = {};
   String _ghiChu = '';
+  String _quyenTaiKhoan = '';
+
+  get quyenTaiKhoan => _quyenTaiKhoan;
 
   getListHoaDon() => _listHoaDon;
 
@@ -20,6 +26,21 @@ class ResponseOrderViewModel extends ChangeNotifier {
   getMapChiTietHoaDon() => _mapListChiTietHoaDon;
 
   getGhiChu() => _ghiChu;
+
+  getListChiTietHonDonByMaHoaDon(int maHoaDon) {
+    return _mapListChiTietHoaDon[maHoaDon] ?? [];
+  }
+
+  setKhongTiepNhanForChiTietHoaDon(int maHoaDon, int maChiTietHoaDon) {
+    var list = _mapListChiTietHoaDon[maHoaDon];
+    for (int i = 0; i < list!.length; i++) {
+      if (list[i].maChiTietHoaDon == maChiTietHoaDon) {
+        list[i].khongTiepNhan = list[i].khongTiepNhan == false ? true : false;
+        break;
+      }
+    }
+    notifyListeners();
+  }
 
   setGhiChu(String value) {
     _ghiChu = value;
@@ -53,10 +74,22 @@ class ResponseOrderViewModel extends ChangeNotifier {
   updateTrangThaiHoaDon(HoaDon hoaDon, String trangThai) async {
     String token = await Helper.getToken();
     hoaDon.tinhTrang = trangThai;
+
     var response = await HoaDonService().updateHoaDon(token, hoaDon);
     if (response is Success) {
       init();
     }
+  }
+
+  updateKhongTiepNhanChiTietHoaDon(
+      List<ChiTietHoaDon> listChiTietHoaDon) async {
+    String token = await Helper.getToken();
+
+    listChiTietHoaDon.forEach((element) {
+      if (element.khongTiepNhan == true) {
+        ChiTietHoaDonService().updateChiTietHoaDon(token, element);
+      }
+    });
   }
 
   updateTrangThaiDaCheBien(ChiTietHoaDon chiTietHoaDon) async {
@@ -70,12 +103,25 @@ class ResponseOrderViewModel extends ChangeNotifier {
         await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
     if (response is Success) {
       init();
-      bool rs = checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
-      checkHoanThanhHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+      checkDaCheBienHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }
   }
 
-  checkHoanThanhHoaDon(int maHoaDon) async {
+  updateTrangThaiDaPhucVu(ChiTietHoaDon chiTietHoaDon) async {
+    NhanVien nguoiCheBien = await Helper.getNhanVienSigned();
+    String token = await Helper.getToken();
+
+    chiTietHoaDon.daPhucVu = true;
+
+    var response =
+        await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
+    if (response is Success) {
+      init();
+      checkDaPhucVuHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
+    }
+  }
+
+  checkDaCheBienHoaDon(int maHoaDon) async {
     String token = await Helper.getToken();
     List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
     bool isHoanThanh = true;
@@ -85,15 +131,33 @@ class ResponseOrderViewModel extends ChangeNotifier {
         isHoanThanh = false;
         break;
       }
-
       if (i == listChiTietHoaDon.length - 1 && isHoanThanh == true) {
-        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'HOANTHANH');
+        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'DACHEBIEN');
+      }
+    }
+  }
+
+  checkDaPhucVuHoaDon(int maHoaDon) async {
+    String token = await Helper.getToken();
+    List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
+    bool rs = true;
+
+    for (int i = 0; i < listChiTietHoaDon.length; i++) {
+      if (listChiTietHoaDon[i].daPhucVu == false) {
+        rs = false;
+        break;
+      }
+
+      if (i == listChiTietHoaDon.length - 1 && rs == true) {
+        updateTrangThaiHoaDon(listChiTietHoaDon[i].hoaDon!, 'CHUATHANHTOAN');
       }
     }
   }
 
   init() async {
     String token = await Helper.getToken();
+    NhanVien nhanVien = await Helper.getNhanVienSigned();
+    _quyenTaiKhoan = nhanVien.taiKhoan!.quyen!;
     var response = await HoaDonService().getDanhSachHoaDon(token);
     if (response is Success) {
       _isInit = true;

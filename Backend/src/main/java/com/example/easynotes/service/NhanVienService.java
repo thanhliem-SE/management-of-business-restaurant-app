@@ -1,11 +1,13 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.NhanVien;
 import com.example.easynotes.model.TaiKhoan;
 import com.example.easynotes.service.repository.NhanVienRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,7 +19,7 @@ public class NhanVienService {
     private TaiKhoanService taiKhoanService;
 
     public List<NhanVien> getList() {
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public NhanVien getById(Long id) {
@@ -25,6 +27,7 @@ public class NhanVienService {
     }
 
     public NhanVien add(NhanVien nhanVien) {
+        nhanVien.setDeleted(false);
         return repository.save(nhanVien);
     }
 

@@ -5,7 +5,9 @@ import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/helper.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
+import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -32,11 +34,26 @@ class BillView extends StatelessWidget {
           viewModel: viewModel,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                NavigationHelper.pushReplacement(
+                    context: context,
+                    page: SelectCategoryView(
+                      hoaDon: hoaDon,
+                      listChiTietHoaDon: listChiTietHoaDon,
+                    ));
+                viewModel.clear();
+              },
               icon: const Icon(Icons.edit),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                NavigationHelper.pushReplacement(
+                    context: context,
+                    page: SelectCategoryView(
+                      hoaDon: hoaDon,
+                    ));
+                viewModel.clear();
+              },
               icon: const Icon(Icons.add),
             ),
             IconButton(
@@ -191,6 +208,7 @@ class BillView extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.only(bottom: 10),
           margin: const EdgeInsets.only(top: 10),
+          color: item.khongTiepNhan == false ? Colors.white : Colors.red[100],
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

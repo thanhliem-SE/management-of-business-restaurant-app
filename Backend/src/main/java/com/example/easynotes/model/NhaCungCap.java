@@ -35,6 +35,8 @@ public class NhaCungCap implements Serializable {
     @NotBlank
     private String tenNhaCungCap;
 
+    private boolean isDeleted;
+
     @Nationalized
     @Lob   // mapping to Text Type on MySQL
     @NotBlank

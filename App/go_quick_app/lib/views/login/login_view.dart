@@ -36,7 +36,7 @@ class _LoginViewState extends State<LoginView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 const Text(
-                  "GoQuicK APP",
+                  "GOQUICK",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,

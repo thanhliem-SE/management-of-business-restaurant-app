@@ -18,6 +18,8 @@ import java.util.Date;
 
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
+@AllArgsConstructor
+@Data
 @Entity
 public class ChiTietHoaDon implements Serializable {
 
@@ -37,6 +39,11 @@ public class ChiTietHoaDon implements Serializable {
     private NhanVien nguoiCheBien;
 
     private boolean daCheBien;
+
+    private boolean daPhucVu;
+
+    private boolean khongTiepNhan;
+    private boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")
@@ -134,5 +141,29 @@ public class ChiTietHoaDon implements Serializable {
 
     public void setNguoiCheBien(NhanVien nguoiCheBien) {
         this.nguoiCheBien = nguoiCheBien;
+    }
+
+    public boolean isDaPhucVu() {
+        return daPhucVu;
+    }
+
+    public void setDaPhucVu(boolean daPhucVu) {
+        this.daPhucVu = daPhucVu;
+    }
+
+    public boolean isKhongTiepNhan() {
+        return khongTiepNhan;
+    }
+
+    public void setKhongTiepNhan(boolean khongTiepNhan) {
+        this.khongTiepNhan = khongTiepNhan;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }

@@ -63,16 +63,18 @@ class Helper {
         return 'Chờ xử lý';
       case 'DANGCHEBIEN':
         return 'Đang chế biến';
-      case 'HOANTHANH':
-        return 'Hoàn thành';
+      case 'DACHEBIEN':
+        return 'Đã chế biến';
       case 'CHUATHANHTOAN':
         return 'Chưa thanh toán';
       case 'DATHANHTOAN':
         return 'Đã thanh toán';
-      case 'HUY':
-        return 'Hủy';
+      case 'KHONGTIEPNHAN':
+        return 'Không tiếp nhận';
       default:
         return 'Chưa xác định';
     }
   }
+
+  static getNhanVien() {}
 }

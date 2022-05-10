@@ -5,6 +5,7 @@ import com.example.easynotes.service.repository.BanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -12,7 +13,7 @@ public class BanService {
     @Autowired
     private BanRepository repository;
     public List<Ban> getList(){
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public Ban getById(Long id){
@@ -20,6 +21,7 @@ public class BanService {
     }
 
     public Ban add(Ban ban){
+        ban.setDeleted(false);
         return repository.save(ban);
     }
 

@@ -18,10 +18,20 @@ class SelectCategoryViewModel extends ChangeNotifier {
   bool _isInit = false;
   Map<int, int> _soLuongChonMon = {};
   List<ChiTietThucPham> _listChiTietThucPham = [];
+  List<ChiTietHoaDon>? _listChiTietHoaDon = null;
 
   setGhiChu(String value) {
     _ghiChu = value;
     notifyListeners();
+  }
+
+  setListChiTietHoaDon(List<ChiTietHoaDon> value) {
+    _listChiTietHoaDon = value;
+    notifyListeners();
+  }
+
+  getListChiTietHoaDon() {
+    return _listChiTietHoaDon;
   }
 
   getGhiChu() {
@@ -64,6 +74,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
     listChiTietThucPham.forEach((chiTietThucPham) {
       _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
     });
+    setDataEditOrder(_listChiTietHoaDon!);
     notifyListeners();
   }
 
@@ -85,7 +96,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
     getChiTietThucPhamFromServer();
   }
 
-  getChiTietThucPhamFromServer() async {
+  getChiTietThucPhamFromServer({List<ChiTietHoaDon>? list}) async {
     String token = await Helper.getToken();
     var response =
         await ChiTietThucPhamService().getChiTietThucPhamHomNay(token);
@@ -96,6 +107,16 @@ class SelectCategoryViewModel extends ChangeNotifier {
     }
   }
 
+  setDataEditOrder(List<ChiTietHoaDon> listChiTietHoaDon) async {
+    String token = await Helper.getToken();
+    listChiTietHoaDon.forEach((element) {
+      _soLuongChonMon[element.thucPham!.maThucPham!] = element.soLuong!;
+      ChiTietHoaDonService()
+          .deleteChiTietHoaDon(token, element.maChiTietHoaDon!);
+    });
+    notifyListeners();
+  }
+
   navigateToHoaDon({required Ban ban, required BuildContext context}) async {
     var response;
 
@@ -104,7 +125,6 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
     HoaDon hoaDon = HoaDon(
         nguoiLapHoaDon: nguoiLapHoaDon,
-        tongThanhTien: getTotalPrice(),
         ban: ban,
         ghiChu: _ghiChu,
         tinhTrang: 'CHO');
@@ -138,11 +158,43 @@ class SelectCategoryViewModel extends ChangeNotifier {
     }
   }
 
+  addOrderToHoaDon(
+      {required HoaDon hoaDon, required BuildContext context}) async {
+    String token = await Helper.getToken();
+
+    hoaDon.ghiChu = _ghiChu;
+    hoaDon.tinhTrang = "CHO";
+    await HoaDonService().updateHoaDon(token, hoaDon);
+
+    for (int i = 0; i < _listChiTietThucPham.length; i++) {
+      var element = _listChiTietThucPham[i];
+      if (_soLuongChonMon[element.maChiTietThucPham!]! > 0) {
+        await ChiTietHoaDonService().addChiTietHoaDon(
+            token,
+            ChiTietHoaDon(
+              thucPham: element.thucPham,
+              soLuong: _soLuongChonMon[element.maChiTietThucPham!],
+              daCheBien: false,
+              hoaDon: hoaDon,
+            ));
+      }
+      if (_listChiTietThucPham.length == i + 1) {
+        Navigator.popUntil(context, (route) {
+          return route.settings.name == 'RequestOrderView';
+        });
+        Navigator.pop(context);
+        NavigationHelper.push(context: context, page: BillView(hoaDon: hoaDon));
+        clear();
+      }
+    }
+  }
+
   clear() {
     _ghiChu = '';
     _tenMonTimKiem = '';
     _isInit = false;
     _soLuongChonMon = {};
     _listChiTietThucPham = [];
+    _listChiTietHoaDon = null;
   }
 }

@@ -33,6 +33,8 @@ public class DanhMuc implements Serializable {
     @NotBlank
     private String loaiDanhMuc;
 
+    private boolean isDeleted;
+
     @JsonIgnore
     @OneToMany(mappedBy = "danhMuc", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ThucPham> thucPhams;
