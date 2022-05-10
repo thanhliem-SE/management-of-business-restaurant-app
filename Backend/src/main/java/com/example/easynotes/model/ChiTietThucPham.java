@@ -33,6 +33,8 @@ public class ChiTietThucPham implements Serializable {
     @Min(value = 0)
     private int soLuong;
 
+    private boolean isDeleted;
+
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate

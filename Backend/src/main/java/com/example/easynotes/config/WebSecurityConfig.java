@@ -79,7 +79,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Our public endpoints
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/login**").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/getbytoken**").permitAll()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/socket").permitAll()
                 // permission for thuc pham api
                 .antMatchers(HttpMethod.GET, "/api/thucpham/**").permitAll()
 //                .antMatchers(HttpMethod.POST, "/api/thucpham/").hasAnyRole("ROLE_QUANLY", "ROLE_ADMIN")

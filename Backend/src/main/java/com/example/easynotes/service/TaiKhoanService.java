@@ -1,5 +1,6 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.JwtBody;
 import com.example.easynotes.model.TaiKhoan;
 import com.example.easynotes.service.repository.TaiKhoanRepository;
@@ -12,6 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,7 +28,7 @@ public class TaiKhoanService {
     AuthenticationManager authenticationManager;
 
     public List<TaiKhoan> getList() {
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public TaiKhoan getByTenTaiKhoan(String tenTaiKhoan) {
@@ -35,6 +37,7 @@ public class TaiKhoanService {
 
     public TaiKhoan add(TaiKhoan taiKhoan) {
         String password = passwordEncoder.encode(taiKhoan.getMatKhau());
+        taiKhoan.setDeleted(false);
         taiKhoan.setMatKhau(password);
         return repository.save(taiKhoan);
     }

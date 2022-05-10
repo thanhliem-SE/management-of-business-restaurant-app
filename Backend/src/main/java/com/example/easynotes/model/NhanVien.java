@@ -36,6 +36,8 @@ public class NhanVien implements Serializable {
     @NotBlank
     private String tenNhanVien;
 
+    private boolean isDeleted;
+
     @NotBlank
     private String soDienThoai;
 

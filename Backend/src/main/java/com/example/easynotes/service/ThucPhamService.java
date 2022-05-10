@@ -1,10 +1,12 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ThanhToan;
 import com.example.easynotes.model.ThucPham;
 import com.example.easynotes.service.repository.ThucPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,7 +15,7 @@ public class ThucPhamService {
     private ThucPhamRepository repository;
 
     public List<ThucPham> getList(){
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public ThucPham getById(Long id){
@@ -21,6 +23,7 @@ public class ThucPhamService {
     }
 
     public ThucPham add(ThucPham thucPham){
+        thucPham.setDeleted(false);
         return repository.save(thucPham);
     }
 

@@ -1,5 +1,6 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.NhaCungCap;
 import com.example.easynotes.service.repository.NhaCungCapRepository;
 import com.google.gson.Gson;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,7 +21,7 @@ public class NhaCungCapService {
     private NhaCungCapRepository repository;
 
     public List<NhaCungCap> getList(){
-        return repository.findAll();
+        return repository.getAll();
     }
 
     public NhaCungCap getById(Long id){
@@ -27,6 +29,7 @@ public class NhaCungCapService {
     }
 
     public NhaCungCap add(NhaCungCap nhaCungCap){
+        nhaCungCap.setDeleted(false);
         return repository.save(nhaCungCap);
     }
 
