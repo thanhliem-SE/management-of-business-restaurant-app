@@ -45,6 +45,9 @@ class _HomeViewState extends State<HomeView> {
         title: const Text(
           'GOQUICK',
         ),
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+        ],
         backgroundColor: kPrimaryColor,
         centerTitle: true,
       ),

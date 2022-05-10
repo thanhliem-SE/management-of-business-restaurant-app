@@ -13,20 +13,26 @@ class Ban {
     this.maSoBan,
     this.viTri,
     this.tinhTrang,
+    this.khongHienThi,
+    this.soBan,
     this.createdAt,
     this.updatedAt,
   });
 
   int? maSoBan;
-  int? viTri;
+  String? viTri;
   String? tinhTrang;
+  int? soBan;
+  bool? khongHienThi;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   factory Ban.fromJson(Map<String, dynamic> json) => Ban(
         maSoBan: json["maSoBan"],
         viTri: json["viTri"],
+        soBan: json["soBan"],
         tinhTrang: json["tinhTrang"],
+        khongHienThi: json["khongHienThi"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
             : null,
@@ -39,5 +45,7 @@ class Ban {
         "maSoBan": maSoBan,
         "viTri": viTri,
         "tinhTrang": tinhTrang,
+        "soBan": soBan,
+        "khongHienThi": khongHienThi ?? false,
       };
 }

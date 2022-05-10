@@ -20,7 +20,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/hoadon")
-public class HoaDonControler  {
+public class HoaDonControler {
 
     @Autowired
     private HoaDonService service;
@@ -36,16 +36,20 @@ public class HoaDonControler  {
     @PostMapping("/")
     public HoaDon addItem(@Valid @RequestBody HoaDon hoaDon) {
         Ban ban = banService.getById(hoaDon.getBan().getMaSoBan());
-        ban.setTinhTrang(TinhTrang.CHO);
+        if (hoaDon.getTinhTrang().equals(TinhTrang.HUY) || hoaDon.getTinhTrang().equals(TinhTrang.DATHANHTOAN))
+            ban.setTinhTrang(null);
+        else
+            ban.setTinhTrang(TinhTrang.CHO);
+
         Ban resultBan = banService.update(ban, ban.getMaSoBan());
-        if (resultBan!=null){
+        if (resultBan != null) {
             HoaDon hoaDon1 = service.add(hoaDon);
-            if (hoaDon1!=null){
+            if (hoaDon1 != null) {
                 return hoaDon1;
-            }else {
+            } else {
                 return new HoaDon();
             }
-        }else {
+        } else {
             return new HoaDon();
         }
     }
@@ -61,7 +65,7 @@ public class HoaDonControler  {
 
     @PutMapping("/{id}")
     public HoaDon update(@PathVariable(value = "id") Long id,
-                      @Valid @RequestBody HoaDon hoaDon) {
+                         @Valid @RequestBody HoaDon hoaDon) {
         HoaDon rs = service.update(hoaDon, id);
         Ban ban = banService.getById(rs.getBan().getMaSoBan());
         ban.setTinhTrang(hoaDon.getTinhTrang());
@@ -75,20 +79,21 @@ public class HoaDonControler  {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        try{
+        try {
             service.deleteById(id);
-            return  ResponseEntity.ok().build();
-        }catch (Exception e) {
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             throw new ResourceNotFoundException("HoaDon", "maHoaDon", id);
         }
     }
+
     @GetMapping("/chuathanhtoan")
-    public List<HoaDon> getHoaDonBeforPaymented(){
+    public List<HoaDon> getHoaDonBeforPaymented() {
         return service.getHoaDonBeforePaymented();
     }
 
     @GetMapping("/phucvutaiban/{masoban}")
-    public HoaDon getHoaDonDangPhucVuTaiBan(@PathVariable(value = "masoban") int masoban){
+    public HoaDon getHoaDonDangPhucVuTaiBan(@PathVariable(value = "masoban") int masoban) {
         return service.getHoaDonDangPhucVuTaiBan(masoban);
     }
 }

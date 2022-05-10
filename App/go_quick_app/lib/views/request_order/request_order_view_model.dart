@@ -13,6 +13,14 @@ class RequestOrderViewModel extends ChangeNotifier {
   bool isInit = false;
   List<Ban> _listBan = [];
   int _numTable = 0;
+  String _viTriBanTrong = 'Tầng Trệt';
+
+  getViTriBanTrong() => _viTriBanTrong;
+
+  setViTriBanTrong(String value) {
+    _viTriBanTrong = value;
+    notifyListeners();
+  }
 
   getIsInit() {
     return isInit;
@@ -34,11 +42,17 @@ class RequestOrderViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  getListBanByViTri(String viTri) {
+    return _listBan.where((element) => element.viTri == viTri).toList();
+  }
+
   getListBanFromServer() async {
     String token = await Helper.getToken();
     var response = await BanService().getListBan(token);
     if (response is Success) {
-      setListBan(response.response as List<Ban>);
+      setListBan((response.response as List<Ban>)
+          .where((element) => element.khongHienThi == false)
+          .toList());
     } else {
       return null;
     }
@@ -66,5 +80,6 @@ class RequestOrderViewModel extends ChangeNotifier {
     isInit = false;
     _listBan = [];
     _numTable = 0;
+    _viTriBanTrong = 'Tầng Trệt';
   }
 }
