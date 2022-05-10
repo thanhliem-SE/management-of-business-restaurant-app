@@ -1,42 +1,85 @@
 [
   {
-    "viTri": 1,
+    "viTri": "Tầng Trệt",
+    "soBan": 1,
     "tinhTrang": "CHO"
   },
   {
-    "viTri": 2,
+    "viTri": "Tầng Trệt",
+    "soBan": 2,
     "tinhTrang": null
   },
   {
-    "viTri": 3,
+    "viTri": "Tầng Trệt",
+    "soBan": 3,
+    "tinhTrang": null
+
+  },
+  {
+    "viTri": "Tầng Trệt",
+    "soBan": 4,
+    "tinhTrang": null
+
+  },
+  {
+    "viTri": "Tầng Trệt",
+    "soBan": 5,
     "tinhTrang": null
   },
   {
-    "viTri": 4,
+    "soBan": 6,
+    "viTri": "Tầng Trệt",
     "tinhTrang": null
   },
   {
-    "viTri": 5,
+    "viTri": "Tầng Trệt",
+    "soBan": 7,
     "tinhTrang": null
   },
   {
-    "viTri": 6,
+    "viTri": "Tầng Trệt",
+    "soBan": 8,
     "tinhTrang": null
   },
   {
-    "viTri": 7,
+    "viTri": "Tầng Trệt",
+    "soBan": 9,
     "tinhTrang": null
   },
   {
-    "viTri": 8,
+    "viTri": "Tầng Trệt",
+    "soBan": 10,
     "tinhTrang": null
   },
   {
-    "viTri": 9,
+    "viTri": "Tầng 1",
+    "soBan": 11,
     "tinhTrang": null
   },
   {
-    "viTri": 10,
+    "viTri": "Tầng 1",
+    "soBan": 12,
     "tinhTrang": null
   },
+  {
+    "viTri": "Tầng 1",
+    "soBan": 13,
+    "tinhTrang": null
+
+  },
+  {
+    "viTri": "Tầng 1",
+    "soBan": 14,
+    "tinhTrang": null
+  },
+  {
+    "viTri": "Tầng 1",
+    "soBan": 15,
+    "tinhTrang": null
+  },
+  {
+    "soBan": 16,
+    "viTri": "Tầng 1",
+    "tinhTrang": null
+  }
 ]
