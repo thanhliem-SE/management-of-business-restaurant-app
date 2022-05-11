@@ -50,9 +50,7 @@ class RequestOrderViewModel extends ChangeNotifier {
     String token = await Helper.getToken();
     var response = await BanService().getListBan(token);
     if (response is Success) {
-      setListBan((response.response as List<Ban>)
-          .where((element) => element.khongHienThi == false)
-          .toList());
+      setListBan(response.response as List<Ban>);
     } else {
       return null;
     }

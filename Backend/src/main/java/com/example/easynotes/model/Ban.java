@@ -34,8 +34,6 @@ public class Ban implements Serializable {
 
     private boolean isDeleted;
 
-    private boolean khongHienThi;
-
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;
 

@@ -13,7 +13,7 @@ class Ban {
     this.maSoBan,
     this.viTri,
     this.tinhTrang,
-    this.khongHienThi,
+    this.isDeleted,
     this.soBan,
     this.createdAt,
     this.updatedAt,
@@ -23,7 +23,7 @@ class Ban {
   String? viTri;
   String? tinhTrang;
   int? soBan;
-  bool? khongHienThi;
+  bool? isDeleted;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -32,7 +32,7 @@ class Ban {
         viTri: json["viTri"],
         soBan: json["soBan"],
         tinhTrang: json["tinhTrang"],
-        khongHienThi: json["khongHienThi"],
+        isDeleted: json["isDeleted"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"])
             : null,
@@ -46,6 +46,6 @@ class Ban {
         "viTri": viTri,
         "tinhTrang": tinhTrang,
         "soBan": soBan,
-        "khongHienThi": khongHienThi ?? false,
+        "isDeleted": isDeleted ?? false,
       };
 }
