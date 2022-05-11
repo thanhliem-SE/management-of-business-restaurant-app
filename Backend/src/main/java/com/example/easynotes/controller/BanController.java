@@ -38,7 +38,7 @@ public class BanController {
     @PutMapping("/{id}")
     public Ban update(@PathVariable(value = "id") Long id,
                           @Valid @RequestBody Ban Ban) {
-        Ban rs = service.update(Ban, id);git 
+        Ban rs = service.update(Ban, id);
         if (rs != null) {
             return rs;
         } else {
