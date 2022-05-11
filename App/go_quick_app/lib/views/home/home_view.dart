@@ -14,6 +14,7 @@ import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
+import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
@@ -46,7 +47,13 @@ class _HomeViewState extends State<HomeView> {
           'GOQUICK',
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+          IconButton(
+              onPressed: () {
+                NavigationHelper.push(
+                    context: context,
+                    page: NotificationView(nhanVien: viewModel.nhanVien));
+              },
+              icon: const Icon(Icons.notifications))
         ],
         backgroundColor: kPrimaryColor,
         centerTitle: true,
