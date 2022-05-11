@@ -8,6 +8,7 @@ import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
@@ -74,7 +75,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
     listChiTietThucPham.forEach((chiTietThucPham) {
       _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
     });
-    setDataEditOrder(_listChiTietHoaDon!);
+    if (_listChiTietHoaDon != null) setDataEditOrder(_listChiTietHoaDon!);
     notifyListeners();
   }
 
@@ -146,6 +147,8 @@ class SelectCategoryViewModel extends ChangeNotifier {
               ));
         }
         if (_listChiTietThucPham.length == i + 1) {
+          SocketViewModel().sendMessage('CHEBIEN', 'Có yêu cầu đặt món mới');
+
           Navigator.popUntil(context, (route) {
             return route.settings.name == 'RequestOrderView';
           });
@@ -179,6 +182,8 @@ class SelectCategoryViewModel extends ChangeNotifier {
             ));
       }
       if (_listChiTietThucPham.length == i + 1) {
+        // SocketViewModel().sendMessage('CHEBIEN', 'Có yêu cầu đặt món mới');
+
         Navigator.popUntil(context, (route) {
           return route.settings.name == 'RequestOrderView';
         });

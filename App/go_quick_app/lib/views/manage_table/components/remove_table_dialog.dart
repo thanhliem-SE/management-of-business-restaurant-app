@@ -16,6 +16,8 @@ class RemoveTableDialog extends StatelessWidget {
     final viewModel = Provider.of<ManageTableViewModel>(context);
     List<Ban> listBanTrong =
         viewModel.getListBanByViTri(viewModel.getViTriBanThem());
+    listBanTrong.removeWhere((element) => element.tinhTrang != null);
+
     Size size = MediaQuery.of(context).size;
     return AlertDialog(
       title: const Text(

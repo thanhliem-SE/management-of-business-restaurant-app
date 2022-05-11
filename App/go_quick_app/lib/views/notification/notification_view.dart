@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/socket_view_model.dart';
+import 'package:provider/provider.dart';
 
 class NotificationView extends StatelessWidget {
   final NhanVien nhanVien;
@@ -11,10 +13,14 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final socketViewModel = Provider.of<SocketViewModel>(context);
     return Scaffold(
       appBar: buildAppBar(context: context, title: 'Thông báo', actions: [
         IconButton(
-            onPressed: () {}, icon: const Icon(Icons.checklist_rtl_sharp))
+            onPressed: () {
+              socketViewModel.sendMessage('CHEBIEN', 'hoa don moi');
+            },
+            icon: const Icon(Icons.checklist_rtl_sharp))
       ]),
       body: Column(
         children: [

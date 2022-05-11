@@ -7,6 +7,7 @@ import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/nhan_vien_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
@@ -35,6 +36,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
     final future = viewModel.getTaiKhoan(context);
+    final socketViewModel = Provider.of<SocketViewModel>(context);
 
     if (viewModel.nhanVien.taiKhoan == null) {
       viewModel.setNhanVien();
@@ -70,6 +72,15 @@ class _HomeViewState extends State<HomeView> {
           }
         },
       ),
+      // body: StreamBuilder(
+      //   stream: socketViewModel.channel.stream,
+      //   builder: (context, snapshot) {
+      //     return Padding(
+      //       padding: const EdgeInsets.symmetric(vertical: 24.0),
+      //       child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
+      //     );
+      //   },
+      // ),
       drawer: viewModel.nhanVien.taiKhoan != null
           ? NavBar(nhanVien: viewModel.nhanVien)
           : Container(),
