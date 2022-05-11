@@ -97,4 +97,16 @@ class ManageTableViewModel extends ChangeNotifier {
       }
     }
   }
+
+  updateBan(BuildContext context, Ban ban) async {
+    String token = await Helper.getToken();
+    var response = await BanService().updateBan(token, ban);
+    Navigator.pop(context);
+    showAlertDialog(
+        context: context,
+        title: 'Thành công',
+        message: 'Cập nhật bàn thành công');
+    clear();
+    init();
+  }
 }

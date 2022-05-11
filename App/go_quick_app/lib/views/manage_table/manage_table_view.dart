@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/views/manage_table/components/update_table_dialog.dart';
 import 'package:provider/provider.dart';
 
 import 'components/add_table_dialog.dart';
@@ -157,7 +158,10 @@ class ManageTableView extends StatelessWidget {
         ),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          showDialog(
+              context: context, builder: (_) => UpdateTableDialog(ban: ban));
+        },
         child: Column(
           children: [
             Row(

@@ -23,82 +23,84 @@ class RemoveTableDialog extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       content: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                DropdownButton(
-                  items: <String>['Tầng Trệt', 'Tầng 1']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    viewModel.setViTriBanThem(value.toString());
-                  },
-                  value: viewModel.getViTriBanThem(),
-                  style: const TextStyle(color: Colors.black, fontSize: 18),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.03,
-            ),
-            Container(
-              width: size.width,
-              height: size.height * 0.38,
-              alignment: Alignment.center,
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 5,
-                ),
-                itemCount: listBanTrong.length,
-                itemBuilder: (BuildContext context, int index) {
-                  Ban ban = listBanTrong[index];
-                  return InkWell(
-                    onTap: () {
-                      if (viewModel
-                          .getListRemoveTable()
-                          .contains(ban.maSoBan)) {
-                        viewModel.removeRemoveTable(ban.maSoBan!);
-                      } else {
-                        viewModel.addRemoveTable(ban.maSoBan!);
-                      }
+        child: Container(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DropdownButton(
+                    items: <String>['Tầng Trệt', 'Tầng 1']
+                        .map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      viewModel.setViTriBanThem(value.toString());
                     },
-                    child: Card(
-                      color:
-                          viewModel.getListRemoveTable().contains(ban.maSoBan)
-                              ? kPrimaryColor
-                              : kPrimaryLightColor,
-                      child: Center(
-                          child: Text(
-                        ban.soBan.toString(),
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: viewModel
-                                    .getListRemoveTable()
-                                    .contains(ban.maSoBan)
-                                ? Colors.white
-                                : Colors.black),
-                      )),
-                    ),
-                  );
-                },
+                    value: viewModel.getViTriBanThem(),
+                    style: const TextStyle(color: Colors.black, fontSize: 18),
+                  ),
+                ],
               ),
-            ),
-            RoundedButton(
-              text: 'XÓA BÀN',
-              press: () {
-                viewModel.deleteBan(context);
-              },
-              color: Colors.red,
-              textColor: Colors.white,
-            ),
-          ],
+              SizedBox(
+                height: size.height * 0.03,
+              ),
+              Container(
+                width: size.width,
+                height: size.height * 0.38,
+                alignment: Alignment.center,
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 5,
+                  ),
+                  itemCount: listBanTrong.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Ban ban = listBanTrong[index];
+                    return InkWell(
+                      onTap: () {
+                        if (viewModel
+                            .getListRemoveTable()
+                            .contains(ban.maSoBan)) {
+                          viewModel.removeRemoveTable(ban.maSoBan!);
+                        } else {
+                          viewModel.addRemoveTable(ban.maSoBan!);
+                        }
+                      },
+                      child: Card(
+                        color:
+                            viewModel.getListRemoveTable().contains(ban.maSoBan)
+                                ? kPrimaryColor
+                                : kPrimaryLightColor,
+                        child: Center(
+                            child: Text(
+                          ban.soBan.toString(),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: viewModel
+                                      .getListRemoveTable()
+                                      .contains(ban.maSoBan)
+                                  ? Colors.white
+                                  : Colors.black),
+                        )),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              RoundedButton(
+                text: 'XÓA BÀN',
+                press: () {
+                  viewModel.deleteBan(context);
+                },
+                color: Colors.red,
+                textColor: Colors.white,
+              ),
+            ],
+          ),
         ),
       ),
     );
