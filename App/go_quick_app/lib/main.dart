@@ -3,6 +3,7 @@ import 'package:go_quick_app/app.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
@@ -67,6 +68,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ManageAllFoodViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SocketViewModel(),
         ),
       ],
       child: MaterialApp(
