@@ -37,7 +37,7 @@ public class BanController {
 
     @PutMapping("/{id}")
     public Ban update(@PathVariable(value = "id") Long id,
-                          @Valid @RequestBody Ban Ban) {
+                      @Valid @RequestBody Ban Ban) {
         Ban rs = service.update(Ban, id);
         if (rs != null) {
             return rs;
@@ -48,11 +48,16 @@ public class BanController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
-        try{
+        try {
             service.deleteById(id);
-            return  ResponseEntity.ok().build();
-        }catch (Exception e) {
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
             throw new ResourceNotFoundException("Ban", "maBan", id);
         }
+    }
+
+    @GetMapping("/add/{viTri}/{soLuong}")
+    public void addBanBySoLuong(@PathVariable("viTri") String viTri, @PathVariable("soLuong") int soLuong) {
+        service.addBanBySoLuong(soLuong, viTri);
     }
 }

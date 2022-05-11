@@ -1,32 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/components/rounded_input_field.dart';
-import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/components/text_field_container.dart';
 import 'package:go_quick_app/config/palette.dart';
-import 'package:go_quick_app/services/ban_service.dart';
-import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
+import 'package:go_quick_app/models/ban.dart';
 import 'package:provider/provider.dart';
 
-class AddTableDialog extends StatelessWidget {
-  const AddTableDialog({Key? key}) : super(key: key);
+import '../manage_table_view_model.dart';
+
+class UpdateTableDialog extends StatelessWidget {
+  final Ban ban;
+  const UpdateTableDialog({
+    Key? key,
+    required this.ban,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<ManageTableViewModel>(context);
     Size size = MediaQuery.of(context).size;
+    int soBan = ban.soBan!;
     return AlertDialog(
       title: const Text(
-        'THÊM BÀN',
+        'CẬP NHẬT BÀN',
         textAlign: TextAlign.center,
       ),
-      content: SingleChildScrollView(
+      content: Container(
+        height: size.height * 0.25,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                const Text('Vị trí'),
                 DropdownButton(
                   items: <String>['Tầng Trệt', 'Tầng 1']
                       .map<DropdownMenuItem<String>>((String value) {
@@ -43,38 +49,38 @@ class AddTableDialog extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
-              height: size.height * 0.002,
-            ),
-            TextFieldContainer(
-              child: TextField(
-                onChanged: (value) {
-                  viewModel.setSoLuongBanThem(int.parse(value));
-                },
-                cursorColor: kPrimaryColor,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  icon: Icon(
-                    Icons.chair,
-                    color: kPrimaryColor,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Số bàn'),
+                Container(
+                  color: Colors.blueGrey[50],
+                  width: size.width * 0.25,
+                  child: TextField(
+                    onChanged: (value) {
+                      soBan = soBan;
+                    },
+                    keyboardType: TextInputType.number,
+                    textAlign: TextAlign.center,
+                    decoration: InputDecoration(
+                      hintText: ban.soBan.toString(),
+                      hintStyle: const TextStyle(color: Colors.black),
+                      border: InputBorder.none,
+                    ),
                   ),
-                  hintText: 'Nhập số lượng bàn',
-                  border: InputBorder.none,
                 ),
-              ),
+              ],
+            ),
+            SizedBox(
+              height: size.height * 0.02,
             ),
             RoundedButton(
-                text: 'Xác nhận',
+                text: "Cập nhật",
                 press: () {
-                  if (viewModel.getSoLuongBanThem() <= 0) {
-                    showAlertDialog(
-                        context: context,
-                        title: 'Thất bại',
-                        message: 'Số lượng bàn phải lớn hơn 0');
-                  } else {
-                    viewModel.addListBanBySoLuong(context);
-                  }
-                }),
+                  ban.viTri = viewModel.getViTriBanThem();
+                  ban.soBan = soBan;
+                  viewModel.updateBan(context, ban);
+                })
           ],
         ),
       ),

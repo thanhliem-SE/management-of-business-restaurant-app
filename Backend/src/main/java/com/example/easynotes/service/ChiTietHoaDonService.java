@@ -15,11 +15,17 @@ public class ChiTietHoaDonService {
     private ChiTietHoaDonRepository repository;
 
     public List<ChiTietHoaDon> getList(){
-        return repository.getAll();
+        List<ChiTietHoaDon> list = repository.getAll();
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).isDeleted())
+                list.remove(i);
+        }
+        return list;
     }
 
     public ChiTietHoaDon getById(Long id){
-        return  repository.findById(id).get();
+        ChiTietHoaDon item =  repository.findById(id).get();
+        return item.isDeleted() ? null : item;
     }
 
     public ChiTietHoaDon add(ChiTietHoaDon chiTietHoaDon){
@@ -28,7 +34,9 @@ public class ChiTietHoaDonService {
     }
 
     public void deleteById(Long id){
-        repository.deleteById(id);
+        ChiTietHoaDon chiTietHoaDon = getById(id);
+        chiTietHoaDon.setDeleted(true);
+        repository.save(chiTietHoaDon);
     }
 
     public ChiTietHoaDon update(ChiTietHoaDon chiTietHoaDon, Long id){
@@ -40,6 +48,11 @@ public class ChiTietHoaDonService {
     }
 
     public List<ChiTietHoaDon> getAllByIdHoaDon(Long maHoaDon){
-        return repository.getChiTietHoaDonByMaHoaDon(maHoaDon);
+        List<ChiTietHoaDon> list = repository.getChiTietHoaDonByMaHoaDon(maHoaDon);
+        for(int i = 0; i < list.size(); i++){
+            if(list.get(i).isDeleted())
+                list.remove(i);
+        }
+        return list;
     }
 }
