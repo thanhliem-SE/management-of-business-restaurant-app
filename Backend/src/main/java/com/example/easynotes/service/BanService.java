@@ -46,5 +46,13 @@ public class BanService {
         return null;
     }
 
-
+    public void addBanBySoLuong(int soLuong, String viTri){
+        int length = getList().size();
+        for (int i = 0; i < soLuong; i++){
+            Ban ban = new Ban();
+            ban.setSoBan(++length);
+            ban.setViTri(viTri);
+            add(ban);
+        }
+    }
 }
