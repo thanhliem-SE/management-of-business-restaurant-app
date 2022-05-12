@@ -4,32 +4,61 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/tai_khoan_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  bool _loading = false;
+  bool _isInit = false;
   late TaiKhoan _taiKhoan;
   NhanVien _nhanVien = NhanVien();
+  List<ThongBao> _listThongBao = [];
+
+  getListThongBao() => _listThongBao;
+
+  setListThongBao(List<ThongBao> listThongBao) {
+    _listThongBao = listThongBao;
+    notifyListeners();
+  }
 
   get nhanVien => _nhanVien;
 
-  setNhanVien() async {
-    _nhanVien = await Helper.getNhanVienSigned();
+  setNhanVien(NhanVien nhanVien) async {
+    _nhanVien = nhanVien;
     notifyListeners();
   }
 
-  get loading => this._loading;
+  getIsInit() => _isInit;
 
-  setLoading(bool loading) async {
-    _loading = loading;
-    notifyListeners();
+  init() async {
+    NhanVien nhanVien = await Helper.getNhanVienSigned();
+    setNhanVien(nhanVien);
+
+    String token = await Helper.getToken();
+    final response = await ThongBaoService()
+        .getThongBaoByTaiKhoan(token, nhanVien.taiKhoan!);
+    if (response is Success) {
+      setListThongBao(response.response as List<ThongBao>);
+    }
+
+    _isInit = true;
+  }
+
+  checkThongBao() {
+    bool rs = false;
+    for (int i = 0; i < _listThongBao.length; i++) {
+      if (_listThongBao[i].daXem == false) {
+        rs = true;
+        break;
+      }
+    }
+    return rs;
   }
 
   getTaiKhoan(context) async {
-    // setLoading(true);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var response =
         await TaiKhoanService().getTaiKhoanByToken(prefs.getString('token')!);
@@ -40,6 +69,18 @@ class HomeViewModel extends ChangeNotifier {
       String errorResponse = (response as Failure).errrorResponse as String;
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(errorResponse)));
+    }
+  }
+
+  updateDaXemThongBao() async {
+    String token = await Helper.getToken();
+    for (int i = 0; i < _listThongBao.length; i++) {
+      _listThongBao[i].daXem = true;
+      await ThongBaoService().updateThongBao(token, _listThongBao[i]);
+      if (i == _listThongBao.length - 1) {
+        notifyListeners();
+        init();
+      }
     }
   }
 }

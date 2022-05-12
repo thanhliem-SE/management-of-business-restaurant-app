@@ -38,8 +38,8 @@ class _HomeViewState extends State<HomeView> {
     final future = viewModel.getTaiKhoan(context);
     final socketViewModel = Provider.of<SocketViewModel>(context);
 
-    if (viewModel.nhanVien.taiKhoan == null) {
-      viewModel.setNhanVien();
+    if (viewModel.getIsInit() == false) {
+      viewModel.init();
     }
 
     Size size = MediaQuery.of(context).size;
@@ -55,7 +55,9 @@ class _HomeViewState extends State<HomeView> {
                     context: context,
                     page: NotificationView(nhanVien: viewModel.nhanVien));
               },
-              icon: const Icon(Icons.notifications))
+              icon: viewModel.checkThongBao() == true
+                  ? const Icon(Icons.notification_add)
+                  : const Icon(Icons.notifications))
         ],
         backgroundColor: kPrimaryColor,
         centerTitle: true,
@@ -156,7 +158,7 @@ class WidgetGridViewMenu extends StatelessWidget {
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(
-              context: context, page: LoginView());
+              context: context, page: const LoginView());
         }),
       ],
     );
