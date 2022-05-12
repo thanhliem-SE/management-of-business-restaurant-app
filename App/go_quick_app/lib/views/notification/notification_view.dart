@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/app_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/socket_view_model.dart';
+import 'package:go_quick_app/views/home/home_view_model.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class NotificationView extends StatelessWidget {
@@ -12,23 +15,36 @@ class NotificationView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final viewModel = Provider.of<HomeViewModel>(context);
     final socketViewModel = Provider.of<SocketViewModel>(context);
+
+    List<ThongBao> listThongBao = viewModel.getListThongBao();
+
+    Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: buildAppBar(context: context, title: 'Thông báo', actions: [
         IconButton(
             onPressed: () {
-              socketViewModel.sendMessage('CHEBIEN', 'hoa don moi');
+              viewModel.init();
             },
-            icon: const Icon(Icons.checklist_rtl_sharp))
+            icon: const Icon(Icons.refresh_sharp)),
+        IconButton(
+            onPressed: () {
+              viewModel.updateDaXemThongBao();
+            },
+            icon: const Icon(Icons.checklist_rtl_sharp)),
       ]),
-      body: Column(
-        children: [
-          Container(
+      body: ListView.builder(
+        itemCount: listThongBao.length,
+        itemBuilder: (context, index) {
+          ThongBao thongBao = listThongBao[index];
+          return Container(
             padding: const EdgeInsets.only(left: 5, right: 5, top: 15),
             width: size.width,
             decoration: BoxDecoration(
-              color: kPrimaryLightColor,
+              color:
+                  thongBao.daXem == false ? kPrimaryLightColor : Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -38,8 +54,10 @@ class NotificationView extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Icon(
-                          Icons.notifications_active,
+                        Icon(
+                          thongBao.daXem == false
+                              ? Icons.notifications_active
+                              : Icons.notifications_sharp,
                           color: kPrimaryColor,
                           size: 30,
                         ),
@@ -47,20 +65,20 @@ class NotificationView extends StatelessWidget {
                           children: [
                             SizedBox(
                               width: size.width * 0.7,
-                              child: const Text(
-                                'Nhận yêu cầu đặt món mới cần chế biến',
+                              child: Text(
+                                thongBao.noiDung!,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 maxLines: 5,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
                         ),
-                        const Text(
-                          '11:35',
-                          style: TextStyle(fontStyle: FontStyle.italic),
+                        Text(
+                          DateFormat("HH:mm").format(thongBao!.createdAt!),
+                          style: const TextStyle(fontStyle: FontStyle.italic),
                         )
                       ],
                     ),
@@ -72,8 +90,8 @@ class NotificationView extends StatelessWidget {
                 )
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }
