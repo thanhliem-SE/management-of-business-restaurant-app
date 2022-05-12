@@ -48,10 +48,10 @@ class HoaDon {
         tinhTrang: json["tinhTrang"],
         ghiChu: json["ghiChu"],
         createdAt: json["createdAt"] != null
-            ? DateTime.parse(json["createdAt"])
+            ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,
         updatedAt: json["updatedAt"] != null
-            ? DateTime.parse(json["updatedAt"])
+            ? DateTime.parse(json["updatedAt"]).add(const Duration(hours: 7))
             : null,
       );
 

@@ -44,10 +44,10 @@ class ThucPham {
         danhMuc: DanhMuc.fromJson(json["danhMuc"]),
         trangThai: json["trangThai"],
         createdAt: json["createdAt"] != null
-            ? DateTime.parse(json["createdAt"])
+            ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,
         updatedAt: json["updatedAt"] != null
-            ? DateTime.parse(json["updatedAt"])
+            ? DateTime.parse(json["updatedAt"]).add(const Duration(hours: 7))
             : null,
       );
 
