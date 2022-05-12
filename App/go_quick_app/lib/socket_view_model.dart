@@ -6,7 +6,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SocketViewModel extends ChangeNotifier {
   WebSocketChannel channel = IOWebSocketChannel.connect(
-    Uri(scheme: "ws", host: "172.31.48.1", port: 8080, path: "/socket"),
+    Uri(scheme: "ws", host: "192.168.1.8", port: 8080, path: "/socket"),
   );
 
   void sendMessage(String role, String data) {
