@@ -3,6 +3,7 @@
 //     final chiTietHoaDon = chiTietHoaDonFromJson(jsonString);
 
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
@@ -36,6 +37,7 @@ class ChiTietHoaDon {
   bool? daCheBien;
   bool? daPhucVu;
   bool? khongTiepNhan;
+  int? thanhTien;
   HoaDon? hoaDon;
   DateTime? createdAt;
   DateTime? updatedAt;

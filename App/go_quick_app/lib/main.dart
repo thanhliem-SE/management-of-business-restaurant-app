@@ -11,6 +11,8 @@ import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manager_all_food_view_model.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
+import 'package:go_quick_app/views/payment/payment_view.dart';
+import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
@@ -18,6 +20,8 @@ import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+
+import 'views/manage_payment/manage_payment_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,6 +74,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => SocketViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PayMentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ManagePayMentViewModel(),
         ),
       ],
       child: MaterialApp(
