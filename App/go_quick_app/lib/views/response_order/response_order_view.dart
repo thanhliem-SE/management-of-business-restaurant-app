@@ -53,7 +53,7 @@ class ResponseOrderView extends StatelessWidget {
               buildTabHoanThanh(
                   size: size,
                   listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'DACHEBIEN')
+                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
                       .toList(),
                   mapListChiTietHoaDon: mapListChiTietHoaDon,
                   viewModel: viewModel),

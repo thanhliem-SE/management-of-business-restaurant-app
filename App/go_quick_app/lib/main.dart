@@ -28,6 +28,7 @@ Future<void> main() async {
   Hive.registerAdapter(NhanVienAdapter());
   await Hive.openBox('signed');
   runApp(const MyApp());
+  SocketViewModel.getMessage();
 }
 
 class MyApp extends StatelessWidget {

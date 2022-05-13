@@ -49,63 +49,72 @@ buildTabHoanThanh(
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
                           ChiTietHoaDon item = listChiTietHoaDon[index];
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 20),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Image.network(
-                                      item.thucPham!.urlHinhAnh![0],
-                                      fit: BoxFit.fill,
-                                      width: size.width * 0.2,
-                                      height: size.height * 0.1,
-                                    ),
-                                    Text(
-                                      item.thucPham!.ten! + ' x${item.soLuong}',
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    ['QUANLY', 'PHUCVU']
-                                            .contains(viewModel.quyenTaiKhoan)
-                                        ? item.daPhucVu == true
-                                            ? IconButton(
-                                                onPressed: () {},
-                                                icon: const Icon(
-                                                    Icons.done_outlined),
-                                                iconSize: 30,
-                                                color: Colors.green,
-                                              )
-                                            : ElevatedButton(
-                                                onPressed: () {
-                                                  showConfirmDialog(context,
-                                                      () {
-                                                    viewModel
-                                                        .updateTrangThaiDaPhucVu(
-                                                            item);
-                                                    Navigator.pop(context);
-                                                  }, 'Bạn có chắc chắn đã phục vụ món ăn này không?');
-                                                },
-                                                child: const Text('Phục Vụ'),
-                                                style: ElevatedButton.styleFrom(
-                                                  primary: Colors.green,
-                                                ),
-                                              )
-                                        : Container()
-                                  ],
-                                ),
-                                item.nguoiCheBien != null
-                                    ? Container(
-                                        child: Text('Người chế biến: ' +
-                                            item.nguoiCheBien!.tenNhanVien!),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                          );
+                          return item.daCheBien == true
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Image.network(
+                                            item.thucPham!.urlHinhAnh![0],
+                                            fit: BoxFit.fill,
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.1,
+                                          ),
+                                          Text(
+                                            item.thucPham!.ten! +
+                                                ' x${item.soLuong}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          [
+                                            'QUANLY',
+                                            'PHUCVU'
+                                          ].contains(viewModel.quyenTaiKhoan)
+                                              ? item.daPhucVu == true
+                                                  ? IconButton(
+                                                      onPressed: () {},
+                                                      icon: const Icon(
+                                                          Icons.done_outlined),
+                                                      iconSize: 30,
+                                                      color: Colors.green,
+                                                    )
+                                                  : ElevatedButton(
+                                                      onPressed: () {
+                                                        showConfirmDialog(
+                                                            context, () {
+                                                          viewModel
+                                                              .updateTrangThaiDaPhucVu(
+                                                                  item);
+                                                          Navigator.pop(
+                                                              context);
+                                                        }, 'Bạn có chắc chắn đã phục vụ món ăn này không?');
+                                                      },
+                                                      child:
+                                                          const Text('Phục Vụ'),
+                                                      style: ElevatedButton
+                                                          .styleFrom(
+                                                        primary: Colors.green,
+                                                      ),
+                                                    )
+                                              : Container()
+                                        ],
+                                      ),
+                                      item.nguoiCheBien != null
+                                          ? Container(
+                                              child: Text('Người chế biến: ' +
+                                                  item.nguoiCheBien!
+                                                      .tenNhanVien!),
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                )
+                              : Container();
                         },
                       ),
                       Container(

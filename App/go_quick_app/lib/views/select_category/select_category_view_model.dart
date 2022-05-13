@@ -4,14 +4,17 @@ import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
 import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
+import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 
 class SelectCategoryViewModel extends ChangeNotifier {
   String _tenMonTimKiem = '';
@@ -147,15 +150,26 @@ class SelectCategoryViewModel extends ChangeNotifier {
               ));
         }
         if (_listChiTietThucPham.length == i + 1) {
-          SocketViewModel().sendMessage('CHEBIEN', 'Có yêu cầu đặt món mới');
-
           Navigator.popUntil(context, (route) {
             return route.settings.name == 'RequestOrderView';
           });
-          Navigator.pop(context);
+          RequestOrderViewModel().init();
           NavigationHelper.push(
               context: context, page: BillView(hoaDon: hoaDonCreated));
           clear();
+
+          NhanVien nhanVien = await Helper.getNhanVienSigned();
+          ThongBaoService().addThongBao(
+              token,
+              ThongBao(
+                noiDung:
+                    "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
+              ),
+              'CHEBIEN');
+          SocketViewModel().sendMessage(
+            "CHEBIEN",
+            "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
+          );
         }
       }
     }
@@ -182,14 +196,22 @@ class SelectCategoryViewModel extends ChangeNotifier {
             ));
       }
       if (_listChiTietThucPham.length == i + 1) {
-        // SocketViewModel().sendMessage('CHEBIEN', 'Có yêu cầu đặt món mới');
-
         Navigator.popUntil(context, (route) {
           return route.settings.name == 'RequestOrderView';
         });
-        Navigator.pop(context);
+        RequestOrderViewModel().init();
         NavigationHelper.push(context: context, page: BillView(hoaDon: hoaDon));
         clear();
+
+        NhanVien nhanVien = await Helper.getNhanVienSigned();
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+              noiDung: "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
+            ),
+            'CHEBIEN');
+        SocketViewModel().sendMessage(
+            "CHEBIEN", "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})");
       }
     }
   }
