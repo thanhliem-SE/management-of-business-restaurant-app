@@ -46,6 +46,6 @@ class ThongBao {
         "maThongBao": maThongBao,
         "noiDung": noiDung,
         "daXem": daXem,
-        "taiKhoan": taiKhoan!.toJson(),
+        "taiKhoan": taiKhoan != null ? taiKhoan!.toJson() : null,
       };
 }

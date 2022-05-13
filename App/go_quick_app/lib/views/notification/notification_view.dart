@@ -19,7 +19,7 @@ class NotificationView extends StatelessWidget {
     final socketViewModel = Provider.of<SocketViewModel>(context);
 
     List<ThongBao> listThongBao = viewModel.getListThongBao();
-
+    listThongBao.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -43,8 +43,7 @@ class NotificationView extends StatelessWidget {
             padding: const EdgeInsets.only(left: 5, right: 5, top: 15),
             width: size.width,
             decoration: BoxDecoration(
-              color:
-                  thongBao.daXem == false ? kPrimaryLightColor : Colors.white,
+              color: thongBao.daXem == false ? Colors.grey[300] : Colors.white,
               borderRadius: BorderRadius.circular(15),
             ),
             child: Column(
@@ -77,7 +76,7 @@ class NotificationView extends StatelessWidget {
                           ],
                         ),
                         Text(
-                          DateFormat("HH:mm").format(thongBao!.createdAt!),
+                          DateFormat("HH:mm").format(thongBao.createdAt!),
                           style: const TextStyle(fontStyle: FontStyle.italic),
                         )
                       ],

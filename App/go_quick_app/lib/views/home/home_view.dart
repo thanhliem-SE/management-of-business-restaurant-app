@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
@@ -13,13 +11,10 @@ import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
-import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
-import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
-import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -75,14 +70,6 @@ class _HomeViewState extends State<HomeView> {
         },
       ),
       // body: StreamBuilder(
-      //   stream: socketViewModel.channel.stream,
-      //   builder: (context, snapshot) {
-      //     return Padding(
-      //       padding: const EdgeInsets.symmetric(vertical: 24.0),
-      //       child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
-      //     );
-      //   },
-      // ),
       drawer: viewModel.nhanVien.taiKhoan != null
           ? NavBar(nhanVien: viewModel.nhanVien)
           : Container(),

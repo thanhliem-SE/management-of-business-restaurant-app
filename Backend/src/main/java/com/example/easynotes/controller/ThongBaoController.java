@@ -1,6 +1,7 @@
 package com.example.easynotes.controller;
 
 import com.example.easynotes.exception.ResourceNotFoundException;
+import com.example.easynotes.model.Quyen;
 import com.example.easynotes.model.TaiKhoan;
 import com.example.easynotes.model.ThongBao;
 import com.example.easynotes.service.NhaCungCapService;
@@ -27,9 +28,12 @@ public class ThongBaoController {
         return service.getAll();
     }
 
-    @PostMapping("/thongbao")
-    public void addThongBao(@RequestBody @Valid ThongBao thongBao){
-        service.addThongBaoByQuyen(thongBao.getNoiDung(), thongBao.getTaiKhoan().getQuyen().toString());
+    @PostMapping("/thongbao/{quyen}")
+    public void addThongBao(@RequestBody @Valid ThongBao thongBao, @PathVariable("quyen") String quyen){
+        service.addThongBaoByQuyen(thongBao.getNoiDung(), quyen);
+        if(quyen != "QUANLY"){
+            service.addThongBaoByQuyen(thongBao.getNoiDung(), "QUANLY");
+        }
     }
 
     @PostMapping("/thongbao/getbytaikhoan")
