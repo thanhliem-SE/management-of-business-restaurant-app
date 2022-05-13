@@ -11,6 +11,8 @@ import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
+import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
+import 'package:go_quick_app/views/manage_payment/manage_payment_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
@@ -127,8 +129,11 @@ class WidgetGridViewMenu extends StatelessWidget {
                 context: context, page: const ManageTableView());
           }),
         if (['QUANLY', 'THUNGAN'].contains(quyen))
-          cardItemMenu(size, Icons.money, 'Quản  lý thanh toán',
-              Colors.amberAccent, () {}),
+          cardItemMenu(
+              size, Icons.money, 'Quản  lý thanh toán', Colors.amberAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ManagePaymentView());
+          }),
         if (['QUANLY'].contains(quyen))
           cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
               Colors.lightBlueAccent, () {}),

@@ -28,7 +28,8 @@ public class ThanhToanController  {
 
     @PostMapping("/")
     public ThanhToan addItem(@Valid @RequestBody ThanhToan thanhToan) {
-        return service.add(thanhToan);
+        ThanhToan thanhToan1 = service.add(thanhToan);
+        return thanhToan1;
     }
 
     @GetMapping("/{id}")
