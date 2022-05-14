@@ -164,7 +164,7 @@ class BillView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      viewModel.kiemTraKhongTiepNhan()
+                      !viewModel.kiemTraKhongTiepNhan()
                           ? InkWell(
                               onTap: () async {
                                 await viewModel.updateHoaDon(context, hoaDon);
