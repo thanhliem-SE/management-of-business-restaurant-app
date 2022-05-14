@@ -33,7 +33,6 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
     final future = viewModel.getTaiKhoan(context);
-    final socketViewModel = Provider.of<SocketViewModel>(context);
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();

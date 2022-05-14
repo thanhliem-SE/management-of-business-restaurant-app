@@ -15,7 +15,6 @@ class GoQuickApp extends StatefulWidget {
 class _GoQuickAppState extends State<GoQuickApp> {
   @override
   Widget build(BuildContext context) {
-    final socketViewModel = Provider.of<SocketViewModel>(context);
     return FutureBuilder<bool>(
       future: Helper.isHasToken(),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
