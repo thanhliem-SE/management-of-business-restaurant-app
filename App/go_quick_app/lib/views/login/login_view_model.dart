@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/tai_khoan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
@@ -55,8 +56,10 @@ class LoginViewModel extends ChangeNotifier {
     }
     if (response is Failure) {
       String errorResponse = (response as Failure).errrorResponse as String;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(errorResponse)));
+      showAlertDialog(
+          context: context,
+          title: 'Thất bại',
+          message: 'Tài khoản hoặc mật khẩu không chính xác');
     }
   }
 

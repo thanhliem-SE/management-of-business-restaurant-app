@@ -166,10 +166,10 @@ class SelectCategoryViewModel extends ChangeNotifier {
                     "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
               ),
               'CHEBIEN');
-          SocketViewModel().sendMessage(
-            "CHEBIEN",
-            "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
-          );
+          // SocketViewModel().sendMessage(
+          //   "CHEBIEN",
+          //   "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
+          // );
         }
       }
     }
@@ -210,8 +210,8 @@ class SelectCategoryViewModel extends ChangeNotifier {
               noiDung: "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
             ),
             'CHEBIEN');
-        SocketViewModel().sendMessage(
-            "CHEBIEN", "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})");
+        // SocketViewModel().sendMessage(
+        //     "CHEBIEN", "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})");
       }
     }
   }
