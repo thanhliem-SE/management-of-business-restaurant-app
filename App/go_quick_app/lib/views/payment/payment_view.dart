@@ -34,14 +34,6 @@ class _PaymentViewState extends State<PaymentView> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<PayMentViewModel>(context);
-    List<String> listTien = [
-      '10000',
-      '20000',
-      '50000',
-      '100000',
-      '200000',
-      '500000'
-    ];
 
     if (viewModel.getIsInit == true) {
       return WillPopScope(

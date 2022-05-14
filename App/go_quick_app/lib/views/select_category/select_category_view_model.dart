@@ -31,7 +31,6 @@ class SelectCategoryViewModel extends ChangeNotifier {
 
   setListChiTietHoaDon(List<ChiTietHoaDon> value) {
     _listChiTietHoaDon = value;
-    notifyListeners();
   }
 
   getListChiTietHoaDon() {
