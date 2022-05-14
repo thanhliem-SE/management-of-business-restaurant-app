@@ -32,7 +32,7 @@ Future<void> main() async {
   Hive.registerAdapter(NhanVienAdapter());
   await Hive.openBox('signed');
   runApp(const MyApp());
-  SocketViewModel.getMessage();
+  // SocketViewModel.getMessage();
 }
 
 class MyApp extends StatelessWidget {
@@ -72,9 +72,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => ManageAllFoodViewModel(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => SocketViewModel(),
-        ),
+        // ChangeNotifierProvider(
+        //   create: (_) => SocketViewModel(),
+        // ),
         ChangeNotifierProvider(
           create: (_) => PayMentViewModel(),
         ),
