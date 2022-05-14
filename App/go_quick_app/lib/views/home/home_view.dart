@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
+import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
@@ -39,41 +41,49 @@ class _HomeViewState extends State<HomeView> {
     }
 
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'GOQUICK',
+    return WillPopScope(
+      onWillPop: () async {
+        showConfirmDialog(context, () {
+          SystemNavigator.pop();
+        }, 'Bạn có xác nhận muốn thoát ứng dụng?');
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'GOQUICK',
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  NavigationHelper.push(
+                      context: context,
+                      page: NotificationView(nhanVien: viewModel.nhanVien));
+                },
+                icon: viewModel.checkThongBao() == true
+                    ? const Icon(Icons.notification_add)
+                    : const Icon(Icons.notifications))
+          ],
+          backgroundColor: kPrimaryColor,
+          centerTitle: true,
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                NavigationHelper.push(
-                    context: context,
-                    page: NotificationView(nhanVien: viewModel.nhanVien));
-              },
-              icon: viewModel.checkThongBao() == true
-                  ? const Icon(Icons.notification_add)
-                  : const Icon(Icons.notifications))
-        ],
-        backgroundColor: kPrimaryColor,
-        centerTitle: true,
+        body: FutureBuilder(
+          future: future,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              taiKhoan = snapshot.data as TaiKhoan;
+              storedSignedData(taiKhoan);
+              return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
+            } else {
+              return const LoginView();
+            }
+          },
+        ),
+        // body: StreamBuilder(
+        drawer: viewModel.nhanVien.taiKhoan != null
+            ? NavBar(nhanVien: viewModel.nhanVien)
+            : Container(),
       ),
-      body: FutureBuilder(
-        future: future,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            taiKhoan = snapshot.data as TaiKhoan;
-            storedSignedData(taiKhoan);
-            return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
-          } else {
-            return const LoginView();
-          }
-        },
-      ),
-      // body: StreamBuilder(
-      drawer: viewModel.nhanVien.taiKhoan != null
-          ? NavBar(nhanVien: viewModel.nhanVien)
-          : Container(),
     );
   }
 

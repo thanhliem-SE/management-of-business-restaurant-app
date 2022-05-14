@@ -29,42 +29,50 @@ class ResponseOrderView extends StatelessWidget {
     listHoaDon.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
     Size size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: buildAppBar(size, context, viewModel),
-        body: Container(
-          child: TabBarView(
-            children: [
-              buildTabDangCho(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'CHO')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabTiepNhan(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabHoanThanh(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabHuy(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'KHONGTIEPNHAN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-            ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        viewModel.clear();
+        return true;
+      },
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: buildAppBar(size, context, viewModel),
+          body: Container(
+            child: TabBarView(
+              children: [
+                buildTabDangCho(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) => element.tinhTrang == 'CHO')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabTiepNhan(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) => element.tinhTrang == 'DANGCHEBIEN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabHoanThanh(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) => element.tinhTrang == 'DANGCHEBIEN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabHuy(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where(
+                            (element) => element.tinhTrang == 'KHONGTIEPNHAN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+              ],
+            ),
           ),
         ),
       ),

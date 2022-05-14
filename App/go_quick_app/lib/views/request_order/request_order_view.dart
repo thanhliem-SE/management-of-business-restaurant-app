@@ -28,57 +28,64 @@ class RequestOrderView extends StatelessWidget {
           context,
           viewModel,
         ),
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: size.height,
-            child: TabBarView(children: [
-              Container(
-                color: kPrimaryLightColor,
-                child: (listBanTangTret.length > 0)
-                    ? GridView.builder(
-                        primary: false,
-                        padding: const EdgeInsets.all(20),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemCount: listBanTangTret.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return cardTableOrder(
-                              size: size,
-                              context: context,
-                              ban: listBanTangTret[index],
-                              viewModel: viewModel);
-                        },
-                      )
-                    : Container(),
-              ),
-              Container(
-                color: kPrimaryLightColor,
-                child: (listBanTang1.length > 0)
-                    ? GridView.builder(
-                        primary: false,
-                        padding: const EdgeInsets.all(20),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                        ),
-                        itemCount: listBanTang1.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return cardTableOrder(
-                              size: size,
-                              context: context,
-                              ban: listBanTang1[index],
-                              viewModel: viewModel);
-                        },
-                      )
-                    : Container(),
-              ),
-            ]),
+        body: WillPopScope(
+          onWillPop: () async {
+            Navigator.pop(context);
+            viewModel.clear();
+            return true;
+          },
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: size.height,
+              child: TabBarView(children: [
+                Container(
+                  color: kPrimaryLightColor,
+                  child: (listBanTangTret.length > 0)
+                      ? GridView.builder(
+                          primary: false,
+                          padding: const EdgeInsets.all(20),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: listBanTangTret.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return cardTableOrder(
+                                size: size,
+                                context: context,
+                                ban: listBanTangTret[index],
+                                viewModel: viewModel);
+                          },
+                        )
+                      : Container(),
+                ),
+                Container(
+                  color: kPrimaryLightColor,
+                  child: (listBanTang1.length > 0)
+                      ? GridView.builder(
+                          primary: false,
+                          padding: const EdgeInsets.all(20),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10,
+                          ),
+                          itemCount: listBanTang1.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return cardTableOrder(
+                                size: size,
+                                context: context,
+                                ban: listBanTang1[index],
+                                viewModel: viewModel);
+                          },
+                        )
+                      : Container(),
+                ),
+              ]),
+            ),
           ),
         ),
       ),
