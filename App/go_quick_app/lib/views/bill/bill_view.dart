@@ -29,6 +29,7 @@ class BillView extends StatelessWidget {
     final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
 
     Size size = MediaQuery.of(context).size;
+<<<<<<< HEAD
     return WillPopScope(
       onWillPop: () async {
         Navigator.pop(context);
@@ -42,6 +43,50 @@ class BillView extends StatelessWidget {
             viewModel: viewModel,
             actions: [
               IconButton(
+=======
+    return Scaffold(
+      appBar: buildAppBar(
+          context: context,
+          title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
+          viewModel: viewModel,
+          actions: [
+            IconButton(
+              onPressed: () {
+                if (hoaDon.tinhTrang != "CHUATHANHTOAN" &&
+                    hoaDon.thanhToan != null) {
+                  _showMaterialDialog(context,
+                      'Bạn không được chỉnh sửa hóa đơn đã thánh toán!');
+                  viewModel.clear();
+                } else {
+                  NavigationHelper.pushReplacement(
+                      context: context,
+                      page: SelectCategoryView(
+                        hoaDon: hoaDon,
+                        listChiTietHoaDon: listChiTietHoaDon,
+                      ));
+                }
+              },
+              icon: const Icon(Icons.edit),
+            ),
+            IconButton(
+              onPressed: () {
+                if (hoaDon.tinhTrang != "CHUATHANHTOAN" &&
+                    hoaDon.thanhToan != null) {
+                  _showMaterialDialog(context,
+                      'Bạn không được thêm món vào hóa đơn đã thánh toán!');
+                  viewModel.clear();
+                } else {
+                  NavigationHelper.pushReplacement(
+                      context: context,
+                      page: SelectCategoryView(
+                        hoaDon: hoaDon,
+                      ));
+                }
+              },
+              icon: const Icon(Icons.add),
+            ),
+            IconButton(
+>>>>>>> efbf0e0 (add xuat hoa don)
                 onPressed: () {
                   NavigationHelper.pushReplacement(
                       context: context,
@@ -51,6 +96,7 @@ class BillView extends StatelessWidget {
                       ));
                   viewModel.clear();
                 },
+<<<<<<< HEAD
                 icon: const Icon(Icons.edit),
               ),
               IconButton(
@@ -120,6 +166,138 @@ class BillView extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, fontSize: 16),
+=======
+                icon: const Icon(Icons.refresh))
+          ]),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Trạng thái: ',
+                    normalText: (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
+                            hoaDon.thanhToan != null)
+                        ? 'Đang chờ xuất hóa đơn'
+                        : Helper.getTrangThaiHoaDon(hoaDon.tinhTrang!)),
+              ),
+              hoaDon.createdAt != null
+                  ? Container(
+                      width: size.width,
+                      margin: const EdgeInsets.only(top: 10),
+                      child: buildTextSpan(
+                          boldText: 'Thời gian: ',
+                          normalText: DateFormat('dd/MM/yyyy HH:mm')
+                              .format(hoaDon.createdAt!)),
+                    )
+                  : Container(),
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Người lập hóa đơn: ',
+                    normalText: hoaDon.nguoiLapHoaDon!.tenNhanVien!),
+              ),
+              Container(
+                width: size.width,
+                margin: const EdgeInsets.only(top: 10),
+                child: buildTextSpan(
+                    boldText: 'Ghi chú: ',
+                    normalText: hoaDon.ghiChu == null || hoaDon.ghiChu!.isEmpty
+                        ? 'Không có'
+                        : hoaDon.ghiChu!),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 5),
+                padding: const EdgeInsets.all(5.0),
+                width: size.width,
+                color: Colors.blueGrey[50],
+                child: Text(
+                  'Danh Sách Đặt Món - Bàn ' + hoaDon.ban!.viTri.toString(),
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+              listChiTietHoaDon.length > 0
+                  ? buildListOrder(context: context, list: listChiTietHoaDon)
+                  : Container(),
+              SizedBox(height: size.height * 0.04),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Tổng tiền',
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  Text(
+                      NumberFormat('###,###')
+                              .format(viewModel.getTotalPrice()) +
+                          'đ',
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20)),
+                ],
+              ),
+              SizedBox(height: size.height * 0.04),
+              Flexible(
+                fit: FlexFit.loose,
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      hoaDon.tinhTrang == "CHUATHANHTOAN"
+                          ? InkWell(
+                              onTap: () {
+                                NavigationHelper.push(
+                                  context: context,
+                                  page: PaymentView(
+                                    hoaDon: hoaDon,
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                color: kPrimaryColor,
+                                width: size.width * 0.9,
+                                height: size.height * 0.05,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Thanh Toán',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                      SizedBox(height: size.height * 0.02),
+                      !viewModel.kiemTraKhongTiepNhan()
+                          ? InkWell(
+                              onTap: () async {
+                                await viewModel.updateHoaDon(context, hoaDon);
+                              },
+                              child: Container(
+                                color: Colors.redAccent[700],
+                                width: size.width * 0.9,
+                                height: size.height * 0.05,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Hủy',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )
+                          : Container(),
+                    ],
+>>>>>>> efbf0e0 (add xuat hoa don)
                   ),
                 ),
                 listChiTietHoaDon.length > 0
@@ -282,5 +460,32 @@ class BillView extends StatelessWidget {
         );
       },
     );
+  }
+
+  _dismissDialog(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _showMaterialDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(
+              'Cảnh báo',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            content: Text(text),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    _dismissDialog(context);
+                  },
+                  child: Text('Ok')),
+            ],
+          );
+        });
   }
 }
