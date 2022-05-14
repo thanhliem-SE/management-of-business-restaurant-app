@@ -164,22 +164,26 @@ class BillView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: Colors.redAccent[700],
-                          width: size.width * 0.9,
-                          height: size.height * 0.05,
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Hủy',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      viewModel.kiemTraKhongTiepNhan()
+                          ? InkWell(
+                              onTap: () async {
+                                await viewModel.updateHoaDon(context, hoaDon);
+                              },
+                              child: Container(
+                                color: Colors.redAccent[700],
+                                width: size.width * 0.9,
+                                height: size.height * 0.05,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Hủy',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),

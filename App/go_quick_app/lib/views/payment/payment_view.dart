@@ -549,38 +549,6 @@ class _PaymentViewState extends State<PaymentView> {
             ),
           ),
         ),
-        viewModel.daThanhToan
-            ? Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      await viewModel.xacNhanThanhToan(context);
-                      setState(() {});
-                    },
-                    style: ElevatedButton.styleFrom(
-                      primary: kPrimaryColor,
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.payment),
-                          SizedBox(
-                            width: constraints.maxHeight * 0.025,
-                          ),
-                          Text(
-                            'Đã thanh toán',
-                            style: TextStyle(fontSize: 18.0),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              )
-            : Container(),
       ],
     );
   }
