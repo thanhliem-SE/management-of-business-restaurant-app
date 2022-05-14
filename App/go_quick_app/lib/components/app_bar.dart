@@ -21,7 +21,7 @@ buildAppBar(
       ),
       onPressed: () {
         Navigator.pop(context);
-        viewModel.clear();
+        if (viewModel != null) viewModel.clear();
       },
     ),
     actions: actions,
