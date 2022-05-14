@@ -3,6 +3,7 @@ import 'package:go_quick_app/app.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
@@ -10,6 +11,8 @@ import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manager_all_food_view_model.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
+import 'package:go_quick_app/views/payment/payment_view.dart';
+import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
@@ -18,6 +21,8 @@ import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
+import 'views/manage_payment/manage_payment_view_model.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final appDocumentDirectory =
@@ -25,10 +30,9 @@ Future<void> main() async {
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(TaiKhoanAdapter());
   Hive.registerAdapter(NhanVienAdapter());
-
   await Hive.openBox('signed');
-
   runApp(const MyApp());
+  SocketViewModel.getMessage();
 }
 
 class MyApp extends StatelessWidget {
@@ -67,6 +71,15 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ManageAllFoodViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => SocketViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PayMentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ManagePayMentViewModel(),
         ),
       ],
       child: MaterialApp(

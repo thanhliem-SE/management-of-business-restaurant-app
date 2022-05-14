@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
 import 'package:go_quick_app/config/palette.dart';
@@ -7,17 +5,18 @@ import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/nhan_vien_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
+import 'package:go_quick_app/views/manage_payment/manage_payment_view.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
+import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
-import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
-import 'package:go_quick_app/views/welcome/welcome_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,9 +33,10 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
     final future = viewModel.getTaiKhoan(context);
+    final socketViewModel = Provider.of<SocketViewModel>(context);
 
-    if (viewModel.nhanVien.taiKhoan == null) {
-      viewModel.setNhanVien();
+    if (viewModel.getIsInit() == false) {
+      viewModel.init();
     }
 
     Size size = MediaQuery.of(context).size;
@@ -46,7 +46,15 @@ class _HomeViewState extends State<HomeView> {
           'GOQUICK',
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications))
+          IconButton(
+              onPressed: () {
+                NavigationHelper.push(
+                    context: context,
+                    page: NotificationView(nhanVien: viewModel.nhanVien));
+              },
+              icon: viewModel.checkThongBao() == true
+                  ? const Icon(Icons.notification_add)
+                  : const Icon(Icons.notifications))
         ],
         backgroundColor: kPrimaryColor,
         centerTitle: true,
@@ -63,6 +71,7 @@ class _HomeViewState extends State<HomeView> {
           }
         },
       ),
+      // body: StreamBuilder(
       drawer: viewModel.nhanVien.taiKhoan != null
           ? NavBar(nhanVien: viewModel.nhanVien)
           : Container(),
@@ -120,8 +129,11 @@ class WidgetGridViewMenu extends StatelessWidget {
                 context: context, page: const ManageTableView());
           }),
         if (['QUANLY', 'THUNGAN'].contains(quyen))
-          cardItemMenu(size, Icons.money, 'Quản  lý thanh toán',
-              Colors.amberAccent, () {}),
+          cardItemMenu(
+              size, Icons.money, 'Quản  lý thanh toán', Colors.amberAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ManagePaymentView());
+          }),
         if (['QUANLY'].contains(quyen))
           cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
               Colors.lightBlueAccent, () {}),
@@ -138,7 +150,7 @@ class WidgetGridViewMenu extends StatelessWidget {
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(
-              context: context, page: LoginView());
+              context: context, page: const LoginView());
         }),
       ],
     );

@@ -5,9 +5,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ResponseOrderViewModel extends ChangeNotifier {
@@ -78,6 +81,25 @@ class ResponseOrderViewModel extends ChangeNotifier {
     var response = await HoaDonService().updateHoaDon(token, hoaDon);
     if (response is Success) {
       init();
+      if (trangThai == "DANGCHEBIEN") {
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+                noiDung: "Hóa đơn được tiếp nhận (Bàn ${hoaDon.ban!.soBan})"),
+            "PHUCVU");
+        SocketViewModel().sendMessage(
+            "PHUCVU", "Hóa đơn được tiếp nhận (Bàn ${hoaDon.ban!.soBan})");
+      }
+      if (trangThai == "KHONGTIEPNHAN") {
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+                noiDung:
+                    "Hóa đơn không được tiếp nhận vì '${hoaDon.ghiChu}' (Bàn ${hoaDon.ban!.soBan})"),
+            "PHUCVU");
+        SocketViewModel().sendMessage("PHUCVU",
+            "Hóa đơn không được tiếp nhận vì '${hoaDon.ghiChu}' (Bàn ${hoaDon.ban!.soBan})");
+      }
     }
   }
 
@@ -102,6 +124,14 @@ class ResponseOrderViewModel extends ChangeNotifier {
     var response =
         await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
     if (response is Success) {
+      ThongBaoService().addThongBao(
+          token,
+          ThongBao(
+              noiDung:
+                  "${chiTietHoaDon.thucPham!.ten} được chế biến xong, có thể phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}"),
+          "PHUCVU");
+      SocketViewModel().sendMessage("PHUCVU",
+          "${chiTietHoaDon.thucPham!.ten} được chế biến xong, có thể phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}");
       init();
       checkDaCheBienHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }
@@ -116,6 +146,14 @@ class ResponseOrderViewModel extends ChangeNotifier {
     var response =
         await ChiTietHoaDonService().updateChiTietHoaDon(token, chiTietHoaDon);
     if (response is Success) {
+      ThongBaoService().addThongBao(
+          token,
+          ThongBao(
+              noiDung:
+                  "${chiTietHoaDon.thucPham!.ten} đã được phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}"),
+          "PHUCVU");
+      SocketViewModel().sendMessage("PHUCVU",
+          "${chiTietHoaDon.thucPham!.ten} đã được phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}");
       init();
       checkDaPhucVuHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }

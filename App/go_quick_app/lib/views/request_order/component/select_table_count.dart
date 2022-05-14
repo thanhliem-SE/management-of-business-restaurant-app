@@ -16,6 +16,7 @@ class SelectTableCount extends StatelessWidget {
     final viewModel = Provider.of<RequestOrderViewModel>(context);
     List<Ban> listBanTrong =
         viewModel.getListBanByViTri(viewModel.getViTriBanTrong());
+    listBanTrong.removeWhere((element) => element.tinhTrang != null);
 
     return AlertDialog(
       title: const Text(

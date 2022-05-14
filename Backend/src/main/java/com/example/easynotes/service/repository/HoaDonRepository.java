@@ -11,7 +11,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query(value = "select * from hoa_don where tinh_trang != 'DATHANHTOAN'", nativeQuery = true)
     public List<HoaDon> getHoaDonBeforePaymented();
 
-    @Query(value = "select * from hoa_don where hoa_don.ma_so_ban = ?1 and hoa_don.tinh_trang in ('CHO', 'DANGCHEBIEN', 'HOANTHANH', 'CHUATHANHTOAN', 'HUY')", nativeQuery = true)
+    @Query(value = "select * from hoa_don where hoa_don.ma_so_ban = ?1 and hoa_don.tinh_trang in ('CHO', 'DANGCHEBIEN', 'HOANTHANH', 'KHONGTIEPNHAN', 'CHUATHANHTOAN', 'HUY')", nativeQuery = true)
     public HoaDon getHoaDonDangPhucVuTaiBan(int maSoBan);
 
     @Query(value = "select * from hoa_don where is_deleted = 0", nativeQuery = true)

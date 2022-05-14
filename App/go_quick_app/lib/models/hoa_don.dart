@@ -3,6 +3,7 @@
 //     final hoaDon = hoaDonFromJson(jsonString);
 
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/thanh_toan.dart';
 import 'package:meta/meta.dart';
@@ -34,6 +35,7 @@ class HoaDon {
   Ban? ban;
   String? ghiChu;
   String? tinhTrang;
+  List<ChiTietHoaDon>? chiTietHoaDons;
   DateTime? createdAt;
   DateTime? updatedAt;
 
@@ -48,10 +50,10 @@ class HoaDon {
         tinhTrang: json["tinhTrang"],
         ghiChu: json["ghiChu"],
         createdAt: json["createdAt"] != null
-            ? DateTime.parse(json["createdAt"])
+            ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,
         updatedAt: json["updatedAt"] != null
-            ? DateTime.parse(json["updatedAt"])
+            ? DateTime.parse(json["updatedAt"]).add(const Duration(hours: 7))
             : null,
       );
 

@@ -7,6 +7,8 @@ import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
+import 'package:go_quick_app/views/payment/payment_view.dart';
+import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -139,7 +141,14 @@ class BillView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          NavigationHelper.push(
+                            context: context,
+                            page: PaymentView(
+                              hoaDon: hoaDon,
+                            ),
+                          );
+                        },
                         child: Container(
                           color: kPrimaryColor,
                           width: size.width * 0.9,
@@ -155,22 +164,26 @@ class BillView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: size.height * 0.02),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: Colors.redAccent[700],
-                          width: size.width * 0.9,
-                          height: size.height * 0.05,
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Hủy',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      !viewModel.kiemTraKhongTiepNhan()
+                          ? InkWell(
+                              onTap: () async {
+                                await viewModel.updateHoaDon(context, hoaDon);
+                              },
+                              child: Container(
+                                color: Colors.redAccent[700],
+                                width: size.width * 0.9,
+                                height: size.height * 0.05,
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'Hủy',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ],
                   ),
                 ),
