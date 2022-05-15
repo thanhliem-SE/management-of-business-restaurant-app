@@ -9,17 +9,12 @@ import 'package:go_quick_app/services/thuc_pham_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ManageAllFoodViewModel extends ChangeNotifier {
-  bool _loading = false;
   bool isInit = false;
-  List<DanhMuc>? danhmucs;
-  List<ThucPham>? listChiTietThucPham;
-  bool get loading => this._loading;
-
-  set loading(bool value) => this._loading = value;
+  late List<DanhMuc> danhmucs;
 
   get getDanhmucs => this.danhmucs;
 
-  void setDanhmucs(List<DanhMuc>? listDanhMuc) async {
+  void setDanhmucs(List<DanhMuc> listDanhMuc) async {
     this.danhmucs = danhmucs;
   }
 
@@ -29,6 +24,13 @@ class ManageAllFoodViewModel extends ChangeNotifier {
       var response = await DanhMucService().getDanhSachDanhMuc(token);
       if (response is Success) {
         danhmucs = response.response as List<DanhMuc>;
+        for (var i = 0; i < danhmucs.length; i++) {
+          danhmucs[i].thucPhamList =
+              await loadingListThucPham(context, danhmucs[i].maDanhMuc!);
+          if (i == danhmucs.length - 1) {
+            notifyListeners();
+          }
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Lỗi lấy danh sách danh mục")));
@@ -39,36 +41,35 @@ class ManageAllFoodViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> loadingListThucPham(BuildContext context) async {
+  Future<List<ThucPham>> loadingListThucPham(
+      BuildContext context, int maDanhMuc) async {
+    List<ThucPham> chitietthucphams = <ThucPham>[];
     try {
-      List<ThucPham> chitietthucphams;
       String token = await Helper.getToken();
-      var response = await ThucPhamService().getDanhSachThucPham(token);
+      var response = await ThucPhamService()
+          .getDanhSachThucPhamTheoDanhMuc(token, maDanhMuc);
       if (response is Success) {
         chitietthucphams = response.response as List<ThucPham>;
-        if (chitietthucphams.isNotEmpty && chitietthucphams.length > 0) {
-          for (var danhmuc in danhmucs!) {
-            danhmuc.thucPhamList = [];
-            danhmuc.thucPhamList!.addAll(chitietthucphams
-                .where((x) => x.danhMuc!.maDanhMuc == danhmuc.maDanhMuc));
-          }
-        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Lỗi lấy danh sách thực phẩm")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text("Lỗi lấy danh sách thực phẩm theo hóa đơn")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
     }
+    return chitietthucphams;
   }
 
-  Init(BuildContext context) async {
-    if (!isInit) {
-      await loadingDanhMucs(context);
-      await loadingListThucPham(context);
-      notifyListeners();
-      isInit = true;
-    }
+  Future<void> Init(BuildContext context) async {
+    await loadingDanhMucs(context);
+    isInit = true;
+    notifyListeners();
+  }
+
+  void clear() {
+    danhmucs.clear();
+    isInit = false;
+    notifyListeners();
   }
 }

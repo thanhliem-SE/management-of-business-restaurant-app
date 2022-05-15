@@ -103,7 +103,6 @@ class ManagePayMentViewModel extends ChangeNotifier {
       if (response is Success) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Thanh toán thành công")));
-        await updateBan(context, hoaDon);
         listHoaDon.remove(hoaDon);
         notifyListeners();
       } else {

@@ -45,4 +45,8 @@ public class HoaDonService {
     public HoaDon getHoaDonDangPhucVuTaiBan(int maSoBan){
         return repository.getHoaDonDangPhucVuTaiBan(maSoBan);
     }
+
+    public List<HoaDon> getListChuaTraHoaDon(){
+        return repository.getListChuaTraHoaDon();
+    }
 }

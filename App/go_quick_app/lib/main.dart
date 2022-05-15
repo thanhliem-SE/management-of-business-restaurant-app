@@ -5,6 +5,7 @@ import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
+import 'package:go_quick_app/views/food_detail/food_detail_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view_model.dart';
@@ -13,6 +14,7 @@ import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
 import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
+import 'package:go_quick_app/views/return_order_customer/return_order_customer_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
 import 'package:hive/hive.dart';
@@ -78,6 +80,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ManagePayMentViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ReturnOrderCustomerViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => FoodDetailViewModel(),
         ),
       ],
       child: MaterialApp(

@@ -19,7 +19,7 @@ class ManagePaymentView extends StatelessWidget {
     if (viewModel.isInitialized) {
       return WillPopScope(
         onWillPop: (() async {
-          NavigationHelper.push(context: context, page: HomeView());
+          NavigationHelper.pushReplacement(context: context, page: HomeView());
           viewModel.clear();
           return true;
         }),

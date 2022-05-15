@@ -16,6 +16,7 @@ class ThucPham {
     this.giaTien,
     this.urlHinhAnh,
     this.chiTiet,
+    this.isDeleted,
     this.trangThai,
     this.danhMuc,
     this.createdAt,
@@ -28,7 +29,7 @@ class ThucPham {
   double? giaTien;
   List<String>? urlHinhAnh;
   DanhMuc? danhMuc;
-
+  bool? isDeleted;
   String? chiTiet;
   String? trangThai;
   DateTime? createdAt;
@@ -39,6 +40,7 @@ class ThucPham {
         ten: json["ten"],
         moTa: json["moTa"],
         giaTien: json["giaTien"],
+        isDeleted: json["isDeleted"],
         urlHinhAnh: List<String>.from(json["urlHinhAnh"].map((x) => x)),
         chiTiet: json["chiTiet"],
         danhMuc: DanhMuc.fromJson(json["danhMuc"]),
@@ -58,6 +60,7 @@ class ThucPham {
         "giaTien": giaTien,
         "urlHinhAnh": List<dynamic>.from(urlHinhAnh!.map((x) => x)),
         "chiTiet": chiTiet,
+        "isDeleted": isDeleted,
         "trangThai": trangThai,
         "danhMuc": danhMuc?.toJson(),
       };

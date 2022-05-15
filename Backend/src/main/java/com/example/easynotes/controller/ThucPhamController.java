@@ -60,4 +60,13 @@ public class ThucPhamController  {
             throw new ResourceNotFoundException("ThucPham", "maThucPham", id);
         }
     }
+
+    @GetMapping("/laytheodanhmuc/{id}")
+    public List<ThucPham> getTheoDanhMuc(@PathVariable(value = "id") Long maDanhMuc){
+        try {
+            return service.getListByDanhMuc(maDanhMuc);
+        }catch (Exception e) {
+            throw new ResourceNotFoundException("ThucPham", "maDanhMuc", maDanhMuc);
+        }
+    }
 }
