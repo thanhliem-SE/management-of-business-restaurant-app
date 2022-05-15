@@ -96,7 +96,7 @@ class ConfirmPasswordDialog extends StatelessWidget {
     var matKhauMoi = '';
     return AlertDialog(
       title: const Text(
-        'Nhập mật khẩu hiện tại',
+        'Đổi mật khẩu',
         textAlign: TextAlign.center,
       ),
       content: SingleChildScrollView(
