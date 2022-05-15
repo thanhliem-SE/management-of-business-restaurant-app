@@ -23,6 +23,7 @@ class HoaDon {
     this.thanhToan,
     this.ban,
     this.ghiChu,
+    this.daTraHoaDon,
     this.tinhTrang,
     this.createdAt,
     this.updatedAt,
@@ -34,6 +35,7 @@ class HoaDon {
   ThanhToan? thanhToan;
   Ban? ban;
   String? ghiChu;
+  bool? daTraHoaDon;
   String? tinhTrang;
   List<ChiTietHoaDon>? chiTietHoaDons;
   DateTime? createdAt;
@@ -47,6 +49,7 @@ class HoaDon {
             ? ThanhToan.fromJson(json["thanhToan"])
             : null,
         ban: Ban.fromJson(json["ban"]),
+        daTraHoaDon: json["daTraHoaDon"],
         tinhTrang: json["tinhTrang"],
         ghiChu: json["ghiChu"],
         createdAt: json["createdAt"] != null
@@ -66,5 +69,6 @@ class HoaDon {
         "ghiChu": ghiChu,
         "ban": ban?.toJson(),
         "tinhTrang": tinhTrang,
+        "daTraHoaDon": daTraHoaDon
       };
 }

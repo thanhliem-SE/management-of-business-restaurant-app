@@ -19,6 +19,7 @@ import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
+import 'package:go_quick_app/views/return_order_customer/return_order_customer_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -136,6 +137,12 @@ class WidgetGridViewMenu extends StatelessWidget {
           cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
             NavigationHelper.push(
                 context: context, page: const ManageTableView());
+          }),
+        if (['QUANLY', 'PHUCVU'].contains(quyen))
+          cardItemMenu(size, Icons.assignment_return, 'Danh sách trả hóa đơn',
+              Colors.lightGreenAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ReturnOrderCustomerview());
           }),
         if (['QUANLY', 'THUNGAN'].contains(quyen))
           cardItemMenu(
