@@ -71,7 +71,13 @@ class RequestOrderViewModel extends ChangeNotifier {
   }
 
   getBanByNumTable() {
-    return _listBan.firstWhere((element) => element.maSoBan == _numTable);
+    Ban ban = Ban();
+    try {
+      ban = _listBan.firstWhere((element) => element.maSoBan == _numTable);
+    } catch (e) {
+      print('lỗi :' + e.toString());
+    }
+    return ban;
   }
 
   clear() {

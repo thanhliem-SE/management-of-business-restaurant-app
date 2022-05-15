@@ -37,7 +37,7 @@ class BillView extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                if (hoaDon.tinhTrang != "CHUATHANHTOAN" &&
+                if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
                     hoaDon.thanhToan != null) {
                   _showMaterialDialog(context,
                       'Bạn không được chỉnh sửa hóa đơn đã thánh toán!');
@@ -55,7 +55,7 @@ class BillView extends StatelessWidget {
             ),
             IconButton(
               onPressed: () {
-                if (hoaDon.tinhTrang != "CHUATHANHTOAN" &&
+                if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
                     hoaDon.thanhToan != null) {
                   _showMaterialDialog(context,
                       'Bạn không được thêm món vào hóa đơn đã thánh toán!');
@@ -163,32 +163,34 @@ class BillView extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      (hoaDon.tinhTrang == 'CHUATHANHTOAN' &&
-                              hoaDon.thanhToan == null)
-                          ? InkWell(
-                              onTap: () {
-                                NavigationHelper.push(
-                                  context: context,
-                                  page: PaymentView(
-                                    hoaDon: hoaDon,
-                                  ),
-                                );
-                              },
-                              child: Container(
-                                color: kPrimaryColor,
-                                width: size.width * 0.9,
-                                height: size.height * 0.05,
-                                alignment: Alignment.center,
-                                child: const Text(
-                                  'Thanh Toán',
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white),
-                                ),
+                      InkWell(
+                        onTap: () {
+                          if (hoaDon.tinhTrang != "CHUATHANHTOAN") {
+                            _showMaterialDialog(context,
+                                'HÓA ĐƠN CHƯA ĐƯỢC CHẾ BIẾN VÀ PHỤC VỤ!');
+                          } else {
+                            NavigationHelper.push(
+                              context: context,
+                              page: PaymentView(
+                                hoaDon: hoaDon,
                               ),
-                            )
-                          : Container(),
+                            );
+                          }
+                        },
+                        child: Container(
+                          color: kPrimaryColor,
+                          width: size.width * 0.9,
+                          height: size.height * 0.05,
+                          alignment: Alignment.center,
+                          child: const Text(
+                            'Thanh Toán',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ),
+                        ),
+                      ),
                       SizedBox(height: size.height * 0.02),
                       !viewModel.kiemTraKhongTiepNhan()
                           ? InkWell(
