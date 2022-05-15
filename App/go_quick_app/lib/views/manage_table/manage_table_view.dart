@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/views/manage_table/components/update_table_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -187,13 +188,20 @@ class ManageTableView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  ban.tinhTrang == null ? 'Trống' : 'Phục Vụ',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          ban.tinhTrang == null ? kPrimaryColor : Colors.white),
+                SizedBox(
+                  width: size.width * 0.2,
+                  child: Text(
+                    ban.tinhTrang == null
+                        ? 'Trống'
+                        : Helper.getTrangThaiHoaDon(ban.tinhTrang!),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: ban.tinhTrang == null
+                            ? kPrimaryColor
+                            : Colors.white),
+                  ),
                 ),
               ],
             ),
