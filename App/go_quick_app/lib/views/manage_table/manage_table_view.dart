@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/views/manage_table/components/update_table_dialog.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class ManageTableView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context).setManageTableViewModel(viewModel);
     }
 
     List<Ban> listBanTangTret = viewModel.getListBanByViTri('Tầng Trệt');

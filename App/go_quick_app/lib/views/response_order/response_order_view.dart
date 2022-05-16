@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/views/response_order/components/build_tab_da_che_bien.dart';
 import 'package:go_quick_app/views/response_order/components/build_tab_khong_tiep_nhan.dart';
 import 'package:go_quick_app/views/response_order/components/search_order_dialog.dart';
@@ -20,6 +21,8 @@ class ResponseOrderView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context)
+          .setResponseOrderViewModel(viewModel);
     }
 
     List<HoaDon> listHoaDon = viewModel.getListHoaDon();

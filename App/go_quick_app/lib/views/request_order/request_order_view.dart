@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/views/request_order/component/select_table_count.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
@@ -17,6 +18,7 @@ class RequestOrderView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context).setRequestOrderViewModel(viewModel);
     }
 
     List<Ban> listBanTangTret = viewModel.getListBanByViTri('Tầng Trệt');

@@ -87,8 +87,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
             ThongBao(
                 noiDung: "Hóa đơn được tiếp nhận (Bàn ${hoaDon.ban!.soBan})"),
             "PHUCVU");
-        // SocketViewModel().sendMessage(
-        //     "PHUCVU", "Hóa đơn được tiếp nhận (Bàn ${hoaDon.ban!.soBan})");
+        SocketViewModel.sendMessage(
+            "PHUCVU", "Cập nhật phản hồi yêu cầu đặt món");
       }
       if (trangThai == "KHONGTIEPNHAN") {
         ThongBaoService().addThongBao(
@@ -97,8 +97,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
                 noiDung:
                     "Hóa đơn không được tiếp nhận vì '${hoaDon.ghiChu}' (Bàn ${hoaDon.ban!.soBan})"),
             "PHUCVU");
-        // SocketViewModel().sendMessage("PHUCVU",
-        //     "Hóa đơn không được tiếp nhận vì '${hoaDon.ghiChu}' (Bàn ${hoaDon.ban!.soBan})");
+        SocketViewModel.sendMessage(
+            "PHUCVU", "Cập nhật phản hồi yêu cầu đặt món");
       }
     }
   }
@@ -130,8 +130,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
               noiDung:
                   "${chiTietHoaDon.thucPham!.ten} được chế biến xong, có thể phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}"),
           "PHUCVU");
-      // SocketViewModel().sendMessage("PHUCVU",
-      //     "${chiTietHoaDon.thucPham!.ten} được chế biến xong, có thể phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}");
+      SocketViewModel.sendMessage(
+          "PHUCVU", "Cập nhật phản hồi yêu cầu đặt món");
       init();
       checkDaCheBienHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }
@@ -152,8 +152,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
               noiDung:
                   "${chiTietHoaDon.thucPham!.ten} đã được phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}"),
           "PHUCVU");
-      // SocketViewModel().sendMessage("PHUCVU",
-      //     "${chiTietHoaDon.thucPham!.ten} đã được phục vụ tại bàn ${chiTietHoaDon.hoaDon!.ban!.soBan}");
+      SocketViewModel.sendMessage(
+          "PHUCVU", "Cập nhật phản hồi yêu cầu đặt món");
       init();
       checkDaPhucVuHoaDon(chiTietHoaDon.hoaDon!.maHoaDon!);
     }

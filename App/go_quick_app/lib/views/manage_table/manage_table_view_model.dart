@@ -5,6 +5,7 @@ import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/ban_service.dart';
 import 'package:go_quick_app/services/thong_bao_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ManageTableViewModel extends ChangeNotifier {
@@ -84,6 +85,7 @@ class ManageTableViewModel extends ChangeNotifier {
         token,
         ThongBao(noiDung: "$_soLuongBanThem bàn được thêm tại $_viTriBanThem"),
         "PHUCVU");
+    SocketViewModel.sendMessage("PHUCVU", "Thêm bàn");
     clear();
     init();
   }
@@ -105,6 +107,7 @@ class ManageTableViewModel extends ChangeNotifier {
             token,
             ThongBao(noiDung: " $soLuongBan bàn không phục vụ được dọn đi"),
             "PHUCVU");
+        SocketViewModel.sendMessage("PHUCVU", "Xóa bàn");
       }
     }
   }
@@ -121,6 +124,7 @@ class ManageTableViewModel extends ChangeNotifier {
         token,
         ThongBao(noiDung: "Bàn ${ban.soBan} được cập nhật thông tin"),
         "PHUCVU");
+    SocketViewModel.sendMessage("PHUCVU", "Cập nhật bàn");
     clear();
     init();
   }
