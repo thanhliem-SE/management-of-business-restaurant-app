@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/services/notification_service.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
@@ -60,7 +61,7 @@ class SocketViewModel extends ChangeNotifier {
     isListened = true;
     try {
       channel.stream.listen((message) {
-        print(message);
+        // print(message);
         handleMessage(message);
       });
     } catch (e) {
@@ -68,27 +69,30 @@ class SocketViewModel extends ChangeNotifier {
     }
   }
 
-  static sendMessage(String role, String data) async {
-    String message = '$role:$data';
+  static sendMessage(String role, String title, String body) async {
+    String message = '$role:$title:$body';
     channel.sink.add(message);
   }
 
   void handleMessage(String message) {
     List<String> split = message.toString().split(':');
     String role = split[0];
-    String data = split[1];
+    String title = split[1];
+    String body = split[2];
 
     if (taiKhoan.quyen == 'role' || taiKhoan.quyen == 'QUANLY') {
       // Có thông báo mới, cập nhật lại danh sách thông báo
       homeViewModel != null ? homeViewModel!.init() : true;
 
-      if (['Thêm bàn', 'Xóa bàn', 'Cập nhật bàn'].contains(data)) {
+      NotificationService().showNotification(1, title, body, 1);
+
+      if (['Thêm bàn', 'Xóa bàn', 'Cập nhật bàn'].contains(title)) {
         // Cập nhật màn hình quản lý bàn và đặt món
         manageTableViewModel != null ? manageTableViewModel!.init() : true;
 
         requestOrderViewModel != null ? requestOrderViewModel!.init() : true;
       } else if (['Cập nhật phản hồi yêu cầu đặt món', 'Yêu cầu đặt món mới']
-          .contains(data)) {
+          .contains(title)) {
         // Cập nhật màn hình phản hồi yêu cầu đặt món và hóa đơn
         responseOrderViewModel != null ? responseOrderViewModel!.init() : true;
         billViewModel != null && maHoaDon != 0

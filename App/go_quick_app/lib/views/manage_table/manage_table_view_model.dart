@@ -85,7 +85,8 @@ class ManageTableViewModel extends ChangeNotifier {
         token,
         ThongBao(noiDung: "$_soLuongBanThem bàn được thêm tại $_viTriBanThem"),
         "PHUCVU");
-    SocketViewModel.sendMessage("PHUCVU", "Thêm bàn");
+    SocketViewModel.sendMessage("PHUCVU", "Thêm bàn",
+        "$_soLuongBanThem bàn được thêm tại $_viTriBanThem");
     clear();
     init();
   }
@@ -105,9 +106,10 @@ class ManageTableViewModel extends ChangeNotifier {
         init();
         ThongBaoService().addThongBao(
             token,
-            ThongBao(noiDung: " $soLuongBan bàn không phục vụ được dọn đi"),
+            ThongBao(noiDung: "$soLuongBan bàn không phục vụ được dọn đi"),
             "PHUCVU");
-        SocketViewModel.sendMessage("PHUCVU", "Xóa bàn");
+        SocketViewModel.sendMessage(
+            "PHUCVU", "Xóa bàn", "$soLuongBan bàn không phục vụ được dọn đi");
       }
     }
   }
@@ -124,7 +126,8 @@ class ManageTableViewModel extends ChangeNotifier {
         token,
         ThongBao(noiDung: "Bàn ${ban.soBan} được cập nhật thông tin"),
         "PHUCVU");
-    SocketViewModel.sendMessage("PHUCVU", "Cập nhật bàn");
+    SocketViewModel.sendMessage(
+        "PHUCVU", "Cập nhật bàn", "Bàn ${ban.soBan} được cập nhật thông tin");
     clear();
     init();
   }

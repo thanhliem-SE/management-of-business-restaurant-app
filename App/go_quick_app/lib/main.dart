@@ -3,6 +3,7 @@ import 'package:go_quick_app/app.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/services/notification_service.dart';
 import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/constants.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
@@ -21,11 +22,14 @@ import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
-
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest.dart' as tz;
 import 'views/manage_payment/manage_payment_view_model.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
