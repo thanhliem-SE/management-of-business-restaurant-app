@@ -16,7 +16,6 @@ class NotificationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
-    final socketViewModel = Provider.of<SocketViewModel>(context);
 
     List<ThongBao> listThongBao = viewModel.getListThongBao();
     listThongBao.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));

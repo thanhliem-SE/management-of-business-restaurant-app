@@ -4,6 +4,7 @@ import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
@@ -24,6 +25,8 @@ class BillView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init(hoaDon.maHoaDon!);
+      Provider.of<SocketViewModel>(context)
+          .setBillViewModel(viewModel, hoaDon.maHoaDon!);
     }
 
     final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
@@ -35,26 +38,41 @@ class BillView extends StatelessWidget {
           title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
           viewModel: viewModel,
           actions: [
+            if (hoaDon.tinhTrang == 'CHO')
+              IconButton(
+                onPressed: () {
+                  if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
+                      hoaDon.thanhToan != null) {
+                    _showMaterialDialog(context,
+                        'Bạn không được chỉnh sửa hóa đơn đã thanh toán!');
+                  } else {
+                    viewModel.clear();
+
+                    NavigationHelper.pushReplacement(
+                        context: context,
+                        page: SelectCategoryView(
+                          hoaDon: hoaDon,
+                          listChiTietHoaDon: listChiTietHoaDon,
+                        ));
+                  }
+                },
+                icon: const Icon(Icons.edit),
+              ),
             IconButton(
               onPressed: () {
-                NavigationHelper.pushReplacement(
-                    context: context,
-                    page: SelectCategoryView(
-                      hoaDon: hoaDon,
-                      listChiTietHoaDon: listChiTietHoaDon,
-                    ));
-                viewModel.clear();
-              },
-              icon: const Icon(Icons.edit),
-            ),
-            IconButton(
-              onPressed: () {
-                NavigationHelper.pushReplacement(
-                    context: context,
-                    page: SelectCategoryView(
-                      hoaDon: hoaDon,
-                    ));
-                viewModel.clear();
+                if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
+                    hoaDon.thanhToan != null) {
+                  _showMaterialDialog(context,
+                      'Bạn không được thêm món vào hóa đơn đã thánh toán!');
+                  viewModel.clear();
+                } else {
+                  NavigationHelper.pushReplacement(
+                      context: context,
+                      page: SelectCategoryView(
+                        hoaDon: hoaDon,
+                      ));
+                  viewModel.clear();
+                }
               },
               icon: const Icon(Icons.add),
             ),
@@ -76,16 +94,21 @@ class BillView extends StatelessWidget {
                 margin: const EdgeInsets.only(top: 10),
                 child: buildTextSpan(
                     boldText: 'Trạng thái: ',
-                    normalText: Helper.getTrangThaiHoaDon(hoaDon.tinhTrang!)),
+                    normalText: (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
+                            hoaDon.thanhToan != null)
+                        ? 'Đang chờ xuất hóa đơn'
+                        : Helper.getTrangThaiHoaDon(hoaDon.tinhTrang!)),
               ),
-              Container(
-                width: size.width,
-                margin: const EdgeInsets.only(top: 10),
-                child: buildTextSpan(
-                    boldText: 'Thời gian: ',
-                    normalText: DateFormat('dd/MM/yyyy HH:mm')
-                        .format(hoaDon.createdAt!)),
-              ),
+              hoaDon.createdAt != null
+                  ? Container(
+                      width: size.width,
+                      margin: const EdgeInsets.only(top: 10),
+                      child: buildTextSpan(
+                          boldText: 'Thời gian: ',
+                          normalText: DateFormat('dd/MM/yyyy HH:mm')
+                              .format(hoaDon.createdAt!)),
+                    )
+                  : Container(),
               Container(
                 width: size.width,
                 margin: const EdgeInsets.only(top: 10),
@@ -142,12 +165,17 @@ class BillView extends StatelessWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          NavigationHelper.push(
-                            context: context,
-                            page: PaymentView(
-                              hoaDon: hoaDon,
-                            ),
-                          );
+                          if (hoaDon.tinhTrang != "CHUATHANHTOAN") {
+                            _showMaterialDialog(context,
+                                'HÓA ĐƠN CHƯA ĐƯỢC CHẾ BIẾN VÀ PHỤC VỤ!');
+                          } else {
+                            NavigationHelper.push(
+                              context: context,
+                              page: PaymentView(
+                                hoaDon: hoaDon,
+                              ),
+                            );
+                          }
                         },
                         child: Container(
                           color: kPrimaryColor,
@@ -273,5 +301,32 @@ class BillView extends StatelessWidget {
         );
       },
     );
+  }
+
+  _dismissDialog(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _showMaterialDialog(BuildContext context, String text) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              'Cảnh báo',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            content: Text(text),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    _dismissDialog(context);
+                  },
+                  child: Text('Ok')),
+            ],
+          );
+        });
   }
 }

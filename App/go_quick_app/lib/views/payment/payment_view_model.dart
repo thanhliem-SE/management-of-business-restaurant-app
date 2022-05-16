@@ -112,7 +112,6 @@ class PayMentViewModel extends ChangeNotifier {
         hoaDon.tinhTrang = "CHUATHANHTOAN";
         var hoaDonRespone = await HoaDonService().updateHoaDon(token, hoaDon);
         if (hoaDonRespone is Success) {
-          hoaDon = hoaDonRespone.response as HoaDon;
           choThanhToan = true;
           result = true;
           notifyListeners();

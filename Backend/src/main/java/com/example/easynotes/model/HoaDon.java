@@ -51,6 +51,8 @@ public class HoaDon implements Serializable {
     @Nationalized
     private String ghiChu;
 
+    private boolean daTraHoaDon;
+
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;
 

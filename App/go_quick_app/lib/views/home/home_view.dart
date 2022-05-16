@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_quick_app/components/nav_bar.dart';
+import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
@@ -17,6 +19,7 @@ import 'package:go_quick_app/views/manage_table/manage_table_view.dart';
 import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
+import 'package:go_quick_app/views/return_order_customer/return_order_customer_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -32,49 +35,68 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
-    final future = viewModel.getTaiKhoan(context);
     final socketViewModel = Provider.of<SocketViewModel>(context);
+    final future = viewModel.getTaiKhoan(context);
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      socketViewModel.setHomeViewModel(viewModel);
+    }
+
+    if (socketViewModel.isListened == false) {
+      socketViewModel.getMessage();
     }
 
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'GOQUICK',
+    return WillPopScope(
+      onWillPop: () async {
+        showConfirmDialog(context, () {
+          SystemNavigator.pop();
+        }, 'Bạn có xác nhận muốn thoát ứng dụng?');
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'GOQUICK',
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  NavigationHelper.push(
+                      context: context,
+                      page: NotificationView(nhanVien: viewModel.nhanVien));
+                },
+                icon: viewModel.checkThongBao() == true
+                    ? const Icon(Icons.notification_add)
+                    : const Icon(Icons.notifications))
+          ],
+          backgroundColor: kPrimaryColor,
+          centerTitle: true,
         ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                NavigationHelper.push(
-                    context: context,
-                    page: NotificationView(nhanVien: viewModel.nhanVien));
-              },
-              icon: viewModel.checkThongBao() == true
-                  ? const Icon(Icons.notification_add)
-                  : const Icon(Icons.notifications))
-        ],
-        backgroundColor: kPrimaryColor,
-        centerTitle: true,
+        body: FutureBuilder(
+          future: future,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              taiKhoan = snapshot.data as TaiKhoan;
+              storedSignedData(taiKhoan);
+
+              if (socketViewModel.taiKhoan.tenTaiKhoan !=
+                  taiKhoan.tenTaiKhoan) {
+                socketViewModel.setTaiKhoan(taiKhoan);
+              }
+
+              return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
+            } else {
+              return const LoginView();
+            }
+          },
+        ),
+        // body: StreamBuilder(
+        drawer: viewModel.nhanVien.taiKhoan != null
+            ? NavBar(nhanVien: viewModel.nhanVien)
+            : Container(),
       ),
-      body: FutureBuilder(
-        future: future,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            taiKhoan = snapshot.data as TaiKhoan;
-            storedSignedData(taiKhoan);
-            return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
-          } else {
-            return const LoginView();
-          }
-        },
-      ),
-      // body: StreamBuilder(
-      drawer: viewModel.nhanVien.taiKhoan != null
-          ? NavBar(nhanVien: viewModel.nhanVien)
-          : Container(),
     );
   }
 
@@ -127,6 +149,12 @@ class WidgetGridViewMenu extends StatelessWidget {
           cardItemMenu(size, Icons.chair, 'Quản lý bàn', Colors.limeAccent, () {
             NavigationHelper.push(
                 context: context, page: const ManageTableView());
+          }),
+        if (['QUANLY', 'PHUCVU'].contains(quyen))
+          cardItemMenu(size, Icons.assignment_return, 'Danh sách trả hóa đơn',
+              Colors.lightGreenAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ReturnOrderCustomerview());
           }),
         if (['QUANLY', 'THUNGAN'].contains(quyen))
           cardItemMenu(

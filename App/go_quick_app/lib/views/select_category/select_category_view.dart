@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_quick_app/components/app_bar.dart';
-import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
-import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/socket_view_model.dart';
-import 'package:go_quick_app/utils/navigation_helper.dart';
-import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/components/add_note_dialog.dart';
 import 'package:go_quick_app/views/select_category/components/list_view_food.dart';
@@ -31,6 +26,8 @@ class SelectCategoryView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context)
+          .setSelectCategoryViewModel(viewModel);
       if (listChiTietHoaDon != null) {
         viewModel.setListChiTietHoaDon(listChiTietHoaDon!);
       }
@@ -57,86 +54,93 @@ class SelectCategoryView extends StatelessWidget {
 
     Size size = MediaQuery.of(context).size;
 
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: buildAppBar(size, context, viewModel),
-        body: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(
-                height: size.height * 0.7,
-                child: TabBarView(
-                  children: [
-                    getFoodTab(listChiTietThucPham: listFoodTab),
-                    getDrinkTab(listChiTietThucPham: listDrinkTab),
-                    getSnackTab(listChiTietThucPham: listSnackTab),
-                    getOtherTab(listChiTietThucPham: listOtherTab)
-                  ],
-                ),
-              ),
-              Flexible(
-                fit: FlexFit.loose,
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        viewModel.clear();
+        return true;
+      },
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: buildAppBar(size, context, viewModel),
+          body: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: size.height * 0.7,
+                  child: TabBarView(
                     children: [
-                      Container(
-                        color: Colors.white,
-                        width: size.width * 0.5,
-                        height: size.height * 0.05,
-                        alignment: Alignment.center,
-                        child: Text(
-                          'Tổng tiền: ' +
-                              NumberFormat('###,###')
-                                  .format(viewModel.getTotalPrice()) +
-                              ' đ',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          viewModel.getTotalPrice() > 0
-                              ? showConfirmDialog(context, () {
-                                  if (hoaDon == null) {
-                                    viewModel.navigateToHoaDon(
-                                        ban: requestOrderModel
-                                            .getBanByNumTable(),
-                                        context: context);
-                                  } else {
-                                    viewModel.addOrderToHoaDon(
-                                        hoaDon: hoaDon!, context: context);
-                                  }
-                                  requestOrderModel.clear();
-                                }, 'Bạn có xác nhận đặt món')
-                              : showAlertDialog(
-                                  context: context,
-                                  title: 'Đặt Món Thất Bại',
-                                  message:
-                                      'Vui lòng chọn ít nhất 1 món ăn để đặt món');
-                        },
-                        child: Container(
-                          color: kPrimaryColor,
-                          width: size.width * 0.5,
-                          height: size.height * 0.06,
-                          alignment: Alignment.center,
-                          child: const Text(
-                            'Xác Nhận',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ),
+                      getFoodTab(listChiTietThucPham: listFoodTab),
+                      getDrinkTab(listChiTietThucPham: listDrinkTab),
+                      getSnackTab(listChiTietThucPham: listSnackTab),
+                      getOtherTab(listChiTietThucPham: listOtherTab)
                     ],
                   ),
                 ),
-              ),
-            ],
+                Flexible(
+                  fit: FlexFit.loose,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Row(
+                      children: [
+                        Container(
+                          color: Colors.white,
+                          width: size.width * 0.5,
+                          height: size.height * 0.05,
+                          alignment: Alignment.center,
+                          child: Text(
+                            'Tổng tiền: ' +
+                                NumberFormat('###,###')
+                                    .format(viewModel.getTotalPrice()) +
+                                ' đ',
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            viewModel.getTotalPrice() > 0
+                                ? showConfirmDialog(context, () {
+                                    if (hoaDon == null) {
+                                      viewModel.navigateToHoaDon(
+                                          ban: requestOrderModel
+                                              .getBanByNumTable(),
+                                          context: context);
+                                    } else {
+                                      viewModel.addOrderToHoaDon(
+                                          hoaDon: hoaDon!, context: context);
+                                    }
+                                    requestOrderModel.clear();
+                                  }, 'Bạn có xác nhận đặt món')
+                                : showAlertDialog(
+                                    context: context,
+                                    title: 'Đặt Món Thất Bại',
+                                    message:
+                                        'Vui lòng chọn ít nhất 1 món ăn để đặt món');
+                          },
+                          child: Container(
+                            color: kPrimaryColor,
+                            width: size.width * 0.5,
+                            height: size.height * 0.06,
+                            alignment: Alignment.center,
+                            child: const Text(
+                              'Xác Nhận',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

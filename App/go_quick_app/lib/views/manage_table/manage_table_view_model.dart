@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/ban_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ManageTableViewModel extends ChangeNotifier {
@@ -78,6 +81,12 @@ class ManageTableViewModel extends ChangeNotifier {
         context: context,
         title: 'Thành công',
         message: 'Thêm $_soLuongBanThem bàn thành công');
+    ThongBaoService().addThongBao(
+        token,
+        ThongBao(noiDung: "$_soLuongBanThem bàn được thêm tại $_viTriBanThem"),
+        "PHUCVU");
+    SocketViewModel.sendMessage("PHUCVU", "Thêm bàn",
+        "$_soLuongBanThem bàn được thêm tại $_viTriBanThem");
     clear();
     init();
   }
@@ -88,12 +97,19 @@ class ManageTableViewModel extends ChangeNotifier {
     for (int i = 0; i < _listRemoveTable.length; i++) {
       BanService().deleteBanById(token, _listRemoveTable[i]);
       if (i == _listRemoveTable.length - 1) {
+        int soLuongBan = _listRemoveTable.length;
         showAlertDialog(
             context: context,
             title: 'Thành công',
-            message: 'Xóa $_soLuongBanThem bàn thành công');
+            message: 'Xóa $soLuongBan bàn thành công');
         clear();
         init();
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(noiDung: "$soLuongBan bàn không phục vụ được dọn đi"),
+            "PHUCVU");
+        SocketViewModel.sendMessage(
+            "PHUCVU", "Xóa bàn", "$soLuongBan bàn không phục vụ được dọn đi");
       }
     }
   }
@@ -106,6 +122,12 @@ class ManageTableViewModel extends ChangeNotifier {
         context: context,
         title: 'Thành công',
         message: 'Cập nhật bàn thành công');
+    ThongBaoService().addThongBao(
+        token,
+        ThongBao(noiDung: "Bàn ${ban.soBan} được cập nhật thông tin"),
+        "PHUCVU");
+    SocketViewModel.sendMessage(
+        "PHUCVU", "Cập nhật bàn", "Bàn ${ban.soBan} được cập nhật thông tin");
     clear();
     init();
   }

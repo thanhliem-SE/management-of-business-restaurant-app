@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/views/response_order/components/build_tab_da_che_bien.dart';
 import 'package:go_quick_app/views/response_order/components/build_tab_khong_tiep_nhan.dart';
 import 'package:go_quick_app/views/response_order/components/search_order_dialog.dart';
@@ -20,6 +21,8 @@ class ResponseOrderView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context)
+          .setResponseOrderViewModel(viewModel);
     }
 
     List<HoaDon> listHoaDon = viewModel.getListHoaDon();
@@ -29,42 +32,52 @@ class ResponseOrderView extends StatelessWidget {
     listHoaDon.sort((a, b) => b.createdAt!.compareTo(a.createdAt!));
 
     Size size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: buildAppBar(size, context, viewModel),
-        body: Container(
-          child: TabBarView(
-            children: [
-              buildTabDangCho(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'CHO')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabTiepNhan(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabHoanThanh(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'DANGCHEBIEN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-              buildTabHuy(
-                  size: size,
-                  listHoaDon: listHoaDon
-                      .where((element) => element.tinhTrang == 'KHONGTIEPNHAN')
-                      .toList(),
-                  mapListChiTietHoaDon: mapListChiTietHoaDon,
-                  viewModel: viewModel),
-            ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        viewModel.clear();
+        return true;
+      },
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: buildAppBar(size, context, viewModel),
+          body: Container(
+            child: TabBarView(
+              children: [
+                buildTabDangCho(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) => element.tinhTrang == 'CHO')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabTiepNhan(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) => element.tinhTrang == 'DANGCHEBIEN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabHoanThanh(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where((element) =>
+                            element.tinhTrang == 'DANGCHEBIEN' ||
+                            element.tinhTrang == 'DACHEBIEN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+                buildTabHuy(
+                    size: size,
+                    listHoaDon: listHoaDon
+                        .where(
+                            (element) => element.tinhTrang == 'KHONGTIEPNHAN')
+                        .toList(),
+                    mapListChiTietHoaDon: mapListChiTietHoaDon,
+                    viewModel: viewModel),
+              ],
+            ),
           ),
         ),
       ),

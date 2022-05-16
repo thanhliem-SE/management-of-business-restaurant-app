@@ -38,4 +38,8 @@ public class ThucPhamService {
         }
         return null;
     }
+
+    public List<ThucPham> getListByDanhMuc(Long maDanhMuc){
+        return repository.getThucPhamByDanhMuc(maDanhMuc);
+    }
 }

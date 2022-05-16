@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,6 +44,7 @@ public class HoaDonControler {
 
         Ban resultBan = banService.update(ban, ban.getMaSoBan());
         if (resultBan != null) {
+            hoaDon.setDaTraHoaDon(false);
             HoaDon hoaDon1 = service.add(hoaDon);
             if (hoaDon1 != null) {
                 return hoaDon1;
@@ -95,5 +97,16 @@ public class HoaDonControler {
     @GetMapping("/phucvutaiban/{masoban}")
     public HoaDon getHoaDonDangPhucVuTaiBan(@PathVariable(value = "masoban") int masoban) {
         return service.getHoaDonDangPhucVuTaiBan(masoban);
+    }
+
+    @GetMapping("/chuatrahoadon")
+    public List<HoaDon> getListChuaTraHoaDon(){
+        List<HoaDon> list = new ArrayList<>();
+        list = service.getListChuaTraHoaDon();
+        if (list != null){
+            return list;
+        }else {
+            return new ArrayList<HoaDon>();
+        }
     }
 }

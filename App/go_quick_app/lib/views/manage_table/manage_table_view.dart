@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/ban.dart';
+import 'package:go_quick_app/socket_view_model.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/views/manage_table/components/update_table_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -19,63 +21,71 @@ class ManageTableView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context).setManageTableViewModel(viewModel);
     }
 
     List<Ban> listBanTangTret = viewModel.getListBanByViTri('Tầng Trệt');
     List<Ban> listBanTang1 = viewModel.getListBanByViTri('Tầng 1');
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: buildAppBar(size, context, viewModel),
-        body: TabBarView(children: [
-          Container(
-            color: kPrimaryLightColor,
-            child: (listBanTangTret.length > 0)
-                ? GridView.builder(
-                    primary: false,
-                    padding: const EdgeInsets.all(20),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: listBanTangTret.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return cardTableOrder(
-                          size: size,
-                          context: context,
-                          ban: listBanTangTret[index],
-                          viewModel: viewModel);
-                    },
-                  )
-                : Container(),
-          ),
-          Container(
-            color: kPrimaryLightColor,
-            child: (listBanTang1.length > 0)
-                ? GridView.builder(
-                    primary: false,
-                    padding: const EdgeInsets.all(20),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10,
-                    ),
-                    itemCount: listBanTang1.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return cardTableOrder(
-                          size: size,
-                          context: context,
-                          ban: listBanTang1[index],
-                          viewModel: viewModel);
-                    },
-                  )
-                : Container(),
-          ),
-        ]),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.pop(context);
+        viewModel.clear();
+        return true;
+      },
+      child: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: buildAppBar(size, context, viewModel),
+          body: TabBarView(children: [
+            Container(
+              color: kPrimaryLightColor,
+              child: (listBanTangTret.length > 0)
+                  ? GridView.builder(
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: listBanTangTret.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return cardTableOrder(
+                            size: size,
+                            context: context,
+                            ban: listBanTangTret[index],
+                            viewModel: viewModel);
+                      },
+                    )
+                  : Container(),
+            ),
+            Container(
+              color: kPrimaryLightColor,
+              child: (listBanTang1.length > 0)
+                  ? GridView.builder(
+                      primary: false,
+                      padding: const EdgeInsets.all(20),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: listBanTang1.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return cardTableOrder(
+                            size: size,
+                            context: context,
+                            ban: listBanTang1[index],
+                            viewModel: viewModel);
+                      },
+                    )
+                  : Container(),
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -180,13 +190,20 @@ class ManageTableView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  ban.tinhTrang == null ? 'Trống' : 'Phục Vụ',
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          ban.tinhTrang == null ? kPrimaryColor : Colors.white),
+                SizedBox(
+                  width: size.width * 0.2,
+                  child: Text(
+                    ban.tinhTrang == null
+                        ? 'Trống'
+                        : Helper.getTrangThaiHoaDon(ban.tinhTrang!),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: ban.tinhTrang == null
+                            ? kPrimaryColor
+                            : Colors.white),
+                  ),
                 ),
               ],
             ),

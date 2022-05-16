@@ -70,6 +70,9 @@ class ListViewFood extends StatelessWidget {
           fit: BoxFit.cover,
           height: size.height * 0.1,
           width: size.width * 0.2,
+          errorBuilder: (context, error, stackTrace) {
+            return Icon(Icons.error_outline);
+          },
         ),
         SizedBox(width: size.width * 0.01),
         Column(
