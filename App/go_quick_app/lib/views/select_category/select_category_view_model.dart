@@ -75,7 +75,13 @@ class SelectCategoryViewModel extends ChangeNotifier {
   setListChiTietThucPham(List<ChiTietThucPham> listChiTietThucPham) {
     _listChiTietThucPham = listChiTietThucPham;
     listChiTietThucPham.forEach((chiTietThucPham) {
-      _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
+      if (_soLuongChonMon[chiTietThucPham.maChiTietThucPham!] == null) {
+        _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] = 0;
+      } else if (_soLuongChonMon[chiTietThucPham.maChiTietThucPham!]! >
+          chiTietThucPham.soLuong!) {
+        _soLuongChonMon[chiTietThucPham.maChiTietThucPham!] =
+            chiTietThucPham.soLuong!;
+      }
     });
     if (_listChiTietHoaDon != null) setDataEditOrder(_listChiTietHoaDon!);
     notifyListeners();
@@ -165,10 +171,10 @@ class SelectCategoryViewModel extends ChangeNotifier {
                     "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
               ),
               'CHEBIEN');
-          // SocketViewModel().sendMessage(
-          //   "CHEBIEN",
-          //   "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
-          // );
+          SocketViewModel.sendMessage(
+            "CHEBIEN",
+            "Yêu cầu đặt món mới",
+          );
         }
       }
     }
@@ -209,8 +215,7 @@ class SelectCategoryViewModel extends ChangeNotifier {
               noiDung: "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})",
             ),
             'CHEBIEN');
-        // SocketViewModel().sendMessage(
-        //     "CHEBIEN", "Có một yêu cầu đặt món mới (Bàn ${hoaDon.ban!.soBan})");
+        SocketViewModel.sendMessage("CHEBIEN", "Yêu cầu đặt món mới");
       }
     }
   }

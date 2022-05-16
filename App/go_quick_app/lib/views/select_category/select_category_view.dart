@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_quick_app/components/app_bar.dart';
-import 'package:go_quick_app/components/custom_box_shadow.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
-import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/socket_view_model.dart';
-import 'package:go_quick_app/utils/navigation_helper.dart';
-import 'package:go_quick_app/views/bill/bill_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view_model.dart';
 import 'package:go_quick_app/views/select_category/components/add_note_dialog.dart';
 import 'package:go_quick_app/views/select_category/components/list_view_food.dart';
@@ -31,6 +26,8 @@ class SelectCategoryView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      Provider.of<SocketViewModel>(context)
+          .setSelectCategoryViewModel(viewModel);
       if (listChiTietHoaDon != null) {
         viewModel.setListChiTietHoaDon(listChiTietHoaDon!);
       }

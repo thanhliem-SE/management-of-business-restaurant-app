@@ -28,6 +28,7 @@ class ChiTietHoaDon {
     this.daPhucVu,
     this.createdAt,
     this.updatedAt,
+    this.isDeleted,
   });
 
   int? maChiTietHoaDon;
@@ -41,6 +42,7 @@ class ChiTietHoaDon {
   HoaDon? hoaDon;
   DateTime? createdAt;
   DateTime? updatedAt;
+  bool? isDeleted;
 
   factory ChiTietHoaDon.fromJson(Map<String, dynamic> json) => ChiTietHoaDon(
         maChiTietHoaDon: json["maChiTietHoaDon"],
@@ -53,6 +55,7 @@ class ChiTietHoaDon {
         daPhucVu: json["daPhucVu"],
         khongTiepNhan: json["khongTiepNhan"],
         hoaDon: HoaDon.fromJson(json["hoaDon"]),
+        isDeleted: json["isDeleted"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,

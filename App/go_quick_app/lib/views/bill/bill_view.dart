@@ -4,6 +4,7 @@ import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
@@ -24,6 +25,8 @@ class BillView extends StatelessWidget {
 
     if (viewModel.getIsInit() == false) {
       viewModel.init(hoaDon.maHoaDon!);
+      Provider.of<SocketViewModel>(context)
+          .setBillViewModel(viewModel, hoaDon.maHoaDon!);
     }
 
     final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
@@ -35,24 +38,26 @@ class BillView extends StatelessWidget {
           title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
           viewModel: viewModel,
           actions: [
-            IconButton(
-              onPressed: () {
-                if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
-                    hoaDon.thanhToan != null) {
-                  _showMaterialDialog(context,
-                      'Bạn không được chỉnh sửa hóa đơn đã thánh toán!');
-                  viewModel.clear();
-                } else {
-                  NavigationHelper.pushReplacement(
-                      context: context,
-                      page: SelectCategoryView(
-                        hoaDon: hoaDon,
-                        listChiTietHoaDon: listChiTietHoaDon,
-                      ));
-                }
-              },
-              icon: const Icon(Icons.edit),
-            ),
+            if (hoaDon.tinhTrang == 'CHO')
+              IconButton(
+                onPressed: () {
+                  if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
+                      hoaDon.thanhToan != null) {
+                    _showMaterialDialog(context,
+                        'Bạn không được chỉnh sửa hóa đơn đã thanh toán!');
+                  } else {
+                    viewModel.clear();
+
+                    NavigationHelper.pushReplacement(
+                        context: context,
+                        page: SelectCategoryView(
+                          hoaDon: hoaDon,
+                          listChiTietHoaDon: listChiTietHoaDon,
+                        ));
+                  }
+                },
+                icon: const Icon(Icons.edit),
+              ),
             IconButton(
               onPressed: () {
                 if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
@@ -66,19 +71,14 @@ class BillView extends StatelessWidget {
                       page: SelectCategoryView(
                         hoaDon: hoaDon,
                       ));
+                  viewModel.clear();
                 }
               },
               icon: const Icon(Icons.add),
             ),
             IconButton(
                 onPressed: () {
-                  NavigationHelper.pushReplacement(
-                      context: context,
-                      page: SelectCategoryView(
-                        hoaDon: hoaDon,
-                        listChiTietHoaDon: listChiTietHoaDon,
-                      ));
-                  viewModel.clear();
+                  viewModel.init(hoaDon.maHoaDon!);
                 },
                 icon: const Icon(Icons.refresh))
           ]),
@@ -312,7 +312,7 @@ class BillView extends StatelessWidget {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text(
+            title: const Text(
               'Cảnh báo',
               style: TextStyle(
                 color: Colors.red,

@@ -35,10 +35,16 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<HomeViewModel>(context);
+    final socketViewModel = Provider.of<SocketViewModel>(context);
     final future = viewModel.getTaiKhoan(context);
 
     if (viewModel.getIsInit() == false) {
       viewModel.init();
+      socketViewModel.setHomeViewModel(viewModel);
+    }
+
+    if (socketViewModel.isListened == false) {
+      socketViewModel.getMessage();
     }
 
     Size size = MediaQuery.of(context).size;
@@ -74,6 +80,12 @@ class _HomeViewState extends State<HomeView> {
             if (snapshot.hasData) {
               taiKhoan = snapshot.data as TaiKhoan;
               storedSignedData(taiKhoan);
+
+              if (socketViewModel.taiKhoan.tenTaiKhoan !=
+                  taiKhoan.tenTaiKhoan) {
+                socketViewModel.setTaiKhoan(taiKhoan);
+              }
+
               return WidgetGridViewMenu(quyen: taiKhoan.quyen!);
             } else {
               return const LoginView();

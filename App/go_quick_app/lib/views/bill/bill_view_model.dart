@@ -38,7 +38,9 @@ class BillViewModel extends ChangeNotifier {
     var response = await ChiTietHoaDonService()
         .getChiTietHoaDonByMaHoaDon(token, maHoaDon);
     if (response is Success) {
-      setListChiTietHoaDon(response.response as List<ChiTietHoaDon>);
+      var list = response.response as List<ChiTietHoaDon>;
+      list.removeWhere((element) => element.isDeleted == true);
+      setListChiTietHoaDon(list);
     } else {
       return null;
     }
