@@ -40,7 +40,7 @@ class ThucPham {
         ten: json["ten"],
         moTa: json["moTa"],
         giaTien: json["giaTien"],
-        isDeleted: json["isDeleted"],
+        isDeleted: json["deleted"],
         urlHinhAnh: List<String>.from(json["urlHinhAnh"].map((x) => x)),
         chiTiet: json["chiTiet"],
         danhMuc: DanhMuc.fromJson(json["danhMuc"]),
@@ -60,7 +60,7 @@ class ThucPham {
         "giaTien": giaTien,
         "urlHinhAnh": List<dynamic>.from(urlHinhAnh!.map((x) => x)),
         "chiTiet": chiTiet,
-        "isDeleted": isDeleted,
+        "deleted": isDeleted,
         "trangThai": trangThai,
         "danhMuc": danhMuc?.toJson(),
       };

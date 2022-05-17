@@ -17,22 +17,20 @@ class FoodDetailViewModel extends ChangeNotifier {
   set setIsInitialized(bool isInitialized) =>
       this.isInitialized = isInitialized;
 
-  Future<void> xoaThucPham(BuildContext context, ThucPham thucPham) async {
+  Future<bool> xoaThucPham(BuildContext context, ThucPham thucPham) async {
     try {
       String token = await Helper.getToken();
       thucPham.isDeleted = true;
       var response = await ThucPhamService().updateThucPham(token, thucPham);
       if (response is Success) {
-        NavigationHelper.pushReplacement(
-          context: context,
-          page: ManageAllFoodView(),
-        );
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Xóa món ăn thành công")));
-      } else {}
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
+      return false;
     }
   }
 }
