@@ -6,6 +6,7 @@ import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/notification_service.dart';
 import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/constants.dart';
+import 'package:go_quick_app/views/add_food_form/add_food_form_view_model.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/food_detail/food_detail_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
@@ -92,6 +93,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => FoodDetailViewModel(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => AddFoodFormViewModel(),
+        )
       ],
       child: MaterialApp(
           debugShowCheckedModeBanner: false,

@@ -70,6 +70,5 @@ class ManageAllFoodViewModel extends ChangeNotifier {
   void clear() {
     danhmucs.clear();
     isInit = false;
-    notifyListeners();
   }
 }
