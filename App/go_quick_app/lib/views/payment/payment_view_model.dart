@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/thanh_toan.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_hoa_don_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
 import 'package:go_quick_app/services/thanh_toan_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class PayMentViewModel extends ChangeNotifier {
@@ -112,9 +115,19 @@ class PayMentViewModel extends ChangeNotifier {
         hoaDon.tinhTrang = "CHUATHANHTOAN";
         var hoaDonRespone = await HoaDonService().updateHoaDon(token, hoaDon);
         if (hoaDonRespone is Success) {
+          HoaDon hoaDon = hoaDonRespone.response as HoaDon;
           choThanhToan = true;
           result = true;
           notifyListeners();
+          ThongBaoService().addThongBao(
+              token,
+              ThongBao(
+                noiDung:
+                    "Yêu cầu thanh toán mới cần được xử lý tại bàn ${hoaDon.ban!.soBan}",
+              ),
+              'THUNGAN');
+          SocketViewModel.sendMessage("THUNGAN", "Yêu cầu thanh toán mới",
+              "Yêu cầu thanh toán mới cần được xử lý tại bàn ${hoaDon.ban!.soBan}");
         } else {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text("Lỗi lấy thanh toán")));

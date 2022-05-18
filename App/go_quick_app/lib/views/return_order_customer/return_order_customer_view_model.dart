@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/ban.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/ban_service.dart';
 import 'package:go_quick_app/services/hoa_don_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ReturnOrderCustomerViewModel extends ChangeNotifier {
@@ -57,6 +60,15 @@ class ReturnOrderCustomerViewModel extends ChangeNotifier {
         listHoaDon.remove(hoaDon);
         await updateBan(context, hoaDon);
         notifyListeners();
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+              noiDung:
+                  "Hóa đơn tại bàn ${hoaDon.ban!.soBan} được trả về thành công",
+            ),
+            'PHUCVU');
+        SocketViewModel.sendMessage("CHEBIEN", "Trả về hóa đơn thành công",
+            "Hóa đơn tại bàn ${hoaDon.ban!.soBan} được trả về thành công");
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Cập nhật hóa đơn thất bại")));

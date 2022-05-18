@@ -14,6 +14,14 @@ import 'package:go_quick_app/utils/helper.dart';
 class BillViewModel extends ChangeNotifier {
   bool _isInit = false;
   List<ChiTietHoaDon> _listChiTietHoaDon = [];
+  HoaDon? _hoaDon = null;
+
+  setHoaDon(HoaDon hoaDon) {
+    _hoaDon = hoaDon;
+    notifyListeners();
+  }
+
+  getHoaDon() => _hoaDon;
 
   getIsInit() => _isInit;
 
@@ -46,9 +54,14 @@ class BillViewModel extends ChangeNotifier {
     }
   }
 
-  init(int maHoaDon) {
-    getListChiTietHoaDonFromServer(maHoaDon);
+  init(int maHoaDon) async {
+    String token = await Helper.getToken();
+    final response = await HoaDonService().getHoaDonByMaHoaDon(token, maHoaDon);
+    if (response is Success) {
+      _hoaDon = response.response as HoaDon;
+    }
     _isInit = true;
+    getListChiTietHoaDonFromServer(maHoaDon);
   }
 
   clear() {
