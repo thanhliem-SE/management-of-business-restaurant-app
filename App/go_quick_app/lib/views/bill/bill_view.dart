@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/app_bar.dart';
-import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -9,15 +8,14 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/payment/payment_view.dart';
-import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BillView extends StatelessWidget {
-  final HoaDon hoaDon;
+  HoaDon hoaDon;
 
-  const BillView({Key? key, required this.hoaDon}) : super(key: key);
+  BillView({Key? key, required this.hoaDon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +28,8 @@ class BillView extends StatelessWidget {
     }
 
     final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
+
+    hoaDon = viewModel.getHoaDon() ?? hoaDon;
 
     Size size = MediaQuery.of(context).size;
     return Scaffold(

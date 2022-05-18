@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/views/return_order_customer/return_order_customer_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class ReturnOrderCustomerview extends StatelessWidget {
                 itemBuilder: (context, index) {
                   HoaDon hoaDon = viewModel.listHoaDon[index];
                   return Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
                           color: Colors.black,
@@ -43,7 +44,7 @@ class ReturnOrderCustomerview extends StatelessWidget {
                         children: [
                           Text(
                             'Hóa đơn số ${hoaDon.maHoaDon}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 16.0,
                               fontWeight: FontWeight.bold,
                             ),
@@ -78,7 +79,7 @@ class ReturnOrderCustomerview extends StatelessWidget {
                               },
                               child: SizedBox(
                                 width: constraints.maxWidth,
-                                child: Text(
+                                child: const Text(
                                   'Nhận trả hóa đơn',
                                   textAlign: TextAlign.center,
                                 ),
@@ -97,7 +98,9 @@ class ReturnOrderCustomerview extends StatelessWidget {
       );
     } else {
       viewModel.intitializedAsync(context);
-      return Scaffold(
+      Provider.of<SocketViewModel>(context)
+          .setReturnOrderCustomerViewModel(viewModel, context);
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -114,15 +117,15 @@ class ReturnOrderCustomerview extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       title: Column(
         children: [
-          Text(
+          const Text(
             'Danh sách trả hóa đơn',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ],
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),

@@ -4,7 +4,6 @@ import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view.dart';
-import 'package:go_quick_app/views/response_order/components/add_note_huy.dart';
 import 'package:go_quick_app/views/response_order/response_order_view_model.dart';
 import 'package:intl/intl.dart';
 
@@ -13,7 +12,7 @@ buildTabTiepNhan(
     required List<HoaDon> listHoaDon,
     required Map<int, List<ChiTietHoaDon>> mapListChiTietHoaDon,
     required ResponseOrderViewModel viewModel}) {
-  return listHoaDon.length > 0
+  return listHoaDon.isNotEmpty
       ? ListView.builder(
           itemCount: listHoaDon.length,
           itemBuilder: (context, index) {
@@ -67,10 +66,14 @@ buildTabTiepNhan(
                                     width: size.width * 0.2,
                                     height: size.height * 0.1,
                                   ),
-                                  Text(
-                                    item.thucPham!.ten! + ' (X${item.soLuong})',
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
+                                  SizedBox(
+                                    width: size.width * 0.35,
+                                    child: Text(
+                                      item.thucPham!.ten! +
+                                          ' (X${item.soLuong})',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                   ['QUANLY', 'CHEBIEN', 'ADMIN']
                                           .contains(viewModel.quyenTaiKhoan)

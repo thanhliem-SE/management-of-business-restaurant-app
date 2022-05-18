@@ -65,11 +65,14 @@ buildTabHoanThanh(
                                             width: size.width * 0.2,
                                             height: size.height * 0.1,
                                           ),
-                                          Text(
-                                            item.thucPham!.ten! +
-                                                ' x${item.soLuong}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
+                                          SizedBox(
+                                            width: size.width * 0.35,
+                                            child: Text(
+                                              item.thucPham!.ten! +
+                                                  ' x${item.soLuong}',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                           ),
                                           [
                                             'QUANLY',
