@@ -70,93 +70,109 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Image.network(
-                                        thucPham.urlHinhAnh![0],
-                                        loadingBuilder: (BuildContext context,
-                                            Widget child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child;
-                                          }
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              value: loadingProgress
-                                                          .expectedTotalBytes !=
-                                                      null
-                                                  ? loadingProgress
-                                                          .cumulativeBytesLoaded /
-                                                      loadingProgress
-                                                          .expectedTotalBytes!
-                                                  : null,
+                                Expanded(
+                                  flex: 3,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.network(
+                                            thucPham.urlHinhAnh![0],
+                                            loadingBuilder:
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent?
+                                                        loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              );
+                                            },
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.1,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 2,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              child: Text(
+                                                thucPham.ten!,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16),
+                                              ),
                                             ),
-                                          );
-                                        },
-                                        width: size.width * 0.2,
-                                        height: size.height * 0.1,
-                                        fit: BoxFit.fill,
+                                            SizedBox(
+                                              child: Text(
+                                                'mô tả: ${thucPham.moTa}',
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              child: Text(
+                                                NumberFormat('###,###').format(
+                                                        thucPham.giaTien) +
+                                                    'đ',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.blueGrey),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SizedBox(
-                                          child: Text(
-                                            thucPham.ten!,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          child: Text(
-                                            'mô tả: ${thucPham.moTa}',
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          child: Text(
-                                            NumberFormat('###,###')
-                                                    .format(thucPham.giaTien) +
-                                                'đ',
-                                            overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(
-                                                fontSize: 18,
-                                                fontWeight: FontWeight.normal,
-                                                color: Colors.blueGrey),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.green),
-                                      onPressed: () async {
-                                        await viewModel.duyetThucPham(
-                                            context, thucPham);
-                                      },
-                                      child: Text("Duyệt"),
-                                    ),
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Colors.redAccent,
+                                Expanded(
+                                  flex: 1,
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            primary: Colors.green),
+                                        onPressed: () async {
+                                          await viewModel.duyetThucPham(
+                                              context, thucPham);
+                                        },
+                                        child: Text("Duyệt"),
                                       ),
-                                      onPressed: () async {
-                                        await viewModel.xoaThucPham(
-                                            context, thucPham);
-                                      },
-                                      child: Text("Từ chối"),
-                                    ),
-                                  ],
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Colors.redAccent,
+                                        ),
+                                        onPressed: () async {
+                                          await viewModel.xoaThucPham(
+                                              context, thucPham);
+                                        },
+                                        child: Text("Từ chối"),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

@@ -1,0 +1,36 @@
+{
+  "bucketName": "goquickappflutter8def6002b0a548c2b67a654e37e04f",
+  "selectedGuestPermissions": [
+    "s3:PutObject",
+    "s3:GetObject",
+    "s3:ListBucket",
+    "s3:DeleteObject"
+  ],
+  "selectedAuthenticatedPermissions": [
+    "s3:PutObject",
+    "s3:GetObject",
+    "s3:ListBucket",
+    "s3:DeleteObject"
+  ],
+  "unauthRoleName": {
+    "Ref": "UnauthRoleName"
+  },
+  "authRoleName": {
+    "Ref": "AuthRoleName"
+  },
+  "s3PrivatePolicy": "Private_policy_6fddf937",
+  "s3ProtectedPolicy": "Protected_policy_6fddf937",
+  "s3PublicPolicy": "Public_policy_6fddf937",
+  "s3ReadPolicy": "read_policy_6fddf937",
+  "s3UploadsPolicy": "Uploads_policy_6fddf937",
+  "authPolicyName": "s3_amplify_6fddf937",
+  "unauthPolicyName": "s3_amplify_6fddf937",
+  "AuthenticatedAllowList": "ALLOW",
+  "GuestAllowList": "ALLOW",
+  "s3PermissionsAuthenticatedPrivate": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+  "s3PermissionsAuthenticatedProtected": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+  "s3PermissionsAuthenticatedPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+  "s3PermissionsAuthenticatedUploads": "s3:PutObject",
+  "s3PermissionsGuestPublic": "s3:PutObject,s3:GetObject,s3:DeleteObject",
+  "s3PermissionsGuestUploads": "s3:PutObject"
+}
