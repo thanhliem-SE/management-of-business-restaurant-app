@@ -53,7 +53,7 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
                             itemBuilder: (context, index) {
                               ThucPham thucPham = item.thucPhamList![index];
                               return Container(
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   border: Border(
                                     bottom: BorderSide(
                                       color: Colors.black,
@@ -169,7 +169,7 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
       );
     } else {
       viewModel.Init(context);
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -204,7 +204,7 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
                       ));
                   viewModel.clear();
                 },
-                icon: Icon(Icons.checklist_rtl_outlined),
+                icon: const Icon(Icons.checklist_rtl_outlined),
               )
             : Container(),
         IconButton(
@@ -213,12 +213,12 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
                 context: context, page: const AddFoodFormView());
             viewModel.clear();
           },
-          icon: Icon(Icons.add_box_rounded),
+          icon: const Icon(Icons.add_box_rounded),
         ),
       ],
       title: Column(
         children: [
-          Text(
+          const Text(
             'Quản lý món ăn',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
@@ -226,7 +226,7 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),

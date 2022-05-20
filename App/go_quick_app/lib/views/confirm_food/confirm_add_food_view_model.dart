@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/services/api_status.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
 import 'package:go_quick_app/services/thuc_pham_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
+
+import '../../socket_view_model.dart';
 
 class ConfirmAddFoodViewModel extends ChangeNotifier {
   bool isInit = false;
@@ -42,6 +46,14 @@ class ConfirmAddFoodViewModel extends ChangeNotifier {
             SnackBar(content: Text("Đã duyệt món ${thucPham.ten}")));
         thucPhamChuaDuyets.remove(thucPham);
         notifyListeners();
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+              noiDung: "${thucPham.ten} đã được duyệt",
+            ),
+            'CHEBIEN');
+        SocketViewModel.sendMessage(
+            "CHEBIEN", "Món ăn được duyệt", "${thucPham.ten} đã được duyệt");
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Lỗi cập nhật thực phẩm")));

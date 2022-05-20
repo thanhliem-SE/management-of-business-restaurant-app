@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/confirm_food/confirm_add_food_view_model.dart';
 import 'package:go_quick_app/views/food_detail/food_detail_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
-import 'package:go_quick_app/views/manage_food/manager_all_food_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -47,7 +47,7 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
                       ThucPham thucPham =
                           viewModel.getThucPhamChuaDuyets[index];
                       return Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(
                               color: Colors.black,
@@ -159,7 +159,7 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
                                           await viewModel.duyetThucPham(
                                               context, thucPham);
                                         },
-                                        child: Text("Duyệt"),
+                                        child: const Text("Duyệt"),
                                       ),
                                       ElevatedButton(
                                         style: ElevatedButton.styleFrom(
@@ -169,7 +169,7 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
                                           await viewModel.xoaThucPham(
                                               context, thucPham);
                                         },
-                                        child: Text("Từ chối"),
+                                        child: const Text("Từ chối"),
                                       ),
                                     ],
                                   ),
@@ -189,7 +189,9 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
       );
     } else {
       viewModel.Init(context);
-      return Scaffold(
+      Provider.of<SocketViewModel>(context)
+          .setConfirmAddFoodViewModel(viewModel, context);
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -206,7 +208,7 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
       backgroundColor: kPrimaryColor,
       title: Column(
         children: [
-          Text(
+          const Text(
             'Danh sách thực phẩm cần duyệt',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
@@ -214,7 +216,7 @@ class _ConfirmAddFoodViewState extends State<ConfirmAddFoodView> {
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),

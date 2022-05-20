@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/notification_service.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
+import 'package:go_quick_app/views/confirm_food/confirm_add_food_view_model.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/manage_payment/manage_payment_view_model.dart';
 import 'package:go_quick_app/views/manage_table/manage_table_view_model.dart';
@@ -31,6 +32,14 @@ class SocketViewModel extends ChangeNotifier {
   BuildContext? managePayMentViewContext = null;
   ReturnOrderCustomerViewModel? returnOrderCustomerViewModel = null;
   BuildContext? returnOrderCustomerViewContext = null;
+  ConfirmAddFoodViewModel? confirmAddFoodViewModel = null;
+  BuildContext? confirmAddFoodViewContext = null;
+
+  setConfirmAddFoodViewModel(
+      ConfirmAddFoodViewModel viewModel, BuildContext context) {
+    confirmAddFoodViewModel = viewModel;
+    confirmAddFoodViewContext = context;
+  }
 
   setReturnOrderCustomerViewModel(
       ReturnOrderCustomerViewModel returnOrderCustomerViewModel,
@@ -139,6 +148,14 @@ class SocketViewModel extends ChangeNotifier {
         returnOrderCustomerViewContext != null
             ? returnOrderCustomerViewModel!
                 .intitializedAsync(returnOrderCustomerViewContext!)
+            : true;
+      } else if (title == "Thực phẩm mới cần duyệt") {
+        confirmAddFoodViewModel != null
+            ? confirmAddFoodViewModel!.Init(confirmAddFoodViewContext!)
+            : true;
+      } else if (title == "Món ăn được duyệt") {
+        confirmAddFoodViewModel != null
+            ? confirmAddFoodViewModel!.Init(confirmAddFoodViewContext!)
             : true;
       }
     }

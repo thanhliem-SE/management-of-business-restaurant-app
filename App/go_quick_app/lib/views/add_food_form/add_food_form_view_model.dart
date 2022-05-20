@@ -1,10 +1,13 @@
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/danh_muc.dart';
+import 'package:go_quick_app/models/thong_bao.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/danh_muc_service.dart';
+import 'package:go_quick_app/services/thong_bao_service.dart';
 import 'package:go_quick_app/services/thuc_pham_service.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
@@ -61,6 +64,15 @@ class AddFoodFormViewModel extends ChangeNotifier {
             .showSnackBar(SnackBar(content: Text("Thêm món ăn thành công")));
         NavigationHelper.pushReplacement(
             context: context, page: const ManageAllFoodView());
+        ThongBaoService().addThongBao(
+            token,
+            ThongBao(
+              noiDung:
+                  "${thucPham.ten} được thêm vào danh sách thực phẩm cần duyệt",
+            ),
+            'CHEBIEN');
+        SocketViewModel.sendMessage("QUANLY", "Thực phẩm mới cần duyệt",
+            "${thucPham.ten} được thêm vào danh sách thực phẩm cần duyệt");
       } else {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Thêm món ăn")));
