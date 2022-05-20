@@ -12,6 +12,7 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/manage_account/manage_account_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_payment/manage_payment_view.dart';
@@ -164,7 +165,10 @@ class WidgetGridViewMenu extends StatelessWidget {
           }),
         if (['QUANLY'].contains(quyen))
           cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
-              Colors.lightBlueAccent, () {}),
+              Colors.lightBlueAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ManageAccountView());
+          }),
         if (['QUANLY', 'CHEBIEN'].contains(quyen))
           cardItemMenu(
               size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent,

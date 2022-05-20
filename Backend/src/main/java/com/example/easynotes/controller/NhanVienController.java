@@ -68,4 +68,8 @@ public class NhanVienController  {
             throw new ResourceNotFoundException("NhanVien", "taiKhoan", tenTaiKhoan);
         }
     }
+    @GetMapping("nhanvien/gettheoquyen/{quyen}")
+    public List<NhanVien> getTheoQuyen(@PathVariable(value = "quyen") String quyen){
+        return service.getNhanVienTheoQuyen(quyen);
+    }
 }

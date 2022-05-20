@@ -15,4 +15,7 @@ public interface NhanVienRepository extends JpaRepository<NhanVien, Long> {
 
     @Query(value = "select * from nhan_vien where is_deleted = 0", nativeQuery = true)
     public List<NhanVien> getAll();
+
+    @Query(value = "select nv.* from nhan_vien nv join tai_khoan tk on nv.ten_tai_khoan = tk.ten_tai_khoan where tk.quyen = ?1 and nv.is_deleted = 0", nativeQuery = true)
+    public List<NhanVien> getNhanVienByQuyen(String quyen);
 }
