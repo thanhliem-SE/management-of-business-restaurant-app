@@ -11,7 +11,7 @@ import 'package:go_quick_app/utils/helper.dart';
 
 class ManageAllFoodViewModel extends ChangeNotifier {
   bool isInit = false;
-  List<DanhMuc> danhmucs = [];
+  List<DanhMuc> danhmucs = <DanhMuc>[];
   String quyen = "";
   late List<ThucPham> thucPhamChuaDuyets = <ThucPham>[];
   List<ThucPham> get getThucPhamChuaDuyets => this.thucPhamChuaDuyets;
