@@ -24,11 +24,12 @@ public class ThucPhamService {
 
     public ThucPham add(ThucPham thucPham){
         thucPham.setDeleted(false);
+        thucPham.setTrangThai("CHUADUYET");
         return repository.save(thucPham);
     }
 
-    public void deleteById(Long id){
-        repository.deleteById(id);
+    public int deleteById(Long id){
+        return repository.deleteThucPham(id);
     }
 
     public ThucPham update(ThucPham thucPham, Long id){
@@ -39,7 +40,13 @@ public class ThucPhamService {
         return null;
     }
 
+
+
     public List<ThucPham> getListByDanhMuc(Long maDanhMuc){
         return repository.getThucPhamByDanhMuc(maDanhMuc);
+    }
+
+    public List<ThucPham> getListChuaDuyet(){
+        return repository.getThucPhamChuaDuyet();
     }
 }

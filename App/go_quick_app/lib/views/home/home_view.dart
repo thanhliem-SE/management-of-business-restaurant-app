@@ -172,6 +172,12 @@ class WidgetGridViewMenu extends StatelessWidget {
             NavigationHelper.push(
                 context: context, page: const ManageAllFoodView());
           }),
+        if (['QUANLY', 'CHEBIEN'].contains(quyen))
+          cardItemMenu(size, Icons.av_timer_outlined,
+              'Quản lý món ăn trong ngày', Colors.blue, () {
+            NavigationHelper.push(
+                context: context, page: const ManageFoodView());
+          }),
         if (['QUANLY'].contains(quyen))
           cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
               Colors.indigoAccent, () {}),

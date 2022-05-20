@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
+import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/food_detail/food_detail_view_model.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
@@ -9,9 +10,30 @@ import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class DetailFoodView extends StatelessWidget {
+class DetailFoodView extends StatefulWidget {
+  final String quyen;
   final ThucPham thucPham;
-  const DetailFoodView({Key? key, required this.thucPham}) : super(key: key);
+  const DetailFoodView({Key? key, required this.thucPham, required this.quyen})
+      : super(key: key);
+
+  @override
+  State<DetailFoodView> createState() => _DetailFoodViewState();
+}
+
+class _DetailFoodViewState extends State<DetailFoodView> {
+  TextEditingController? _tenController,
+      _moTaController,
+      _chiTietController,
+      _giaController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _tenController = TextEditingController();
+    _moTaController = TextEditingController();
+    _chiTietController = TextEditingController();
+    _giaController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +44,7 @@ class DetailFoodView extends StatelessWidget {
       onWillPop: () async {
         NavigationHelper.pushReplacement(
             context: context, page: const ManageAllFoodView());
+        viewModel.isViewDetail = true;
         return true;
       },
       child: Scaffold(
@@ -40,7 +63,7 @@ class DetailFoodView extends StatelessWidget {
                       child: SizedBox(
                         width: constraints.maxWidth,
                         child: CarouselSlider.builder(
-                          itemCount: thucPham.urlHinhAnh!.length,
+                          itemCount: widget.thucPham.urlHinhAnh!.length,
                           itemBuilder: (context, i, id) {
                             return GestureDetector(
                               child: Container(
@@ -53,7 +76,26 @@ class DetailFoodView extends StatelessWidget {
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(15.0),
                                   child: Image.network(
-                                    thucPham.urlHinhAnh![i],
+                                    widget.thucPham.urlHinhAnh![i],
+                                    loadingBuilder: (BuildContext context,
+                                        Widget child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      }
+                                      return Center(
+                                        child: CircularProgressIndicator(
+                                          value: loadingProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? loadingProgress
+                                                      .cumulativeBytesLoaded /
+                                                  loadingProgress
+                                                      .expectedTotalBytes!
+                                              : null,
+                                        ),
+                                      );
+                                    },
                                     width: constraints.maxWidth,
                                     fit: BoxFit.fitWidth,
                                   ),
@@ -77,15 +119,28 @@ class DetailFoodView extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        Text(
-                          thucPham.ten.toString(),
-                          textAlign: TextAlign.center,
-                          overflow: TextOverflow.fade,
-                          style: TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        viewModel.isViewDetail
+                            ? Text(
+                                widget.thucPham.ten.toString(),
+                                textAlign: TextAlign.center,
+                                overflow: TextOverflow.fade,
+                                style: TextStyle(
+                                  fontSize: 25.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              )
+                            : TextField(
+                                controller: _tenController,
+                                decoration: InputDecoration(
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: kPrimaryColor),
+                                  ),
+                                ),
+                              ),
                       ],
                     ),
                   ),
@@ -103,12 +158,26 @@ class DetailFoodView extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '${thucPham.moTa}',
-                              textAlign: TextAlign.justify,
-                              overflow: TextOverflow.fade,
-                              style: TextStyle(fontSize: fontSize),
-                            ),
+                            child: viewModel.isViewDetail
+                                ? Text(
+                                    '${widget.thucPham.moTa}',
+                                    textAlign: TextAlign.justify,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(fontSize: fontSize),
+                                  )
+                                : TextField(
+                                    controller: _moTaController,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: kPrimaryColor),
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ],
                       ),
@@ -128,12 +197,26 @@ class DetailFoodView extends StatelessWidget {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              '${thucPham.chiTiet}',
-                              textAlign: TextAlign.justify,
-                              overflow: TextOverflow.fade,
-                              style: TextStyle(fontSize: fontSize),
-                            ),
+                            child: viewModel.isViewDetail
+                                ? Text(
+                                    '${widget.thucPham.chiTiet}',
+                                    textAlign: TextAlign.justify,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(fontSize: fontSize),
+                                  )
+                                : TextField(
+                                    controller: _chiTietController,
+                                    decoration: InputDecoration(
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: kPrimaryColor),
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ],
                       ),
@@ -146,16 +229,41 @@ class DetailFoodView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Giá: ',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              'Giá: ',
+                              style: TextStyle(
+                                  fontSize: 18.0, fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          Text(
-                            NumberFormat('###,###').format(thucPham.giaTien) +
-                                'đ',
-                            style: TextStyle(
-                                fontSize: 18.0, fontWeight: FontWeight.bold),
+                          Expanded(
+                            flex: 5,
+                            child: viewModel.isViewDetail
+                                ? Text(
+                                    NumberFormat('###,###')
+                                            .format(widget.thucPham.giaTien) +
+                                        'đ',
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: TextField(
+                                      controller: _giaController,
+                                      decoration: InputDecoration(
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: kPrimaryColor),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
                           ),
                         ],
                       ),
@@ -174,7 +282,7 @@ class DetailFoodView extends StatelessWidget {
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            thucPham.danhMuc!.loaiDanhMuc!,
+                            widget.thucPham.danhMuc!.loaiDanhMuc!,
                             style: TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
@@ -195,7 +303,8 @@ class DetailFoodView extends StatelessWidget {
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            DateFormat('dd/MM/yyy').format(thucPham.createdAt!),
+                            DateFormat('dd/MM/yyy')
+                                .format(widget.thucPham.createdAt!),
                             style: TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.bold),
                           ),
@@ -218,18 +327,44 @@ class DetailFoodView extends StatelessWidget {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Xóa món ăn',
-                              style: TextStyle(
-                                  fontSize: 18.0, fontWeight: FontWeight.bold),
-                            ),
+                            child: ['QUANLY'].contains(widget.quyen)
+                                ? Text(
+                                    'Xóa món ăn',
+                                    style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : Container(),
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             primary: Colors.green,
                           ),
-                          onPressed: () {},
+                          onPressed: () async {
+                            if (!viewModel.isViewDetail) {
+                              widget.thucPham.ten = _tenController?.text;
+                              widget.thucPham.moTa = _moTaController?.text;
+                              widget.thucPham.chiTiet =
+                                  _chiTietController?.text;
+                              widget.thucPham.giaTien = _giaController != null
+                                  ? double.tryParse("${_giaController?.text}")
+                                  : 0;
+                              await viewModel.updateThucPham(
+                                  context, widget.thucPham);
+                            } else {
+                              _tenController?.text =
+                                  widget.thucPham.ten.toString();
+                              _moTaController?.text =
+                                  widget.thucPham.moTa.toString();
+                              _chiTietController?.text =
+                                  widget.thucPham.chiTiet.toString();
+                              _giaController?.text =
+                                  widget.thucPham.giaTien.toString();
+                            }
+                            viewModel.setIsViewDetail =
+                                !viewModel.getIsViewDetail;
+                          },
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
@@ -269,7 +404,11 @@ class DetailFoodView extends StatelessWidget {
           Icons.arrow_back,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          NavigationHelper.pushReplacement(
+              context: context, page: const ManageAllFoodView());
+          viewModel.isViewDetail = true;
+        },
       ),
     );
   }
@@ -294,7 +433,8 @@ class DetailFoodView extends StatelessWidget {
             actions: <Widget>[
               TextButton(
                   onPressed: () async {
-                    bool kq = await viewModel.xoaThucPham(context, thucPham);
+                    bool kq =
+                        await viewModel.xoaThucPham(context, widget.thucPham);
                     if (kq) {
                       _dismissDialog(context);
                       NavigationHelper.push(

@@ -2,6 +2,7 @@ package com.example.easynotes.service;
 
 import com.example.easynotes.model.ChiTietHoaDon;
 import com.example.easynotes.model.ChiTietThucPham;
+import com.example.easynotes.model.ThucPham;
 import com.example.easynotes.service.repository.ChiTietThucPhamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,9 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ChiTietThucPhamService {
     @Autowired
     private ChiTietThucPhamRepository repository;
+
+    @Autowired
+    private ThucPhamService thucPhamService;
 
     public List<ChiTietThucPham> getList(){
         return repository.getAll();
@@ -51,6 +55,22 @@ public class ChiTietThucPhamService {
           }
        });
        return result;
+    }
+
+    public List<ChiTietThucPham> taoChiTietThucPhamHomNayTheoDanhMuc( Long maDanhMuc){
+        List<ThucPham> thucPhamList = thucPhamService.getListByDanhMuc(maDanhMuc);
+        List<ChiTietThucPham> chiTietThucPhamList = new ArrayList<>();
+        for (int i = 0; i < thucPhamList.size(); i++) {
+            ChiTietThucPham chiTietThucPham = new ChiTietThucPham();
+            chiTietThucPham.setThucPham(thucPhamList.get(i));
+            chiTietThucPham.setSoLuong(0);
+            chiTietThucPham.setDeleted(false);
+            chiTietThucPhamList.add(repository.save(chiTietThucPham));
+            if (i == thucPhamList.size() - 1 ){
+                return chiTietThucPhamList;
+            }
+        }
+        return chiTietThucPhamList;
     }
 
     public ChiTietThucPham getChiTietThucPhamHomNayTheoMaThucPham(Long maThucPham){

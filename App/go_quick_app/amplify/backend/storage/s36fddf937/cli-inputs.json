@@ -1,0 +1,18 @@
+{
+  "resourceName": "s36fddf937",
+  "policyUUID": "6fddf937",
+  "bucketName": "goquickappflutter8def6002b0a548c2b67a654e37e04f",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "NONE",
+  "groupAccess": {}
+}

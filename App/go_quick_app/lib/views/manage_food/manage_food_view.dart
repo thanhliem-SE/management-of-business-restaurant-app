@@ -91,6 +91,29 @@ class _ManageFoodViewState extends State<ManageFoodView> {
                                                           .urlHinhAnh!
                                                           .elementAt(0)
                                                           .toString(),
+                                                      loadingBuilder: (BuildContext
+                                                              context,
+                                                          Widget child,
+                                                          ImageChunkEvent?
+                                                              loadingProgress) {
+                                                        if (loadingProgress ==
+                                                            null) {
+                                                          return child;
+                                                        }
+                                                        return Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            value: loadingProgress
+                                                                        .expectedTotalBytes !=
+                                                                    null
+                                                                ? loadingProgress
+                                                                        .cumulativeBytesLoaded /
+                                                                    loadingProgress
+                                                                        .expectedTotalBytes!
+                                                                : null,
+                                                          ),
+                                                        );
+                                                      },
                                                       fit: BoxFit.cover,
                                                       height: size.height * 0.1,
                                                       width: size.width * 0.3,
@@ -256,9 +279,11 @@ class _ManageFoodViewState extends State<ManageFoodView> {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () async {
+            await viewModel.newChiTietThucPhamTrongNgay(context);
+          },
           icon: Icon(
-            Icons.add_circle,
+            Icons.replay_circle_filled_rounded,
             color: Colors.white,
           ),
         ),
