@@ -1,18 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_quick_app/config/palette.dart';
-import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
-import 'package:go_quick_app/models/danh_muc.dart';
-import 'package:go_quick_app/models/thuc_pham.dart';
-import 'package:go_quick_app/services/api_status.dart';
-import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
-import 'package:go_quick_app/services/danh_muc_service.dart';
-import 'package:go_quick_app/services/thuc_pham_service.dart';
-import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view_model.dart';
-import 'package:go_quick_app/views/select_category/components/list_view_food.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -41,7 +30,7 @@ class _ManageFoodViewState extends State<ManageFoodView> {
       setState(() {});
     }
     return isLoading
-        ? Scaffold(
+        ? const Scaffold(
             body: Center(
               child: CircularProgressIndicator(
                 color: kPrimaryColor,
@@ -142,7 +131,8 @@ class _ManageFoodViewState extends State<ManageFoodView> {
                                                                 .thucPham!
                                                                 .ten
                                                                 .toString(),
-                                                            style: TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               fontSize: 18,
                                                               fontWeight:
                                                                   FontWeight
@@ -204,7 +194,7 @@ class _ManageFoodViewState extends State<ManageFoodView> {
                                   },
                                   child: SizedBox(
                                     height: size.height * 0.05,
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         "HỦY",
                                         style: TextStyle(
@@ -225,7 +215,7 @@ class _ManageFoodViewState extends State<ManageFoodView> {
                                   },
                                   child: SizedBox(
                                     height: size.height * 0.05,
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         "LƯU",
                                         style: TextStyle(
@@ -273,7 +263,7 @@ class _ManageFoodViewState extends State<ManageFoodView> {
             isUpdate = !isUpdate;
             setState(() {});
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.system_update_alt,
             color: Colors.white,
           ),
@@ -282,7 +272,7 @@ class _ManageFoodViewState extends State<ManageFoodView> {
           onPressed: () async {
             await viewModel.newChiTietThucPhamTrongNgay(context);
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.replay_circle_filled_rounded,
             color: Colors.white,
           ),
@@ -290,19 +280,19 @@ class _ManageFoodViewState extends State<ManageFoodView> {
       ],
       title: Column(
         children: [
-          Text(
+          const Text(
             'Quản Lý Món Ăn',
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           Text(
             "ngày: ${getFormatedDate(DateTime.now())}",
-            style: TextStyle(fontSize: 13),
+            style: const TextStyle(fontSize: 13),
           ),
         ],
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),
@@ -345,14 +335,14 @@ class InputCountFood extends StatelessWidget {
                 inputFormatters: <TextInputFormatter>[
                   FilteringTextInputFormatter.digitsOnly
                 ],
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey,
                     ),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
+                    borderSide: const BorderSide(
                       color: kPrimaryColor,
                     ),
                   ),

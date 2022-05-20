@@ -1,11 +1,8 @@
-import 'dart:developer';
 import 'dart:io';
 
-import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:amplify_storage_s3/amplify_storage_s3.dart';
 import 'package:flutter/material.dart';
-import 'package:go_quick_app/amplifyconfiguration.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/danh_muc.dart';
 import 'package:go_quick_app/services/api_status.dart';
@@ -13,7 +10,6 @@ import 'package:go_quick_app/services/danh_muc_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/add_food_form/add_food_form_view_model.dart';
-import 'package:go_quick_app/views/food_detail/food_detail_view_model.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +70,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
                   padding: const EdgeInsets.all(8.0),
                   child: InputDecorator(
                     decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(
+                      contentPadding: const EdgeInsets.symmetric(
                           horizontal: 20.0, vertical: 15.0),
                       labelText: "Danh mục sản phẩm",
                       border: OutlineInputBorder(
@@ -111,7 +107,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
                             onPressed: () async {
                               await chooseFile();
                             },
-                            child: Text('Chọn file'),
+                            child: const Text('Chọn file'),
                           ),
                         ),
                       ),
@@ -160,11 +156,11 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
                           setState(() {});
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("thất bại")));
+                              const SnackBar(content: Text("thất bại")));
                         }
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       'THÊM MÓN ĂN MỚI',
                     ),
                   ),
@@ -176,7 +172,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
       );
     } else {
       viewModel.Init(context);
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -194,7 +190,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
       child: TextField(
         controller: _controller,
         keyboardType: TextInputType.number,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           label: Text('Giá món ăn'),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey),
@@ -231,7 +227,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
               color: isValidate ? Colors.grey : Colors.red,
             ),
           ),
-          focusedBorder: OutlineInputBorder(
+          focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: kPrimaryColor),
           ),
         ),
@@ -245,7 +241,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
       backgroundColor: kPrimaryColor,
       title: Column(
         children: [
-          Text(
+          const Text(
             'Thêm món ăn vào danh mục',
             style: TextStyle(color: Colors.white, fontSize: 18),
           ),
@@ -253,7 +249,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),
@@ -275,7 +271,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
         setState(() {});
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Lỗi lấy danh sách danh mục")));
+            const SnackBar(content: Text("Lỗi lấy danh sách danh mục")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)
@@ -288,7 +284,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
         await picker.getImage(source: ImageSource.gallery);
     if (pickedFile == null) {
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("No Image")));
+          .showSnackBar(const SnackBar(content: Text("No Image")));
       return;
     } else {
       listImage.add(pickedFile);
@@ -299,7 +295,7 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
   Future<bool> uploadImage(AddFoodFormViewModel viewModel) async {
     bool ketQua = false;
     for (var i = 0; i < listImage.length; i++) {
-      var uuid = Uuid();
+      var uuid = const Uuid();
       final key = DateTime.now().toString() + uuid.v4();
       final file = File(listImage[i].path);
       try {
@@ -334,42 +330,42 @@ class _AddFoodFormViewState extends State<AddFoodFormView> {
 
   bool validate(BuildContext context, AddFoodFormViewModel viewModel) {
     if (_tenMonAn == null || _tenMonAn!.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Tên món ăn không được trống",
         style: TextStyle(color: Colors.red),
       )));
       return false;
     } else if (_mota == null || _mota!.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Mô tả món ăn không được trống",
         style: TextStyle(color: Colors.red),
       )));
       return false;
     } else if (_chiTietMonAn == null || _chiTietMonAn!.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Chi tiết món ăn không được trống",
         style: TextStyle(color: Colors.red),
       )));
       return false;
     } else if (_chiTietMonAn == null || _chiTietMonAn!.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Mô tả món ăn không được trống",
         style: TextStyle(color: Colors.red),
       )));
       return false;
     } else if (_giaTien == null || _giaTien!.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Giá tiền món ăn không được trống",
         style: TextStyle(color: Colors.red),
       )));
       return false;
     } else if (listImage == null || listImage.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
         "Hình ảnh món ăn không được trống",
         style: TextStyle(color: Colors.red),
