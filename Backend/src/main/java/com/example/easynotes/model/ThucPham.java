@@ -36,6 +36,7 @@ public class ThucPham implements Serializable {
     private String ten;
 
     @Nationalized
+    @Lob
     @NotBlank
     private String moTa;
 
@@ -44,6 +45,7 @@ public class ThucPham implements Serializable {
     @Min(value = 0)
     private double giaTien;
 
+    @Lob
     @ElementCollection
     private List<String> urlHinhAnh;
 

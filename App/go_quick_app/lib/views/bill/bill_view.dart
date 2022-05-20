@@ -255,6 +255,20 @@ class BillView extends StatelessWidget {
             children: [
               Image.network(
                 item.thucPham!.urlHinhAnh![0],
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
                 width: size.width * 0.2,
                 height: size.height * 0.1,
                 fit: BoxFit.fill,

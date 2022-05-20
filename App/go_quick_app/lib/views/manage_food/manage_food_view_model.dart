@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/danh_muc.dart';
+import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/chi_tiet_thuc_pham_service.dart';
 import 'package:go_quick_app/services/danh_muc_service.dart';
+import 'package:go_quick_app/services/thuc_pham_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 
 class ManageFoodViewModel extends ChangeNotifier {
@@ -11,6 +13,7 @@ class ManageFoodViewModel extends ChangeNotifier {
   bool isInit = false;
   List<DanhMuc>? danhmucs;
   List<ChiTietThucPham>? listChiTietThucPham;
+  List<ThucPham> listThucPham = <ThucPham>[];
   bool get loading => this._loading;
 
   set loading(bool value) => this._loading = value;
@@ -76,6 +79,31 @@ class ManageFoodViewModel extends ChangeNotifier {
       if (item.maChiTietThucPham == maChitietThucPham) {
         item.soLuong = soLuong;
       }
+    }
+  }
+
+  Future<void> newChiTietThucPhamTrongNgay(BuildContext context) async {
+    try {
+      String token = await Helper.getToken();
+      danhmucs?.clear();
+      await loadingDanhMucs(context);
+      if (danhmucs!.isNotEmpty) {
+        for (var i = 0; i < danhmucs!.length; i++) {
+          var response = await ChiTietThucPhamService()
+              .taoChiTietHoaDonHomNay(token, danhmucs![i]);
+          if (response is Success) {
+            danhmucs![i].thucphams = response.response as List<ChiTietThucPham>;
+          }
+          if (i == danhmucs!.length - 1) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Tạo chi tiết món ăn hôm nay thành công")));
+            notifyListeners();
+          }
+        }
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
     }
   }
 

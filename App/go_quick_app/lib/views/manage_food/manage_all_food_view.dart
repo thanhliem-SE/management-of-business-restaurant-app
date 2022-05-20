@@ -4,6 +4,7 @@ import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/add_food_form/add_food_form_view.dart';
+import 'package:go_quick_app/views/confirm_food/confirm_add_food_view.dart';
 import 'package:go_quick_app/views/food_detail/food_detail_view.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
@@ -42,78 +43,110 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
                   child: TabBarView(
                     children: [
                       for (var item in viewModel.danhmucs)
-                        ListView.builder(
-                          itemCount: item.thucPhamList?.length,
-                          itemBuilder: (context, index) {
-                            ThucPham thucPham = item.thucPhamList![index];
-                            return Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              child: InkWell(
-                                onTap: () async {
-                                  NavigationHelper.push(
-                                    context: context,
-                                    page: DetailFoodView(thucPham: thucPham),
-                                  );
-                                  viewModel.clear();
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.network(
-                                          thucPham.urlHinhAnh![0],
-                                          width: size.width * 0.2,
-                                          height: size.height * 0.1,
-                                          fit: BoxFit.fill,
-                                        ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          SizedBox(
-                                            child: Text(
-                                              thucPham.ten!,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            child: Text(
-                                              'mô tả: ${thucPham.moTa}',
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            child: Text(
-                                              NumberFormat('###,###').format(
-                                                      thucPham.giaTien) +
-                                                  'đ',
-                                              overflow: TextOverflow.ellipsis,
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: Colors.blueGrey),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
+                        RefreshIndicator(
+                          color: kPrimaryColor,
+                          onRefresh: () async {
+                            await viewModel.Init(context);
                           },
+                          child: ListView.builder(
+                            itemCount: item.thucPhamList?.length,
+                            itemBuilder: (context, index) {
+                              ThucPham thucPham = item.thucPhamList![index];
+                              return Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    NavigationHelper.push(
+                                      context: context,
+                                      page: DetailFoodView(
+                                        thucPham: thucPham,
+                                        quyen: viewModel.quyen,
+                                      ),
+                                    );
+                                    viewModel.clear();
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Image.network(
+                                            thucPham.urlHinhAnh![0],
+                                            loadingBuilder:
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent?
+                                                        loadingProgress) {
+                                              if (loadingProgress == null) {
+                                                return child;
+                                              }
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              );
+                                            },
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.1,
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SizedBox(
+                                              child: Text(
+                                                thucPham.ten!,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              child: Text(
+                                                'mô tả: ${thucPham.moTa}',
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              child: Text(
+                                                NumberFormat('###,###').format(
+                                                        thucPham.giaTien) +
+                                                    'đ',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.blueGrey),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                     ],
                   ),
@@ -150,6 +183,19 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
         ],
       ),
       actions: [
+        ['QUANLY'].contains(viewModel.quyen)
+            ? IconButton(
+                onPressed: () async {
+                  NavigationHelper.push(
+                      context: context,
+                      page: ConfirmAddFoodView(
+                        quyen: viewModel.quyen,
+                      ));
+                  viewModel.clear();
+                },
+                icon: Icon(Icons.checklist_rtl_outlined),
+              )
+            : Container(),
         IconButton(
           onPressed: () async {
             NavigationHelper.push(

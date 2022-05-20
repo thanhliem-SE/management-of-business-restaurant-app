@@ -61,4 +61,9 @@ public class ChiTietThucPhamController {
     public List<ChiTietThucPham> getByToday() {
         return service.getChiTietThucPhamToday();
     }
+
+    @GetMapping("/taochitiethomnay/{id}")
+    public List<ChiTietThucPham> taoChiTiet( @PathVariable(value = "id") Long id){
+        return service.taoChiTietThucPhamHomNayTheoDanhMuc(id);
+    }
 }
