@@ -50,6 +50,7 @@ public class ThucPham implements Serializable {
     private List<String> urlHinhAnh;
 
     @Nationalized
+    @Lob
     private String chiTiet;
 
     @Nationalized
