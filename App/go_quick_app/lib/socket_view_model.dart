@@ -14,10 +14,10 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class SocketViewModel extends ChangeNotifier {
-  // static WebSocketChannel channel = IOWebSocketChannel.connect(
-  //     'ws://ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com:7070/webSocket');
-  static WebSocketChannel channel =
-      IOWebSocketChannel.connect('ws://192.168.1.8:7070/webSocket');
+  static WebSocketChannel channel = IOWebSocketChannel.connect(
+      'ws://ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com:7070/webSocket');
+  // static WebSocketChannel channel =
+  //     IOWebSocketChannel.connect('ws://192.168.1.8:7070/webSocket');
   bool isListened = false;
   TaiKhoan taiKhoan = TaiKhoan();
 
