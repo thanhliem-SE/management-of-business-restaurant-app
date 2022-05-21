@@ -24,7 +24,9 @@ import java.util.concurrent.atomic.AtomicReference;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
+@Table(name = HoaDon.TABLE_NAME)
 public class HoaDon implements Serializable {
+    public static final String TABLE_NAME= "HoaDon";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,7 @@ public class HoaDon implements Serializable {
     @JoinColumn(name = "maNhanVien")
     private NhanVien nguoiLapHoaDon;
 
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
     @OneToOne
@@ -49,19 +52,22 @@ public class HoaDon implements Serializable {
     private Ban ban;
 
     @Nationalized
+    @Column(name = "ghiChu")
     private String ghiChu;
 
+    @Column(name = "daTraHoaDon")
     private boolean daTraHoaDon;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "tinhTrang")
     private TinhTrang tinhTrang;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhat")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;
