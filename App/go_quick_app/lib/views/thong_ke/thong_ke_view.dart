@@ -50,7 +50,7 @@ class _ThongKeViewState extends State<ThongKeView> {
       title: Column(
         children: [
           const Text(
-            'Thống kê hóa đơn theo tháng',
+            'Thống kê hóa đơn',
             style: const TextStyle(color: Colors.white),
           ),
         ],
