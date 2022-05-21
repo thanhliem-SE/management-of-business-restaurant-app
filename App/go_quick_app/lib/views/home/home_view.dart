@@ -214,7 +214,7 @@ class WidgetGridViewMenu extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 22,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             )
