@@ -32,17 +32,18 @@ public class Ban implements Serializable {
 
     private int soBan;
 
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
     private TinhTrang tinhTrang;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhap")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;

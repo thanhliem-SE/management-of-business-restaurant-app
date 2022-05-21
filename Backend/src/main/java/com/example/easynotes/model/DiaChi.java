@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
@@ -17,7 +18,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class DiaChi implements Serializable {
     @NotBlank
+    @Column(name = "soNha")
     private String soNha;
+
     @NotBlank
     private String phuong;
     @NotBlank
