@@ -22,6 +22,7 @@ import 'package:go_quick_app/views/response_order/response_order_view_model.dart
 import 'package:go_quick_app/views/return_order_customer/return_order_customer_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
+import 'package:go_quick_app/views/thong_ke/thong_ke_view_model.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -103,6 +104,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ManageAccountViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ThongKeViewModel(),
         ),
       ],
       child: MaterialApp(

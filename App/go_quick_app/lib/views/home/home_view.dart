@@ -21,6 +21,7 @@ import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
 import 'package:go_quick_app/views/return_order_customer/return_order_customer_view.dart';
+import 'package:go_quick_app/views/thong_ke/thong_ke_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -182,9 +183,18 @@ class WidgetGridViewMenu extends StatelessWidget {
             NavigationHelper.push(
                 context: context, page: const ManageFoodView());
           }),
+<<<<<<< HEAD
         // if (['QUANLY'].contains(quyen))
         //   cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
         //       Colors.indigoAccent, () {}),
+=======
+        if (['QUANLY'].contains(quyen))
+          cardItemMenu(
+              size, Icons.bar_chart_outlined, 'Thống kê', Colors.indigoAccent,
+              () {
+            NavigationHelper.push(context: context, page: ThongKeView());
+          }),
+>>>>>>> f81aa7d (update)
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(
