@@ -95,7 +95,7 @@ class NhanVienService {
   Future<Object> createNhanVien(String token, NhanVien nhanVien) async {
     try {
       final response = await http.post(
-        Uri.parse(api + 'nhanvien/'),
+        Uri.parse(api + 'nhanvien/nhanvienvataikhoan'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
           HttpHeaders.authorizationHeader: '$token'

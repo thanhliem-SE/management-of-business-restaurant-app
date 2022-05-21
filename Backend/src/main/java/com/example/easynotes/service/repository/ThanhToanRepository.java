@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ThanhToanRepository extends JpaRepository<ThanhToan, Long> {
-    @Query(value = "select * from thanh_toan where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from ThanhToan where daXoa = 0", nativeQuery = true)
     public List<ThanhToan> getAll();
 }

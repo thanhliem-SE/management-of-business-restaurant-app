@@ -183,18 +183,12 @@ class WidgetGridViewMenu extends StatelessWidget {
             NavigationHelper.push(
                 context: context, page: const ManageFoodView());
           }),
-<<<<<<< HEAD
-        // if (['QUANLY'].contains(quyen))
-        //   cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
-        //       Colors.indigoAccent, () {}),
-=======
         if (['QUANLY'].contains(quyen))
           cardItemMenu(
               size, Icons.bar_chart_outlined, 'Thống kê', Colors.indigoAccent,
               () {
             NavigationHelper.push(context: context, page: ThongKeView());
           }),
->>>>>>> f81aa7d (update)
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(

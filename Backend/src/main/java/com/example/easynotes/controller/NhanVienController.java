@@ -30,6 +30,11 @@ public class NhanVienController  {
         return service.add(nhanVien);
     }
 
+    @PostMapping("/nhanvien/nhanvienvataikhoan")
+    public NhanVien addNhanVienAndTaiKhoan(@Valid @RequestBody NhanVien nhanVien){
+        return service.addNhanVienAndTaiKhoan(nhanVien);
+    }
+
     @GetMapping("/nhanvien/{id}")
     public NhanVien getById(@PathVariable(value = "id") Long id) {
         try {

@@ -11,9 +11,9 @@ import java.util.List;
 
 @Repository
 public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, String> {
-    @Query(value = "select * from tai_khoan where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from TaiKhoan where daXoa = 0", nativeQuery = true)
     public List<TaiKhoan> getAll();
 
-    @Query(value = "select * from tai_khoan where quyen = ?1", nativeQuery = true)
+    @Query(value = "select * from TaiKhoan where quyen = ?1", nativeQuery = true)
     public List<TaiKhoan> getListTaiKhoanByQuyen(String quyen);
 }
