@@ -28,11 +28,11 @@ public class NhanVienService {
 
     public NhanVien add(NhanVien nhanVien) {
         nhanVien.setDeleted(false);
-        TaiKhoan taiKhoan = taiKhoanService.add(nhanVien.getTaiKhoan());
-        if (taiKhoan != null){
-            return repository.save(nhanVien);
-        }
-        return new NhanVien();
+//        TaiKhoan taiKhoan = taiKhoanService.add(nhanVien.getTaiKhoan());
+//        if (taiKhoan != null){
+//            return repository.save(nhanVien);
+//        }
+        return repository.save(nhanVien);
     }
 
     public void deleteById(Long id) {
