@@ -164,7 +164,7 @@ class ManagePaymentView extends StatelessWidget {
                                                         fontSize: 14),
                                                   ),
                                                   SizedBox(
-                                                      width: size.width * 0.1),
+                                                      width: size.width * 0.05),
                                                   Text(
                                                     NumberFormat('###,###')
                                                             .format(item
@@ -174,7 +174,7 @@ class ManagePaymentView extends StatelessWidget {
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                 ],
                                               ),

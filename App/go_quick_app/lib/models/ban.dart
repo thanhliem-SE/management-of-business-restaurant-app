@@ -32,7 +32,7 @@ class Ban {
         viTri: json["viTri"],
         soBan: json["soBan"],
         tinhTrang: json["tinhTrang"],
-        isDeleted: json["isDeleted"],
+        isDeleted: json["deleted"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,
@@ -46,6 +46,6 @@ class Ban {
         "viTri": viTri,
         "tinhTrang": tinhTrang,
         "soBan": soBan,
-        "isDeleted": isDeleted ?? false,
+        "deleted": isDeleted ?? false,
       };
 }

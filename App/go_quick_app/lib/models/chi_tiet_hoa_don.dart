@@ -54,7 +54,7 @@ class ChiTietHoaDon {
         daPhucVu: json["daPhucVu"],
         khongTiepNhan: json["khongTiepNhan"],
         hoaDon: HoaDon.fromJson(json["hoaDon"]),
-        isDeleted: json["isDeleted"],
+        isDeleted: json["deleted"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,

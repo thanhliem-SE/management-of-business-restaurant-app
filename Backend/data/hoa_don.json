@@ -1,15 +1,3 @@
 [
-  {
-    "nguoiLapHoaDon": {
-      "maNhanVien": 2
-    },
-    "tongThanhTien": 100000.0,
-    "ban": {
-      "maSoBan": 1
-    },
-    "tinhTrang": "CHO",
-    "thanhToan": {
-      "maThanhToan": 1
-    }
-  }
+
 ]
