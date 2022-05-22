@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChiTietHoaDonRepository extends JpaRepository<ChiTietHoaDon, Long> {
-    @Query(value = "select * from chi_tiet_hoa_don where ma_hoa_don = :idHoaDon", nativeQuery = true)
+    @Query(value = "select * from ChiTietHoaDon where maHoaDon = :idHoaDon", nativeQuery = true)
     public List<ChiTietHoaDon> getChiTietHoaDonByMaHoaDon(@Param(value = "idHoaDon") Long idHoaDon);
 
-    @Query(value = "select * from chi_tiet_hoa_don where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from ChiTietHoaDon where daXoa = 0", nativeQuery = true)
     public List<ChiTietHoaDon> getAll();
 }

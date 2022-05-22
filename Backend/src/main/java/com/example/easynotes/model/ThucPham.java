@@ -25,10 +25,13 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
+@Table(name = ThucPham.TABLE_NAME)
 public class ThucPham implements Serializable {
+    public static final String TABLE_NAME= "ThucPham";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "maThucPham")
     private Long maThucPham;
 
     @Nationalized
@@ -36,22 +39,30 @@ public class ThucPham implements Serializable {
     private String ten;
 
     @Nationalized
+    @Lob
     @NotBlank
+    @Column(name = "moTa")
     private String moTa;
 
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
+    @Column(name = "giaTien")
     @Min(value = 0)
     private double giaTien;
 
+    @Lob
     @ElementCollection
     private List<String> urlHinhAnh;
 
     @Nationalized
+    @Lob
+    @Column(name = "chiTiet")
     private String chiTiet;
 
     @Nationalized
     @NotBlank
+    @Column(name = "trangThai")
     private String trangThai;
 
     @ManyToOne
@@ -62,12 +73,12 @@ public class ThucPham implements Serializable {
     @JoinColumn(name = "maDanhMuc")
     private DanhMuc danhMuc;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhat")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;

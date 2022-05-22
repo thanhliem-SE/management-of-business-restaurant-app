@@ -62,7 +62,7 @@ class _PaymentViewState extends State<PaymentView> {
       );
     } else {
       viewModel.initialize(widget.hoaDon, context);
-      return Scaffold(
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -93,21 +93,21 @@ class _PaymentViewState extends State<PaymentView> {
             }
           },
           icon: isView
-              ? Icon(Icons.edit_off_outlined)
-              : Icon(Icons.edit_outlined),
+              ? const Icon(Icons.edit_off_outlined)
+              : const Icon(Icons.edit_outlined),
         ),
       ],
       title: Column(
         children: [
           Text(
             'Thanh toán hóa đơn số ${hoaDon.maHoaDon} bàn ${hoaDon.ban?.soBan}',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ],
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),
@@ -141,6 +141,20 @@ class _PaymentViewState extends State<PaymentView> {
             children: [
               Image.network(
                 item.thucPham!.urlHinhAnh![0],
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
                 width: size.width * 0.2,
                 height: size.height * 0.1,
                 fit: BoxFit.fill,
@@ -196,9 +210,9 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
+            decoration: const BoxDecoration(
+              border: const Border(
+                bottom: const BorderSide(
                   color: Colors.black,
                   width: 1.0,
                 ),
@@ -210,7 +224,7 @@ class _PaymentViewState extends State<PaymentView> {
                 width: constraints.maxWidth,
                 child: Text(
                   "Chi tiết hóa đơn #${widget.hoaDon.maHoaDon}",
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                   ),
@@ -222,9 +236,9 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
+            decoration: const BoxDecoration(
+              border: const Border(
+                bottom: const BorderSide(
                   color: Colors.black,
                   width: 1.0,
                 ),
@@ -245,9 +259,9 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
+              decoration: const BoxDecoration(
+                border: const Border(
+                  bottom: const BorderSide(
                     color: Colors.black,
                     width: 1.0,
                   ),
@@ -258,7 +272,7 @@ class _PaymentViewState extends State<PaymentView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Tổng tiền: "),
+                    const Text("Tổng tiền: "),
                     Text(
                         NumberFormat('###,###')
                                 .format(viewModel.tinTongTienHoaDon()) +
@@ -272,7 +286,7 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   color: Colors.black,
@@ -285,7 +299,7 @@ class _PaymentViewState extends State<PaymentView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tiền khách trả: "),
+                  const Text("Tiền khách trả: "),
                   isView
                       ? Text(
                           NumberFormat('###,###')
@@ -300,17 +314,18 @@ class _PaymentViewState extends State<PaymentView> {
                             controller: _tienKhachTraController,
                             keyboardType: TextInputType.number,
                             onChanged: (value) {},
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(
+                            decoration: const InputDecoration(
+                              border: const OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: kPrimaryColor,
                                 ),
                               ),
-                              enabledBorder: OutlineInputBorder(
+                              enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide(color: Colors.grey),
                               ),
                               focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: kPrimaryColor),
+                                borderSide:
+                                    const BorderSide(color: kPrimaryColor),
                               ),
                             ),
                             cursorColor: kPrimaryColor,
@@ -324,7 +339,7 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   color: Colors.black,
@@ -337,7 +352,7 @@ class _PaymentViewState extends State<PaymentView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tiền thừa: "),
+                  const Text("Tiền thừa: "),
                   Text(
                       NumberFormat('###,###')
                               .format(viewModel.thanhToan.getTienThua ?? 0) +
@@ -366,11 +381,11 @@ class _PaymentViewState extends State<PaymentView> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.payment),
+                          const Icon(Icons.payment),
                           SizedBox(
                             width: constraints.maxHeight * 0.025,
                           ),
-                          Text(
+                          const Text(
                             'Đã thanh toán',
                             style: TextStyle(fontSize: 18.0),
                           )
@@ -397,9 +412,9 @@ class _PaymentViewState extends State<PaymentView> {
                 size: constraints.maxWidth * 0.3,
                 color: kPrimaryColor,
               ),
-              Text(
+              const Text(
                 'Đang chờ xuất hóa đơn',
-                style: TextStyle(
+                style: const TextStyle(
                   color: kPrimaryColor,
                   fontSize: 20.0,
                   fontWeight: FontWeight.bold,
@@ -411,8 +426,8 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
+            decoration: const BoxDecoration(
+              border: const Border(
                 bottom: BorderSide(
                   color: Colors.black,
                   width: 1.0,
@@ -423,7 +438,7 @@ class _PaymentViewState extends State<PaymentView> {
               padding: const EdgeInsets.all(8.0),
               child: SizedBox(
                 width: constraints.maxWidth,
-                child: Text(
+                child: const Text(
                   "Chi tiết hóa đơn",
                   style: TextStyle(
                     fontSize: 18.0,
@@ -437,8 +452,8 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
+            decoration: const BoxDecoration(
+              border: const Border(
                 bottom: BorderSide(
                   color: Colors.black,
                   width: 1.0,
@@ -460,8 +475,8 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-              decoration: BoxDecoration(
-                border: Border(
+              decoration: const BoxDecoration(
+                border: const Border(
                   bottom: BorderSide(
                     color: Colors.black,
                     width: 1.0,
@@ -473,7 +488,7 @@ class _PaymentViewState extends State<PaymentView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Tổng tiền: "),
+                    const Text("Tổng tiền: "),
                     Text(
                         NumberFormat('###,###')
                                 .format(viewModel.tinTongTienHoaDon()) +
@@ -487,9 +502,9 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
+            decoration: const BoxDecoration(
+              border: const Border(
+                bottom: const BorderSide(
                   color: Colors.black,
                   width: 1.0,
                 ),
@@ -500,7 +515,7 @@ class _PaymentViewState extends State<PaymentView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tiền khách trả: "),
+                  const Text("Tiền khách trả: "),
                   Text(
                     NumberFormat('###,###').format(
                             viewModel.hoaDon.thanhToan?.getTienKhachTra) +
@@ -516,7 +531,7 @@ class _PaymentViewState extends State<PaymentView> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   color: Colors.black,
@@ -529,7 +544,7 @@ class _PaymentViewState extends State<PaymentView> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Tiền thừa: "),
+                  const Text("Tiền thừa: "),
                   Text(
                       NumberFormat('###,###').format(
                               viewModel.hoaDon.thanhToan?.tienThua ?? 0) +

@@ -28,7 +28,20 @@ public class NhanVienService {
 
     public NhanVien add(NhanVien nhanVien) {
         nhanVien.setDeleted(false);
+//        TaiKhoan taiKhoan = taiKhoanService.add(nhanVien.getTaiKhoan());
+//        if (taiKhoan != null){
+//            return repository.save(nhanVien);
+//        }
         return repository.save(nhanVien);
+    }
+
+    public NhanVien addNhanVienAndTaiKhoan(NhanVien nhanVien){
+        nhanVien.setDeleted(false);
+        TaiKhoan taiKhoan = taiKhoanService.add(nhanVien.getTaiKhoan());
+        if (taiKhoan != null){
+            return repository.save(nhanVien);
+        }
+        return new NhanVien();
     }
 
     public void deleteById(Long id) {
@@ -49,5 +62,9 @@ public class NhanVienService {
             return repository.findByTaiKhoan(taiKhoan);
         }
         return null;
+    }
+
+    public List<NhanVien> getNhanVienTheoQuyen(String quyen){
+        return repository.getNhanVienByQuyen(quyen);
     }
 }

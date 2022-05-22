@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-goquickappflutter-dev-02325-authRole",
+      "UnauthRoleArn": "arn:aws:iam::716906208899:role/amplify-goquickappflutter-dev-02325-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::716906208899:role/amplify-goquickappflutter-dev-02325-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-goquickappflutter-dev-02325-deployment",
+      "UnauthRoleName": "amplify-goquickappflutter-dev-02325-unauthRole",
+      "StackName": "amplify-goquickappflutter-dev-02325",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:716906208899:stack/amplify-goquickappflutter-dev-02325/10753f70-d606-11ec-b5a7-02edff450778",
+      "AmplifyAppId": "d27vecmom9jn7x"
+    },
+    "categories": {
+      "auth": {
+        "goquickappflutter83ebfbf8": {},
+        "true": {}
+      }
+    }
+  }
+}

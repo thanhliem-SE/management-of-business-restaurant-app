@@ -30,6 +30,11 @@ public class NhanVienController  {
         return service.add(nhanVien);
     }
 
+    @PostMapping("/nhanvien/nhanvienvataikhoan")
+    public NhanVien addNhanVienAndTaiKhoan(@Valid @RequestBody NhanVien nhanVien){
+        return service.addNhanVienAndTaiKhoan(nhanVien);
+    }
+
     @GetMapping("/nhanvien/{id}")
     public NhanVien getById(@PathVariable(value = "id") Long id) {
         try {
@@ -67,5 +72,9 @@ public class NhanVienController  {
         } catch (Exception e) {
             throw new ResourceNotFoundException("NhanVien", "taiKhoan", tenTaiKhoan);
         }
+    }
+    @GetMapping("nhanvien/gettheoquyen/{quyen}")
+    public List<NhanVien> getTheoQuyen(@PathVariable(value = "quyen") String quyen){
+        return service.getNhanVienTheoQuyen(quyen);
     }
 }

@@ -68,6 +68,8 @@ class ResponseOrderViewModel extends ChangeNotifier {
     if (response is Success) {
       _mapListChiTietHoaDon[maHoaDon] =
           response.response as List<ChiTietHoaDon>;
+      _mapListChiTietHoaDon[maHoaDon]!
+          .removeWhere((element) => element.isDeleted == true);
       notifyListeners();
     } else {
       return [];
@@ -182,6 +184,7 @@ class ResponseOrderViewModel extends ChangeNotifier {
   checkDaPhucVuHoaDon(int maHoaDon) async {
     String token = await Helper.getToken();
     List<ChiTietHoaDon> listChiTietHoaDon = _mapListChiTietHoaDon[maHoaDon]!;
+    listChiTietHoaDon.removeWhere((element) => element.isDeleted == true);
     bool rs = true;
 
     for (int i = 0; i < listChiTietHoaDon.length; i++) {

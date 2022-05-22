@@ -135,24 +135,19 @@ Container cardTableOrder(
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: size.width * 0.2,
-                child: Text(
-                  ban.tinhTrang == null
-                      ? 'Trống'
-                      : Helper.getTrangThaiHoaDon(ban.tinhTrang!),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color:
-                          ban.tinhTrang == null ? kPrimaryColor : Colors.white),
-                ),
-              ),
-            ],
+          SizedBox(
+            width: size.width,
+            height: size.height * 0.04,
+            child: Text(
+              ban.tinhTrang == null
+                  ? 'Trống'
+                  : Helper.getTrangThaiHoaDon(ban.tinhTrang!),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: ban.tinhTrang == null ? kPrimaryColor : Colors.white),
+            ),
           ),
         ],
       ),

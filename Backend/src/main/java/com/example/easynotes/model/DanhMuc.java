@@ -24,27 +24,32 @@ import java.util.List;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
+@Table(name = DanhMuc.TABLE_NAME)
 public class DanhMuc implements Serializable {
+    public static final String TABLE_NAME= "DanhMuc";
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long maDanhMuc;
 
     @Nationalized
     @NotBlank
+    @Column(name = "loaiDanhMuc")
     private String loaiDanhMuc;
 
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
     @JsonIgnore
     @OneToMany(mappedBy = "danhMuc", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ThucPham> thucPhams;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhat")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;

@@ -45,17 +45,17 @@ public class Helpers {
     @Autowired
     BanService banService;
     public void initData() {
-        initNhaCungCap();
+//        initNhaCungCap();
         initTaiKhoan();
         initNhanVien();
         initDanhMuc();
         initThucPham();
         // must put after thucpham
-        initThanhToan();
+//        initThanhToan();
         initBan();
-        initHoaDon();
-        initChiTietHoaDon();
-        initChiTietThucPham();
+//        initHoaDon();
+//        initChiTietHoaDon();
+//        initChiTietThucPham();
     }
 
     private void initNhaCungCap() {

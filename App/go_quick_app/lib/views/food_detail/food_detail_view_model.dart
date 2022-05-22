@@ -8,6 +8,14 @@ import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 
 class FoodDetailViewModel extends ChangeNotifier {
   bool isInitialized = false;
+  bool isViewDetail = true;
+  bool get getIsViewDetail => this.isViewDetail;
+
+  set setIsViewDetail(bool isViewDetail) {
+    this.isViewDetail = isViewDetail;
+    notifyListeners();
+  }
+
   late ThucPham thucPham;
   ThucPham get getThucPham => this.thucPham;
 
@@ -17,19 +25,34 @@ class FoodDetailViewModel extends ChangeNotifier {
   set setIsInitialized(bool isInitialized) =>
       this.isInitialized = isInitialized;
 
-  Future<void> xoaThucPham(BuildContext context, ThucPham thucPham) async {
+  Future<bool> xoaThucPham(BuildContext context, ThucPham thucPham) async {
     try {
       String token = await Helper.getToken();
       thucPham.isDeleted = true;
       var response = await ThucPhamService().updateThucPham(token, thucPham);
       if (response is Success) {
-        NavigationHelper.pushReplacement(
-          context: context,
-          page: ManageAllFoodView(),
-        );
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
+      return false;
+    }
+  }
+
+  Future<void> updateThucPham(BuildContext context, ThucPham thucPham) async {
+    try {
+      String token = await Helper.getToken();
+      var response = await ThucPhamService().updateThucPham(token, thucPham);
+      if (response is Success) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text("Xóa món ăn thành công")));
-      } else {}
+            .showSnackBar(SnackBar(content: Text("Cập nhật thành công")));
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("Cập nhật thất bại")));
+      }
     } catch (e) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));

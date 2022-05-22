@@ -12,6 +12,7 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view_model.dart';
 import 'package:go_quick_app/views/login/login_view.dart';
+import 'package:go_quick_app/views/manage_account/manage_account_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_all_food_view.dart';
 import 'package:go_quick_app/views/manage_food/manage_food_view.dart';
 import 'package:go_quick_app/views/manage_payment/manage_payment_view.dart';
@@ -20,6 +21,7 @@ import 'package:go_quick_app/views/notification/notification_view.dart';
 import 'package:go_quick_app/views/request_order/request_order_view.dart';
 import 'package:go_quick_app/views/response_order/response_order_view.dart';
 import 'package:go_quick_app/views/return_order_customer/return_order_customer_view.dart';
+import 'package:go_quick_app/views/thong_ke/thong_ke_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeView extends StatefulWidget {
@@ -164,7 +166,10 @@ class WidgetGridViewMenu extends StatelessWidget {
           }),
         if (['QUANLY'].contains(quyen))
           cardItemMenu(size, Icons.manage_accounts, 'Quản lý tài khoản',
-              Colors.lightBlueAccent, () {}),
+              Colors.lightBlueAccent, () {
+            NavigationHelper.push(
+                context: context, page: const ManageAccountView());
+          }),
         if (['QUANLY', 'CHEBIEN'].contains(quyen))
           cardItemMenu(
               size, Icons.restaurant, 'Quản lý món ăn', Colors.orangeAccent,
@@ -172,9 +177,18 @@ class WidgetGridViewMenu extends StatelessWidget {
             NavigationHelper.push(
                 context: context, page: const ManageAllFoodView());
           }),
+        if (['QUANLY', 'CHEBIEN'].contains(quyen))
+          cardItemMenu(size, Icons.av_timer_outlined,
+              'Quản lý món ăn trong ngày', Colors.blue, () {
+            NavigationHelper.push(
+                context: context, page: const ManageFoodView());
+          }),
         if (['QUANLY'].contains(quyen))
-          cardItemMenu(size, Icons.bar_chart_outlined, 'Thống kê',
-              Colors.indigoAccent, () {}),
+          cardItemMenu(
+              size, Icons.bar_chart_outlined, 'Thống kê', Colors.indigoAccent,
+              () {
+            NavigationHelper.push(context: context, page: ThongKeView());
+          }),
         cardItemMenu(size, Icons.logout_outlined, 'Đăng xuất', Colors.redAccent,
             () {
           NavigationHelper.clearAllAndNavigateTo(
@@ -204,7 +218,7 @@ class WidgetGridViewMenu extends StatelessWidget {
               title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                fontSize: 22,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
             )

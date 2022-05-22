@@ -11,6 +11,6 @@ import java.util.List;
 @Repository
 public interface NhaCungCapRepository extends JpaRepository<NhaCungCap, Long> {
 
-    @Query(value = "select * from nha_cung_cap where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from NhaCungCap where daXoa = 0", nativeQuery = true)
     public List<NhaCungCap> getAll();
 }

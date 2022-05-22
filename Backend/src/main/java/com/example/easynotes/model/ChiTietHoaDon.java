@@ -21,7 +21,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Entity
+@Table(name = ChiTietHoaDon.TABLE_NAME)
 public class ChiTietHoaDon implements Serializable {
+    public static final String TABLE_NAME= "ChiTietHoaDon";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,7 @@ public class ChiTietHoaDon implements Serializable {
     private ThucPham thucPham;
 
     @Min(value = 1)
+    @Column(name = "soLuong")
     private int soLuong;
 
     @ManyToOne
@@ -43,18 +46,20 @@ public class ChiTietHoaDon implements Serializable {
     private boolean daPhucVu;
 
     private boolean khongTiepNhan;
+
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
     @ManyToOne
     @JoinColumn(name = "maHoaDon")
     private HoaDon hoaDon;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhat")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;

@@ -3,7 +3,6 @@
 //     final chiTietHoaDon = chiTietHoaDonFromJson(jsonString);
 
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
@@ -55,7 +54,7 @@ class ChiTietHoaDon {
         daPhucVu: json["daPhucVu"],
         khongTiepNhan: json["khongTiepNhan"],
         hoaDon: HoaDon.fromJson(json["hoaDon"]),
-        isDeleted: json["isDeleted"],
+        isDeleted: json["deleted"],
         createdAt: json["createdAt"] != null
             ? DateTime.parse(json["createdAt"]).add(const Duration(hours: 7))
             : null,

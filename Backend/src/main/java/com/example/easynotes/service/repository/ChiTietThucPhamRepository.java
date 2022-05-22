@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface ChiTietThucPhamRepository extends JpaRepository<ChiTietThucPham, Long> {
 
-    @Query(value = "select * from chi_tiet_thuc_pham where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from ChiTietThucPham where daXoa = 0", nativeQuery = true)
     public List<ChiTietThucPham> getAll();
 }

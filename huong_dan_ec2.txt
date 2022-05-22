@@ -1,0 +1,18 @@
+Mở CMD hoặc PowerCell
+B1. Kết nối ssh
+ssh -i "khoa_luan.pem" ec2-user@ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com
+
+B2. Chạy Backend
+java -jar backend.jar
+
+B3. Mở tab CMD mới, kết nối SSH và chạy Socket
+java -jar socket.jar
+
+Note:
+- link backend: ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com:8080/
+- link socket:  ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com:7070/
+Cyberpunk
+- server: ec2-18-141-199-16.ap-southeast-1.compute.amazonaws.com
+- SFTH
+- Username: ec2-user
+- Port: 22

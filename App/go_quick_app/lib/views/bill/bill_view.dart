@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/app_bar.dart';
-import 'package:go_quick_app/components/rounded_button.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -9,15 +8,14 @@ import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/bill/bill_view_model.dart';
 import 'package:go_quick_app/views/payment/payment_view.dart';
-import 'package:go_quick_app/views/payment/payment_view_model.dart';
 import 'package:go_quick_app/views/select_category/select_category_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class BillView extends StatelessWidget {
-  final HoaDon hoaDon;
+  HoaDon hoaDon;
 
-  const BillView({Key? key, required this.hoaDon}) : super(key: key);
+  BillView({Key? key, required this.hoaDon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +29,8 @@ class BillView extends StatelessWidget {
 
     final listChiTietHoaDon = viewModel.getListChiTietHoaDon();
 
+    hoaDon = viewModel.getHoaDon() ?? hoaDon;
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: buildAppBar(
@@ -38,23 +38,18 @@ class BillView extends StatelessWidget {
           title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
           viewModel: viewModel,
           actions: [
-            if (hoaDon.tinhTrang == 'CHO')
+            if (hoaDon.tinhTrang == 'CHO' ||
+                hoaDon.tinhTrang == 'KHONGTIEPNHAN')
               IconButton(
                 onPressed: () {
-                  if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
-                      hoaDon.thanhToan != null) {
-                    _showMaterialDialog(context,
-                        'Bạn không được chỉnh sửa hóa đơn đã thanh toán!');
-                  } else {
-                    viewModel.clear();
+                  viewModel.clear();
 
-                    NavigationHelper.pushReplacement(
-                        context: context,
-                        page: SelectCategoryView(
-                          hoaDon: hoaDon,
-                          listChiTietHoaDon: listChiTietHoaDon,
-                        ));
-                  }
+                  NavigationHelper.pushReplacement(
+                      context: context,
+                      page: SelectCategoryView(
+                        hoaDon: hoaDon,
+                        listChiTietHoaDon: listChiTietHoaDon,
+                      ));
                 },
                 icon: const Icon(Icons.edit),
               ),
@@ -255,6 +250,20 @@ class BillView extends StatelessWidget {
             children: [
               Image.network(
                 item.thucPham!.urlHinhAnh![0],
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      value: loadingProgress.expectedTotalBytes != null
+                          ? loadingProgress.cumulativeBytesLoaded /
+                              loadingProgress.expectedTotalBytes!
+                          : null,
+                    ),
+                  );
+                },
                 width: size.width * 0.2,
                 height: size.height * 0.1,
                 fit: BoxFit.fill,

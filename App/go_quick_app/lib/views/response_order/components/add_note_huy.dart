@@ -18,6 +18,10 @@ class AddNoteCancelDialog extends StatelessWidget {
     final viewModel = Provider.of<ResponseOrderViewModel>(context);
     List<ChiTietHoaDon> listChiTietHoaDon =
         viewModel.getListChiTietHonDonByMaHoaDon(hoaDon.maHoaDon!);
+    listChiTietHoaDon = listChiTietHoaDon
+        .where((element) =>
+            element.daCheBien == false && element.isDeleted == false)
+        .toList();
     return AlertDialog(
       title: const Text(
         'Không Tiếp Nhận Món Ăn',
@@ -33,33 +37,55 @@ class AddNoteCancelDialog extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   ChiTietHoaDon item = listChiTietHoaDon[index];
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.network(
-                        item.thucPham!.urlHinhAnh![0],
-                        fit: BoxFit.fill,
-                        width: size.width * 0.2,
-                        height: size.height * 0.1,
-                      ),
-                      Text(
-                        item.thucPham!.ten!,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      item.khongTiepNhan == false
-                          ? IconButton(
-                              onPressed: () {
-                                viewModel.setKhongTiepNhanForChiTietHoaDon(
-                                    hoaDon.maHoaDon!, item.maChiTietHoaDon!);
-                              },
-                              icon: const Icon(Icons.check_box_outline_blank))
-                          : IconButton(
-                              onPressed: () {
-                                viewModel.setKhongTiepNhanForChiTietHoaDon(
-                                    hoaDon.maHoaDon!, item.maChiTietHoaDon!);
-                              },
-                              icon: const Icon(Icons.check_box_outlined)),
-                    ],
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Image.network(
+                          item.thucPham!.urlHinhAnh![0],
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) {
+                              return child;
+                            }
+                            return Center(
+                              child: CircularProgressIndicator(
+                                value: loadingProgress.expectedTotalBytes !=
+                                        null
+                                    ? loadingProgress.cumulativeBytesLoaded /
+                                        loadingProgress.expectedTotalBytes!
+                                    : null,
+                              ),
+                            );
+                          },
+                          fit: BoxFit.fill,
+                          width: size.width * 0.2,
+                          height: size.height * 0.1,
+                        ),
+                        SizedBox(
+                          width: size.width * 0.3,
+                          child: Text(
+                            item.thucPham!.ten!,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 14),
+                          ),
+                        ),
+                        item.khongTiepNhan == false
+                            ? IconButton(
+                                onPressed: () {
+                                  viewModel.setKhongTiepNhanForChiTietHoaDon(
+                                      hoaDon.maHoaDon!, item.maChiTietHoaDon!);
+                                },
+                                icon: const Icon(Icons.check_box_outline_blank))
+                            : IconButton(
+                                onPressed: () {
+                                  viewModel.setKhongTiepNhanForChiTietHoaDon(
+                                      hoaDon.maHoaDon!, item.maChiTietHoaDon!);
+                                },
+                                icon: const Icon(Icons.check_box_outlined)),
+                      ],
+                    ),
                   );
                 },
               ),

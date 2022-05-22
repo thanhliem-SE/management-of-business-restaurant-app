@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_hoa_don.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
+import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:go_quick_app/views/manage_payment/component/xuat_hoa_don_view.dart';
@@ -19,7 +20,8 @@ class ManagePaymentView extends StatelessWidget {
     if (viewModel.isInitialized) {
       return WillPopScope(
         onWillPop: (() async {
-          NavigationHelper.pushReplacement(context: context, page: HomeView());
+          NavigationHelper.pushReplacement(
+              context: context, page: const HomeView());
           viewModel.clear();
           return true;
         }),
@@ -35,8 +37,8 @@ class ManagePaymentView extends StatelessWidget {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
-                            decoration: BoxDecoration(
-                              border: Border(
+                            decoration: const BoxDecoration(
+                              border: const Border(
                                 bottom: BorderSide(
                                   color: Colors.black,
                                   width: 1.0,
@@ -50,7 +52,7 @@ class ManagePaymentView extends StatelessWidget {
                                 children: [
                                   Text(
                                     'Hóa đơn số: ${hoaDon.maHoaDon}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -80,6 +82,29 @@ class ManagePaymentView extends StatelessWidget {
                                                   Image.network(
                                                     item.thucPham!
                                                         .urlHinhAnh![0],
+                                                    loadingBuilder: (BuildContext
+                                                            context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            loadingProgress) {
+                                                      if (loadingProgress ==
+                                                          null) {
+                                                        return child;
+                                                      }
+                                                      return Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          value: loadingProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? loadingProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  loadingProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
+                                                      );
+                                                    },
                                                     width: size.width * 0.2,
                                                     height: size.height * 0.1,
                                                     fit: BoxFit.fill,
@@ -102,7 +127,7 @@ class ManagePaymentView extends StatelessWidget {
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                  fontSize: 16),
+                                                                  fontSize: 14),
                                                         ),
                                                       ),
                                                       SizedBox(
@@ -120,7 +145,7 @@ class ManagePaymentView extends StatelessWidget {
                                                           overflow: TextOverflow
                                                               .ellipsis,
                                                           style: const TextStyle(
-                                                              fontSize: 18,
+                                                              fontSize: 16,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .normal,
@@ -136,10 +161,10 @@ class ManagePaymentView extends StatelessWidget {
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                   SizedBox(
-                                                      width: size.width * 0.1),
+                                                      width: size.width * 0.05),
                                                   Text(
                                                     NumberFormat('###,###')
                                                             .format(item
@@ -149,7 +174,7 @@ class ManagePaymentView extends StatelessWidget {
                                                     style: const TextStyle(
                                                         fontWeight:
                                                             FontWeight.bold,
-                                                        fontSize: 16),
+                                                        fontSize: 14),
                                                   ),
                                                 ],
                                               ),
@@ -176,7 +201,7 @@ class ManagePaymentView extends StatelessWidget {
                                             await viewModel.updateHoaDon(
                                                 context, hoaDon, 'HUY');
                                           },
-                                          child: Text('TỪ CHỐI'),
+                                          child: const Text('TỪ CHỐI'),
                                         ),
                                         ElevatedButton(
                                           style: TextButton.styleFrom(
@@ -191,7 +216,7 @@ class ManagePaymentView extends StatelessWidget {
                                             await viewModel.updateHoaDon(
                                                 context, hoaDon, 'DATHANHTOAN');
                                           },
-                                          child: Text('XUẤT HÓA ĐƠN'),
+                                          child: const Text('XUẤT HÓA ĐƠN'),
                                         ),
                                       ],
                                     ),
@@ -206,7 +231,7 @@ class ManagePaymentView extends StatelessWidget {
                   : Container(
                       width: constraints.maxWidth,
                       height: constraints.maxHeight,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Trống',
                           style: TextStyle(
@@ -222,7 +247,9 @@ class ManagePaymentView extends StatelessWidget {
       );
     } else {
       viewModel.initialAsync(context);
-      return Scaffold(
+      Provider.of<SocketViewModel>(context)
+          .setManagePaymentViewModel(viewModel, context);
+      return const Scaffold(
         body: Center(
           child: CircularProgressIndicator(
             color: kPrimaryColor,
@@ -239,15 +266,15 @@ class ManagePaymentView extends StatelessWidget {
       backgroundColor: kPrimaryColor,
       title: Column(
         children: [
-          Text(
+          const Text(
             'Quản lý thanh toán',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 16),
           ),
         ],
       ),
       centerTitle: true,
       leading: IconButton(
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back,
           color: Colors.white,
         ),

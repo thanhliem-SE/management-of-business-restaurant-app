@@ -51,11 +51,20 @@ public class ThucPhamController  {
         }
     }
 
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
+//        try{
+//            service.deleteById(id);
+//            return  ResponseEntity.ok().build();
+//        }catch (Exception e) {
+//            throw new ResourceNotFoundException("ThucPham", "maThucPham", id);
+//        }
+//    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable(value = "id") Long id) {
+    public int delete(@PathVariable(value = "id") Long id) {
         try{
-            service.deleteById(id);
-            return  ResponseEntity.ok().build();
+            return  service.deleteById(id);
         }catch (Exception e) {
             throw new ResourceNotFoundException("ThucPham", "maThucPham", id);
         }
@@ -68,5 +77,10 @@ public class ThucPhamController  {
         }catch (Exception e) {
             throw new ResourceNotFoundException("ThucPham", "maDanhMuc", maDanhMuc);
         }
+    }
+
+    @GetMapping("/danhsachchuaduyet")
+    public List<ThucPham> getThucPhamChuaDuyet(){
+        return service.getListChuaDuyet();
     }
 }

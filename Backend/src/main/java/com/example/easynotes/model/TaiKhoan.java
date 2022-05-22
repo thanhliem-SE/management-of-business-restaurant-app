@@ -26,24 +26,30 @@ import java.util.Date;
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Entity
+@Table(name = TaiKhoan.TABLE_NAME)
 public class TaiKhoan implements Serializable {
+    public static final String TABLE_NAME= "TaiKhoan";
+
     @Id
+    @Column(name = "tenTaiKhoan")
     private String tenTaiKhoan;
 
     @NotBlank
+    @Column(name = "matKhau")
     private String matKhau;
 
+    @Column(name = "daXoa")
     private boolean isDeleted;
 
     @Enumerated(EnumType.STRING)
     private Quyen quyen;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "ngayTao")
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdAt;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ngayCapNhat")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date updatedAt;

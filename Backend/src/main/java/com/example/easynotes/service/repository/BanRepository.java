@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface BanRepository extends JpaRepository<Ban, Long> {
-    @Query(value = "select * from ban where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from Ban where daXoa = 0", nativeQuery = true)
     public List<Ban> getAll();
 }

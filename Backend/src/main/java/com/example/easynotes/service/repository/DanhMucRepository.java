@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface DanhMucRepository extends JpaRepository<DanhMuc, Long> {
-    @Query(value = "select * from danh_muc where is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from DanhMuc where daXoa = 0", nativeQuery = true)
     public List<DanhMuc> getAll();
 }

@@ -1,0 +1,102 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-goquickappflutter-dev-02325-authRole",
+      "UnauthRoleArn": "arn:aws:iam::716906208899:role/amplify-goquickappflutter-dev-02325-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::716906208899:role/amplify-goquickappflutter-dev-02325-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-goquickappflutter-dev-02325-deployment",
+      "UnauthRoleName": "amplify-goquickappflutter-dev-02325-unauthRole",
+      "StackName": "amplify-goquickappflutter-dev-02325",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:716906208899:stack/amplify-goquickappflutter-dev-02325/10753f70-d606-11ec-b5a7-02edff450778",
+      "AmplifyAppId": "d27vecmom9jn7x"
+    }
+  },
+  "auth": {
+    "goquickappflutter83ebfbf8": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-goquickappflutter-dev-02325-deployment/amplify-cfn-templates/auth/goquickappflutter83ebfbf8-cloudformation-template.json",
+        "logicalId": "authgoquickappflutter83ebfbf8"
+      },
+      "lastPushTimeStamp": "2022-05-17T18:05:56.417Z",
+      "output": {
+        "UserPoolId": "ap-southeast-1_37S61es1w",
+        "AppClientIDWeb": "60a4olv273mq7oro3ff771norr",
+        "AppClientID": "28fnl2kg71m7tpphb6pstc4kfs",
+        "IdentityPoolId": "ap-southeast-1:16741676-88b1-4a39-9723-72505277d262",
+        "UserPoolArn": "arn:aws:cognito-idp:ap-southeast-1:716906208899:userpool/ap-southeast-1_37S61es1w",
+        "IdentityPoolName": "goquickappflutter83ebfbf8_identitypool_83ebfbf8__dev",
+        "UserPoolName": "goquickappflutter83ebfbf8_userpool_83ebfbf8"
+      },
+      "lastPushDirHash": "GzOEPTz+XwpJA9BzvQ+s92Izt3U="
+    }
+  },
+  "api": {
+    "goquickappflutter": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 7
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "4y5uugnt2ffmllmf63yj6cvloe",
+        "GraphQLAPIEndpointOutput": "https://x3u55bia6ncznmcxxolyi5sb3m.appsync-api.ap-southeast-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-nwv3he6zzrbppjgs4czgxhanbq"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-goquickappflutter-dev-02325-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apigoquickappflutter"
+      },
+      "lastPushTimeStamp": "2022-05-17T18:05:56.131Z",
+      "lastPushDirHash": "O9Xse24Pyr656YTpFmxPbdCVM/0="
+    }
+  },
+  "storage": {
+    "s36fddf937": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "lastPushTimeStamp": "2022-05-17T18:05:56.417Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-goquickappflutter-dev-02325-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages36fddf937"
+      },
+      "output": {
+        "BucketName": "goquickappflutter8def6002b0a548c2b67a654e37e04f02325-dev",
+        "Region": "ap-southeast-1"
+      },
+      "lastPushDirHash": "vXScNcL05n8m8LSKgPxLrbStIgc="
+    }
+  }
+}
