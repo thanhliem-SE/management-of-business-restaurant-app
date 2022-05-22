@@ -100,7 +100,9 @@ class NhanVienService {
           'Content-Type': 'application/json; charset=UTF-8',
           HttpHeaders.authorizationHeader: '$token'
         },
-        body: json.encode(nhanVien.toJson()),
+        body: json.encode(
+          nhanVien.toJson(),
+        ),
       );
 
       if (response.statusCode == 200) {
