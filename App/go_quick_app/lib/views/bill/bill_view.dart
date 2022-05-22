@@ -38,23 +38,18 @@ class BillView extends StatelessWidget {
           title: 'Hóa đơn #' + hoaDon.maHoaDon.toString(),
           viewModel: viewModel,
           actions: [
-            if (hoaDon.tinhTrang == 'CHO')
+            if (hoaDon.tinhTrang == 'CHO' ||
+                hoaDon.tinhTrang == 'KHONGTIEPNHAN')
               IconButton(
                 onPressed: () {
-                  if (hoaDon.tinhTrang == "CHUATHANHTOAN" &&
-                      hoaDon.thanhToan != null) {
-                    _showMaterialDialog(context,
-                        'Bạn không được chỉnh sửa hóa đơn đã thanh toán!');
-                  } else {
-                    viewModel.clear();
+                  viewModel.clear();
 
-                    NavigationHelper.pushReplacement(
-                        context: context,
-                        page: SelectCategoryView(
-                          hoaDon: hoaDon,
-                          listChiTietHoaDon: listChiTietHoaDon,
-                        ));
-                  }
+                  NavigationHelper.pushReplacement(
+                      context: context,
+                      page: SelectCategoryView(
+                        hoaDon: hoaDon,
+                        listChiTietHoaDon: listChiTietHoaDon,
+                      ));
                 },
                 icon: const Icon(Icons.edit),
               ),
