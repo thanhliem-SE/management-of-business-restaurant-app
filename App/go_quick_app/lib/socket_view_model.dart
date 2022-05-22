@@ -129,6 +129,7 @@ class SocketViewModel extends ChangeNotifier {
         selectCategoryViewModel != null
             ? selectCategoryViewModel!.init()
             : true;
+        requestOrderViewModel != null ? requestOrderViewModel!.init() : true;
       } else if (title == 'Yêu cầu thanh toán mới') {
         // Cập nhật màn hình quản lý thanh toán
         managePayMentViewModel != null

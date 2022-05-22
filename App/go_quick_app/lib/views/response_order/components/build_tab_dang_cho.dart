@@ -20,7 +20,9 @@ buildTabDangCho(
             HoaDon hoaDon = listHoaDon[index];
             List<ChiTietHoaDon> listChiTietHoaDon =
                 mapListChiTietHoaDon[hoaDon.maHoaDon]
-                        ?.where((element) => element.daCheBien == false)
+                        ?.where((element) =>
+                            element.daCheBien == false &&
+                            element.isDeleted == false)
                         .toList() ??
                     [];
             return InkWell(
