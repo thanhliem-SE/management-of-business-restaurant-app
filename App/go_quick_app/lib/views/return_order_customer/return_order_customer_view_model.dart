@@ -67,7 +67,7 @@ class ReturnOrderCustomerViewModel extends ChangeNotifier {
                   "Hóa đơn tại bàn ${hoaDon.ban!.soBan} được trả về thành công",
             ),
             'PHUCVU');
-        SocketViewModel.sendMessage("CHEBIEN", "Trả về hóa đơn thành công",
+        SocketViewModel.sendMessage("PHUVU", "Trả về hóa đơn thành công",
             "Hóa đơn tại bàn ${hoaDon.ban!.soBan} được trả về thành công");
       } else {
         ScaffoldMessenger.of(context)
