@@ -83,17 +83,24 @@ class NavBar extends StatelessWidget {
   }
 }
 
-class ConfirmPasswordDialog extends StatelessWidget {
+class ConfirmPasswordDialog extends StatefulWidget {
   final TaiKhoan taiKhoan;
+
   const ConfirmPasswordDialog({Key? key, required this.taiKhoan})
       : super(key: key);
 
   @override
+  State<ConfirmPasswordDialog> createState() => _ConfirmPasswordDialogState();
+}
+
+class _ConfirmPasswordDialogState extends State<ConfirmPasswordDialog> {
+  var matKhauCu = '';
+  var matKhauCheck = '';
+  var matKhauMoi = '';
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var matKhauCu = '';
-    var matKhauCheck = '';
-    var matKhauMoi = '';
+
     return AlertDialog(
       title: const Text(
         'Đổi mật khẩu',
@@ -104,35 +111,41 @@ class ConfirmPasswordDialog extends StatelessWidget {
           children: [
             RoundedPasswordField(
               onChanged: (value) {
-                matKhauCu = value;
+                setState(() {
+                  matKhauCu = value;
+                });
               },
               hintText: 'Nhập mật khẩu cũ',
             ),
             RoundedPasswordField(
               onChanged: (value) {
-                matKhauMoi = value;
+                setState(() {
+                  matKhauMoi = value;
+                });
               },
               hintText: 'Nhập mật khẩu mới',
             ),
             RoundedPasswordField(
               onChanged: (value) {
-                matKhauCheck = value;
+                setState(() {
+                  matKhauCheck = value;
+                });
               },
               hintText: 'Xác nhận mật khẩu mới',
             ),
             RoundedButton(
-              text: 'Xác nhận',
-              press: () {
-                if (matKhauMoi == matKhauCheck) {
-                  doiTaiKhoan(context, taiKhoan, matKhauCu, matKhauMoi);
-                } else {
-                  showAlertDialog(
-                      context: context,
-                      title: 'Thất bại',
-                      message: 'Mật khẩu mới và xác nhận không khớp');
-                }
-              },
-            )
+                text: 'Xác nhận',
+                press: () {
+                  if (matKhauMoi == matKhauCheck) {
+                    doiTaiKhoan(
+                        context, widget.taiKhoan, matKhauCu, matKhauMoi);
+                  } else {
+                    showAlertDialog(
+                        context: context,
+                        title: 'Thất bại',
+                        message: 'Mật khẩu mới và xác nhận không khớp');
+                  }
+                })
           ],
         ),
       ),
