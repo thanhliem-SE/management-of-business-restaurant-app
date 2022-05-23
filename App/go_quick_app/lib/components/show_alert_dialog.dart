@@ -44,7 +44,7 @@ showAlertDialog(
   Widget okButton = TextButton(
     child: Text("Đóng"),
     onPressed: () {
-      Navigator.pop(context);
+      if (Navigator.canPop(context)) Navigator.pop(context);
     },
   );
 

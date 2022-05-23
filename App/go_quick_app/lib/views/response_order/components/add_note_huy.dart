@@ -98,19 +98,21 @@ class AddNoteCancelDialog extends StatelessWidget {
                   viewModel.setGhiChu(value);
                 },
                 decoration: const InputDecoration(
-                    hintText: 'Lý do hủy', fillColor: kPrimaryLightColor),
+                    hintText: 'Lý do không tiếp nhận',
+                    fillColor: kPrimaryLightColor),
               ),
               SizedBox(
                 height: size.height * 0.04,
               ),
               RoundedButton(
-                  text: 'HỦY',
+                  text: 'KHÔNG TIẾP NHẬN',
                   press: () {
                     if (viewModel.getGhiChu() == '') {
                       showAlertDialog(
                           context: context,
                           title: 'Thất bại',
-                          message: 'Vui lòng nhập lý do hủy yêu cầu đặt món');
+                          message:
+                              'Vui lòng nhập lý do không tiếp nhận yêu cầu đặt món');
                     } else {
                       hoaDon.ghiChu = viewModel.getGhiChu();
                       viewModel.setGhiChu('');
