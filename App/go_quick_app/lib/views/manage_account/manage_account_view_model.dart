@@ -6,6 +6,7 @@ import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/nhan_vien_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'manage_account_view.dart';
 
@@ -57,6 +58,8 @@ class ManageAccountViewModel extends ChangeNotifier {
       if (response is Success) {
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text("Thêm thành công")));
+        launchUrl(Uri.parse(
+            'sms:+${nhanVien.soDienThoai}?body=Thông báo tài khoản của nhân viên ${nhanVien.tenNhanVien} \n Tên đăng nhập: ${nhanVien.taiKhoan?.tenTaiKhoan} \n Mật khẩu: ${nhanVien.taiKhoan?.matKhau}'));
         NavigationHelper.pushReplacement(
             context: context, page: const ManageAccountView());
       } else {
