@@ -66,4 +66,5 @@ public class ChiTietThucPhamController {
     public List<ChiTietThucPham> taoChiTiet( @PathVariable(value = "id") Long id){
         return service.taoChiTietThucPhamHomNayTheoDanhMuc(id);
     }
+
 }

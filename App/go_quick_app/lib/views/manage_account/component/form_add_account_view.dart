@@ -16,7 +16,7 @@ class FormAddAccountView extends StatefulWidget {
 
 class _FormAddAccountViewState extends State<FormAddAccountView> {
   TextEditingController? _tenNhanVien, _soDienThoai, _tenTaiKhoan, _matKhau;
-  List<String> quyen = ["QUANLY", "PHUCVU", "NHANVIEN", "THUNGAN"];
+  List<String> quyen = ["QUANLY", "PHUCVU", "CHEBIEN", "THUNGAN"];
   String quyenController = "";
   @override
   void initState() {
