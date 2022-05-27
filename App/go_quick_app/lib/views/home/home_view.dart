@@ -81,7 +81,7 @@ class _HomeViewState extends State<HomeView> {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               taiKhoan = snapshot.data as TaiKhoan;
-              storedSignedData(taiKhoan);
+              storedSignedData(taiKhoan, viewModel);
 
               if (socketViewModel.taiKhoan.tenTaiKhoan !=
                   taiKhoan.tenTaiKhoan) {
@@ -102,7 +102,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  void storedSignedData(TaiKhoan taiKhoan) async {
+  void storedSignedData(TaiKhoan taiKhoan, HomeViewModel viewModel) async {
     Helper.setTaiKhoanSigned(taiKhoan);
     String token = await Helper.getToken();
 
@@ -111,6 +111,7 @@ class _HomeViewState extends State<HomeView> {
     if (response is Success) {
       NhanVien nhanVien = response.response as NhanVien;
       Helper.setNhanVienSigned(nhanVien);
+      viewModel.init();
     }
   }
 }

@@ -67,8 +67,6 @@ class HomeViewModel extends ChangeNotifier {
     }
     if (response is Failure) {
       String errorResponse = (response as Failure).errrorResponse as String;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(errorResponse)));
     }
   }
 
