@@ -55,7 +55,6 @@ class LoginViewModel extends ChangeNotifier {
       NavigationHelper.push(context: context, page: HomeView());
     }
     if (response is Failure) {
-      String errorResponse = (response as Failure).errrorResponse as String;
       showAlertDialog(
           context: context,
           title: 'Thất bại',
