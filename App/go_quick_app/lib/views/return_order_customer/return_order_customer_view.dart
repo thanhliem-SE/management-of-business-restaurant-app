@@ -24,73 +24,78 @@ class ReturnOrderCustomerview extends StatelessWidget {
           appBar: buildAppBar(size, context, viewModel),
           body: LayoutBuilder(
             builder: (context, constraints) {
-              return ListView.builder(
-                itemCount: viewModel.listHoaDon.length,
-                itemBuilder: (context, index) {
-                  HoaDon hoaDon = viewModel.listHoaDon[index];
-                  return Container(
-                    decoration: const BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Colors.black,
-                          width: 1.0,
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await viewModel.intitializedAsync(context);
+                },
+                child: ListView.builder(
+                  itemCount: viewModel.listHoaDon.length,
+                  itemBuilder: (context, index) {
+                    HoaDon hoaDon = viewModel.listHoaDon[index];
+                    return Container(
+                      decoration: const BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Colors.black,
+                            width: 1.0,
+                          ),
                         ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Hóa đơn số ${hoaDon.maHoaDon}',
-                            style: const TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Hóa đơn số ${hoaDon.maHoaDon}',
+                              style: const TextStyle(
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text('Số bàn: ${hoaDon.ban?.maSoBan}'),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Giờ tạo: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(hoaDon.createdAt!)}',
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Số bàn: ${hoaDon.ban?.maSoBan}'),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Giờ xuất hóa đơn: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(hoaDon.updatedAt!)}',
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Giờ tạo: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(hoaDon.createdAt!)}',
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Người lập hóa đơn: ${hoaDon.nguoiLapHoaDon?.tenNhanVien}',
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Giờ xuất hóa đơn: ${DateFormat('dd/MM/yyyy HH:mm:ss').format(hoaDon.updatedAt!)}',
+                              ),
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await viewModel.updateHoaDon(context, hoaDon);
-                              },
-                              child: SizedBox(
-                                width: constraints.maxWidth,
-                                child: const Text(
-                                  'Nhận trả hóa đơn',
-                                  textAlign: TextAlign.center,
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                'Người lập hóa đơn: ${hoaDon.nguoiLapHoaDon?.tenNhanVien}',
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await viewModel.updateHoaDon(context, hoaDon);
+                                },
+                                child: SizedBox(
+                                  width: constraints.maxWidth,
+                                  child: const Text(
+                                    'Nhận trả hóa đơn',
+                                    textAlign: TextAlign.center,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             },
           ),

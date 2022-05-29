@@ -115,7 +115,7 @@ class ManagePayMentViewModel extends ChangeNotifier {
                   "Hóa đơn tại bàn ${hoaDon.ban!.soBan} đã được thanh toán",
             ),
             'CHEBIEN');
-        SocketViewModel.sendMessage("THUNGAN", "Thanh toán thành công",
+        SocketViewModel.sendMessage("PHUCVU", "Thanh toán thành công",
             "Hóa đơn tại bàn ${hoaDon.ban!.soBan} đã được thanh toán");
       } else {
         ScaffoldMessenger.of(context)
