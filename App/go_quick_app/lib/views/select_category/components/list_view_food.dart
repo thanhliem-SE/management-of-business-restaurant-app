@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:go_quick_app/components/show_alert_dialog.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
+import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/utils/helper.dart';
+import 'package:go_quick_app/utils/navigation_helper.dart';
+import 'package:go_quick_app/views/food_detail/food_detail_view.dart';
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +29,18 @@ class ListViewFood extends StatelessWidget {
         ChiTietThucPham item = listChiTietThucPham[index];
         int amount = viewModel.getSoLuongChonMon(item.maChiTietThucPham!);
         return InkWell(
-          onLongPress: () {
-            showAlertDialog(
-                context: context,
-                title: item.thucPham!.ten!,
-                message: item.thucPham!.moTa!);
+          onLongPress: () async {
+            // showAlertDialog(
+            //     context: context,
+            //     title: item.thucPham!.ten!,
+            //     message: item.thucPham!.moTa!);
+            NavigationHelper.push(
+              context: context,
+              page: DetailFoodView(
+                thucPham: item.thucPham!,
+                quyen: await getQuyen(context),
+              ),
+            );
           },
           child: Container(
             padding: EdgeInsets.all(size.width * 0.02),
@@ -152,5 +163,20 @@ class ListViewFood extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future<String> getQuyen(BuildContext context) async {
+    String quyen = "";
+    try {
+      TaiKhoan taiKhoan = await Helper.getTaiKhoanSigned();
+      if (taiKhoan != null) {
+        quyen = taiKhoan.quyen!;
+        return quyen;
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
+    }
+    return quyen;
   }
 }

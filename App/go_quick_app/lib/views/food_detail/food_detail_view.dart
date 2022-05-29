@@ -42,8 +42,7 @@ class _DetailFoodViewState extends State<DetailFoodView> {
     double fontSize = 16.0;
     return WillPopScope(
       onWillPop: () async {
-        NavigationHelper.pushReplacement(
-            context: context, page: const ManageAllFoodView());
+        Navigator.of(context).pop();
         viewModel.isViewDetail = true;
         return true;
       },
@@ -340,47 +339,53 @@ class _DetailFoodViewState extends State<DetailFoodView> {
                                 ),
                               )
                             : Container(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.green,
-                            ),
-                            onPressed: () async {
-                              if (!viewModel.isViewDetail) {
-                                widget.thucPham.ten = _tenController?.text;
-                                widget.thucPham.moTa = _moTaController?.text;
-                                widget.thucPham.chiTiet =
-                                    _chiTietController?.text;
-                                widget.thucPham.giaTien = _giaController != null
-                                    ? double.tryParse("${_giaController?.text}")
-                                    : 0;
-                                await viewModel.updateThucPham(
-                                    context, widget.thucPham);
-                              } else {
-                                _tenController?.text =
-                                    widget.thucPham.ten.toString();
-                                _moTaController?.text =
-                                    widget.thucPham.moTa.toString();
-                                _chiTietController?.text =
-                                    widget.thucPham.chiTiet.toString();
-                                _giaController?.text =
-                                    widget.thucPham.giaTien.toString();
-                              }
-                              viewModel.setIsViewDetail =
-                                  !viewModel.getIsViewDetail;
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                'Cập nhật món',
-                                style: TextStyle(
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        )
+                        ['QUANLY', 'CHEBIEN'].contains(widget.quyen)
+                            ? Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.green,
+                                  ),
+                                  onPressed: () async {
+                                    if (!viewModel.isViewDetail) {
+                                      widget.thucPham.ten =
+                                          _tenController?.text;
+                                      widget.thucPham.moTa =
+                                          _moTaController?.text;
+                                      widget.thucPham.chiTiet =
+                                          _chiTietController?.text;
+                                      widget.thucPham.giaTien =
+                                          _giaController != null
+                                              ? double.tryParse(
+                                                  "${_giaController?.text}")
+                                              : 0;
+                                      await viewModel.updateThucPham(
+                                          context, widget.thucPham);
+                                    } else {
+                                      _tenController?.text =
+                                          widget.thucPham.ten.toString();
+                                      _moTaController?.text =
+                                          widget.thucPham.moTa.toString();
+                                      _chiTietController?.text =
+                                          widget.thucPham.chiTiet.toString();
+                                      _giaController?.text =
+                                          widget.thucPham.giaTien.toString();
+                                    }
+                                    viewModel.setIsViewDetail =
+                                        !viewModel.getIsViewDetail;
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      'Cập nhật món',
+                                      style: TextStyle(
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(),
                       ],
                     ),
                   )
@@ -412,8 +417,7 @@ class _DetailFoodViewState extends State<DetailFoodView> {
           color: Colors.white,
         ),
         onPressed: () {
-          NavigationHelper.pushReplacement(
-              context: context, page: const ManageAllFoodView());
+          Navigator.of(context).pop();
           viewModel.isViewDetail = true;
         },
       ),

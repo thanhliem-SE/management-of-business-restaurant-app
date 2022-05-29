@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_quick_app/config/palette.dart';
+import 'package:go_quick_app/models/chi_tiet_thuc_pham.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/add_food_form/add_food_form_view.dart';
@@ -28,8 +29,8 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
       return WillPopScope(
         onWillPop: () async {
           viewModel.clear();
-          NavigationHelper.pushReplacement(
-              context: context, page: const HomeView());
+          // NavigationHelper.push(context: context, page: const HomeView());
+          Navigator.of(context).pop();
           return true;
         },
         child: DefaultTabController(
@@ -232,8 +233,8 @@ class _ManageAllFoodViewState extends State<ManageAllFoodView> {
         ),
         onPressed: () {
           viewModel.clear();
-          NavigationHelper.pushReplacement(
-              context: context, page: const HomeView());
+          // NavigationHelper.push(context: context, page: const HomeView());
+          Navigator.of(context).pop();
         },
       ),
     );
