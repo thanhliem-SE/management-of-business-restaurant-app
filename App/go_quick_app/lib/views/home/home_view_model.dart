@@ -39,7 +39,7 @@ class HomeViewModel extends ChangeNotifier {
 
     String token = await Helper.getToken();
     final response = await ThongBaoService()
-        .getThongBaoByTaiKhoan(token, nhanVien.taiKhoan!);
+        .getThongBaoByTaiKhoan(token, nhanVien.taiKhoan ?? TaiKhoan());
     if (response is Success) {
       setListThongBao(response.response as List<ThongBao>);
     }
@@ -60,8 +60,8 @@ class HomeViewModel extends ChangeNotifier {
 
   getTaiKhoan(context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    var response =
-        await TaiKhoanService().getTaiKhoanByToken(prefs.getString('token')!);
+    var response = await TaiKhoanService()
+        .getTaiKhoanByToken(prefs.getString('token') ?? "");
     if (response is Success) {
       return response.response;
     }

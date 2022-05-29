@@ -42,7 +42,7 @@ class Helper {
 
   static Future<NhanVien> getNhanVienSigned() async {
     var box = Hive.box('signed');
-    NhanVien nhanVien = box.get('nhanVien');
+    NhanVien nhanVien = box.get('nhanVien') ?? NhanVien();
     return nhanVien;
   }
 

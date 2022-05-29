@@ -15,15 +15,14 @@ class ManageAccountView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     final viewModel = Provider.of<ManageAccountViewModel>(context);
     if (viewModel.initialized) {
-      return WillPopScope(
-        onWillPop: () async {
-          viewModel.clear();
-          NavigationHelper.pushReplacement(
-              context: context, page: const HomeView());
-          return true;
-        },
-        child: DefaultTabController(
-          length: viewModel.quyenList.length,
+      return DefaultTabController(
+        length: viewModel.quyenList.length,
+        child: WillPopScope(
+          onWillPop: () async {
+            viewModel.clear();
+            Navigator.of(context).pop();
+            return true;
+          },
           child: Scaffold(
             appBar: buildAppBar(size, context, viewModel),
             body: TabBarView(
@@ -99,10 +98,10 @@ class ManageAccountView extends StatelessWidget {
                                 ),
                               ),
                               nhanvien.taiKhoan?.quyen != "QUANLY"
-                                  ? Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Expanded(
-                                        flex: 1,
+                                  ? Expanded(
+                                      flex: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
                                               primary: Colors.red),
@@ -176,8 +175,7 @@ class ManageAccountView extends StatelessWidget {
         ),
         onPressed: () {
           viewModel.clear();
-          NavigationHelper.pushReplacement(
-              context: context, page: const HomeView());
+          Navigator.of(context).pop();
         },
       ),
     );
