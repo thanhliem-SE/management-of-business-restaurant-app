@@ -13,7 +13,9 @@ buildTabDangCho(
     required List<HoaDon> listHoaDon,
     required Map<int, List<ChiTietHoaDon>> mapListChiTietHoaDon,
     required ResponseOrderViewModel viewModel}) {
-  return listHoaDon.length > 0
+  listHoaDon.sort((a, b) => (a.createdAt ?? DateTime.now())
+      .compareTo((b.createdAt ?? DateTime.now())));
+  return listHoaDon.isNotEmpty
       ? ListView.builder(
           itemCount: listHoaDon.length,
           itemBuilder: (context, index) {
