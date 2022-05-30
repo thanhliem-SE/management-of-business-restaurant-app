@@ -88,7 +88,8 @@ buildTabDangCho(
                               fontStyle: FontStyle.italic,
                             ),
                           ),
-                    ['QUANLY', 'CHEBIEN'].contains(viewModel.quyenTaiKhoan)
+                    ['QUANLY', 'CHEBIEN'].contains(viewModel.quyenTaiKhoan) &&
+                            listHoaDon[0].maHoaDon == hoaDon.maHoaDon
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
