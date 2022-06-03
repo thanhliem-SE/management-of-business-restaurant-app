@@ -4,6 +4,7 @@ import 'package:go_quick_app/models/hoa_don.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:go_quick_app/views/thong_ke/thong_ke_view_model.dart';
+import 'package:go_quick_app/views/thong_ke/widget/thong_ke_mon_an_view.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
@@ -267,6 +268,18 @@ class _ThongKeViewState extends State<ThongKeView> {
               context: context, page: const HomeView());
         },
       ),
+      actions: [
+        IconButton(
+          icon: const Icon(
+            Icons.arrow_forward_outlined,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            NavigationHelper.push(
+                context: context, page: const ThongKeMonAnView());
+          },
+        ),
+      ],
     );
   }
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:go_quick_app/models/thong_ke_mon_an.dart';
 import 'package:go_quick_app/models/thuc_pham.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/utils/constants.dart';
@@ -130,6 +131,33 @@ class ThucPhamService {
         return Success(
             response:
                 ThucPham.fromJson(jsonDecode(utf8.decode(response.bodyBytes))));
+      }
+      return Failure(
+          code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
+    } on HttpException {
+      return Failure(
+          code: NO_INTERNET, errrorResponse: 'Không có kết nối internet!');
+    } on FormatException {
+      return Failure(
+          code: INVALID_FORMAT, errrorResponse: 'Định dạng không hợp lệ!');
+    } catch (e) {
+      return Failure(code: UNKNOW_ERROR, errrorResponse: 'Lỗi không xác định!');
+    }
+  }
+
+  Future<Object> getThongKeTheoThang(String token, int thang, int nam) async {
+    try {
+      final response = await http.get(
+          Uri.parse(api + 'thucpham/thongkemonan/$thang/$nam'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+            HttpHeaders.authorizationHeader: '$token'
+          });
+
+      if (response.statusCode == 200) {
+        return Success(
+            response:
+                listThongKeMonAnFromJson(utf8.decode(response.bodyBytes)));
       }
       return Failure(
           code: USER_INVALID_RESPONSE, errrorResponse: 'Lỗi không xác định!');
