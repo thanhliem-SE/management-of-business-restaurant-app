@@ -3,6 +3,7 @@ import 'package:go_quick_app/app.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
+import 'package:go_quick_app/models/thong_ke_mon_an.dart';
 import 'package:go_quick_app/services/notification_service.dart';
 import 'package:go_quick_app/socket_view_model.dart';
 import 'package:go_quick_app/utils/constants.dart';
@@ -23,6 +24,8 @@ import 'package:go_quick_app/views/return_order_customer/return_order_customer_v
 import 'package:go_quick_app/views/select_category/select_category_view_model.dart';
 import 'package:go_quick_app/views/sign_up/sign_up_viewmodel.dart';
 import 'package:go_quick_app/views/thong_ke/thong_ke_view_model.dart';
+import 'package:go_quick_app/views/thong_ke/widget/thong_ke_mon_an_view.dart';
+import 'package:go_quick_app/views/thong_ke/widget/thong_ke_mon_an_view_model.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
@@ -107,6 +110,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => ThongKeViewModel(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ThongKeMonAnViewModel(),
         ),
       ],
       child: MaterialApp(

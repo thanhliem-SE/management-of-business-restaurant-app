@@ -1,5 +1,6 @@
 package com.example.easynotes.service;
 
+import com.example.easynotes.dto.ThongKeMonAn;
 import com.example.easynotes.model.ThanhToan;
 import com.example.easynotes.model.ThucPham;
 import com.example.easynotes.service.repository.ThucPhamRepository;
@@ -48,5 +49,9 @@ public class ThucPhamService {
 
     public List<ThucPham> getListChuaDuyet(){
         return repository.getThucPhamChuaDuyet();
+    }
+
+    public List<ThongKeMonAn> getThongKeMonAnByThang(int thang, int nam){
+        return repository.getThongKeMonAnByThang(thang, nam);
     }
 }
