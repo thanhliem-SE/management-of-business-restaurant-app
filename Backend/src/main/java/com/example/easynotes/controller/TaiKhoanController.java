@@ -77,4 +77,14 @@ public class TaiKhoanController {
             throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", id);
         }
     }
+
+    @GetMapping("/taikhoan/reset/{tenTaiKhoan}")
+    public TaiKhoan resetPassword(@PathVariable(value = "tenTaiKhoan") String tenTaiKhoan) {
+        try {
+            return service.resetPasswordByTenTaiKhoan(tenTaiKhoan);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("TaiKhoan", "maTaiKhoan", tenTaiKhoan);
+        }
+    }
+
 }
