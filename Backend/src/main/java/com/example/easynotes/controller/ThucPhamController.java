@@ -1,6 +1,7 @@
 package com.example.easynotes.controller;
 
 
+import com.example.easynotes.dto.ThongKeMonAn;
 import com.example.easynotes.exception.ResourceNotFoundException;
 import com.example.easynotes.model.ThucPham;
 import com.example.easynotes.service.ThucPhamService;
@@ -82,5 +83,10 @@ public class ThucPhamController  {
     @GetMapping("/danhsachchuaduyet")
     public List<ThucPham> getThucPhamChuaDuyet(){
         return service.getListChuaDuyet();
+    }
+
+    @GetMapping("/thongkemonan/{thang}/{nam}")
+    public List<ThongKeMonAn> getThongKeMonAnByThang(@PathVariable(value = "thang") int thang, @PathVariable(value = "nam") int nam){
+        return service.getThongKeMonAnByThang(thang, nam);
     }
 }
