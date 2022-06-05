@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/nhan_vien.dart';
+import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:go_quick_app/views/home/home_view.dart';
 import 'package:go_quick_app/views/manage_account/component/form_add_account_view.dart';
@@ -37,84 +38,94 @@ class ManageAccountView extends StatelessWidget {
                       itemCount: item.nhanViens.length,
                       itemBuilder: (context, index) {
                         NhanVien nhanvien = item.nhanViens[index];
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(
-                                color: Colors.black,
+                        return InkWell(
+                          onLongPress: () {
+                            _showMaterialDialog(
+                                context,
+                                "Bạn có muốn đặt lại mật khẩu",
+                                viewModel,
+                                nhanvien.taiKhoan!);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  color: Colors.black,
+                                ),
                               ),
                             ),
-                          ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: LayoutBuilder(
-                                  builder: (BuildContext context,
-                                      BoxConstraints constraints) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.account_box_sharp,
-                                        size: constraints.maxWidth,
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Expanded(
-                                flex: 3,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      child: Text(
-                                        nhanvien.tenNhanVien ?? "",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      child: Text(
-                                        'Quyền: ${nhanvien.taiKhoan?.quyen}',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      child: Text(
-                                        'Sđt: ${nhanvien.soDienThoai}',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      child: Text(
-                                        'Tên tài khoản: ${nhanvien.taiKhoan?.tenTaiKhoan}',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              nhanvien.taiKhoan?.quyen != "QUANLY"
-                                  ? Expanded(
-                                      flex: 1,
-                                      child: Padding(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: LayoutBuilder(
+                                    builder: (BuildContext context,
+                                        BoxConstraints constraints) {
+                                      return Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              primary: Colors.red),
-                                          onPressed: () async {
-                                            await viewModel.xoaNhanVien(
-                                                context, nhanvien);
-                                          },
-                                          child: Text("Xóa"),
+                                        child: Icon(
+                                          Icons.account_box_sharp,
+                                          size: constraints.maxWidth,
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        child: Text(
+                                          nhanvien.tenNhanVien ?? "",
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
                                         ),
                                       ),
-                                    )
-                                  : Container(),
-                            ],
+                                      SizedBox(
+                                        child: Text(
+                                          'Quyền: ${nhanvien.taiKhoan?.quyen}',
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        child: Text(
+                                          'Sđt: ${nhanvien.soDienThoai}',
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        child: Text(
+                                          'Tên tài khoản: ${nhanvien.taiKhoan?.tenTaiKhoan}',
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                nhanvien.taiKhoan?.quyen != "QUANLY"
+                                    ? Expanded(
+                                        flex: 1,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                                primary: Colors.red),
+                                            onPressed: () async {
+                                              await viewModel.xoaNhanVien(
+                                                  context, nhanvien);
+                                            },
+                                            child: Text("Xóa"),
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           ),
                         );
                       },
@@ -179,5 +190,39 @@ class ManageAccountView extends StatelessWidget {
         },
       ),
     );
+  }
+
+  _dismissDialog(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  void _showMaterialDialog(BuildContext context, String text,
+      ManageAccountViewModel viewModel, TaiKhoan taiKhoan) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text(
+              'Cảnh báo',
+              style: TextStyle(
+                color: Colors.red,
+              ),
+            ),
+            content: Text(text),
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () async {
+                    await viewModel.capNhatTaiKhoan(context, taiKhoan);
+                    _dismissDialog(context);
+                  },
+                  child: Text('Đồng ý')),
+              TextButton(
+                  onPressed: () {
+                    _dismissDialog(context);
+                  },
+                  child: Text('Từ chối')),
+            ],
+          );
+        });
   }
 }

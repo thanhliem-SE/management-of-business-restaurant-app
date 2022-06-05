@@ -212,6 +212,9 @@ class _ManageFoodViewState extends State<ManageFoodView> {
                                 child: MaterialButton(
                                   onPressed: () async {
                                     await viewModel.SaveUpdate(context);
+                                    setState(() {
+                                      isUpdate = false;
+                                    });
                                   },
                                   child: SizedBox(
                                     height: size.height * 0.05,

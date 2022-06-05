@@ -4,6 +4,7 @@ import 'package:go_quick_app/models/nhan_vien.dart';
 import 'package:go_quick_app/models/tai_khoan.dart';
 import 'package:go_quick_app/services/api_status.dart';
 import 'package:go_quick_app/services/nhan_vien_service.dart';
+import 'package:go_quick_app/services/tai_khoan_service.dart';
 import 'package:go_quick_app/utils/helper.dart';
 import 'package:go_quick_app/utils/navigation_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -85,6 +86,26 @@ class ManageAccountViewModel extends ChangeNotifier {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Xóa tài khoản ${nhanVien.tenNhanVien} thất bại")));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("error: ${e.toString()}")));
+    }
+  }
+
+  Future<void> capNhatTaiKhoan(BuildContext context, TaiKhoan taiKhoan) async {
+    try {
+      String token = await Helper.getToken();
+      var response =
+          await TaiKhoanService().resetMatKhau(token, taiKhoan.tenTaiKhoan!);
+      if (response is Success) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Đã reset tài khoản thành công")));
+        await loadNhanVienIntoQuyen(context);
+        notifyListeners();
+      } else {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("reset tài khoản thất bại")));
       }
     } catch (e) {
       ScaffoldMessenger.of(context)

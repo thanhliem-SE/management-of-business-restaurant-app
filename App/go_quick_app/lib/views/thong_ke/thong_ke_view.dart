@@ -1,3 +1,4 @@
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:go_quick_app/config/palette.dart';
 import 'package:go_quick_app/models/hoa_don.dart';
@@ -243,6 +244,14 @@ class _ThongKeViewState extends State<ThongKeView> {
       );
     }
   }
+
+  // double getMaxPrice(ThongKeViewModel viewModel) {
+  //   double max = 0;
+  //   viewModel.hoadons
+  //       .sort((a, b) => a.tongThanhTien!.compareTo(b.tongThanhTien!));
+  //   max = viewModel.hoadons[0].tongThanhTien!;
+  //   return max;
+  // }
 
   AppBar buildAppBar(
       Size size, BuildContext context, ThongKeViewModel viewModel) {
