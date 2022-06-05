@@ -92,4 +92,10 @@ public class TaiKhoanService {
         return jwtBody.getSub();
     }
 
+    public TaiKhoan resetPasswordByTenTaiKhoan(String tenTaiKhoan){
+        TaiKhoan taiKhoan = getByTenTaiKhoan(tenTaiKhoan);
+        taiKhoan.setMatKhau(passwordEncoder.encode("123456"));
+        return repository.save(taiKhoan);
+    }
+
 }
