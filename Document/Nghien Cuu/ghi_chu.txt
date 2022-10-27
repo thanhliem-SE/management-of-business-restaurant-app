@@ -1,1 +1,0 @@
-- create at, update at, get/set, constructor có thêm vào class diagram
